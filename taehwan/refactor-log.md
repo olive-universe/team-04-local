@@ -29,3 +29,11 @@
 - metrics.md → archive/2026-11-16-metrics-허심청.md (허심청 주제)
 - emotion-keywords.md → archive/2026-11-16-emotion-keywords-허심청.md (허심청 주제)
 - 옮기기 전 파일 수: 143 / 옮긴 뒤 파일 수: 143 (.git 폴더 빼고)
+
+## 2026-11-17 · raw/ 원본을 갈래별 폴더로 (이름 규칙: collection-rules.md 맨 아래)
+
+파일 내용은 고치지 않았다(옮기기 전후 해시 같음). raw/는 git에 올리지 않는 폴더라 커밋 기록에는 남지 않는다.
+
+- raw/google-raw-1-번역본.txt → raw/text/2026-11-16_구글맵_광안리_외국어리뷰-번역본.txt
+- raw/google-raw-2-원문.txt → raw/text/2026-11-16_구글맵_광안리_외국어리뷰-원문.txt
+- 경로가 적힌 inputs/google_reviews_source.md 2줄을 새 경로로 고쳤다. 00-먼저-읽기.md는 폴더 지도를 새로 쓸 때 고친다.
