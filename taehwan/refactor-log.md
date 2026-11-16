@@ -17,3 +17,15 @@
 - prompts/08-fieldwork-plan.md → prompts/09-fieldwork-plan.md (2026-11-16, 08-project-analysis.md와 번호가 겹쳐서)
 - fieldwork-plan.md (허심청 버전) → archive/2026-11-16-fieldwork-plan-허심청.md (2026-11-16, 맨 위 fieldwork-plan.md를 광안리 버전으로 새로 쓰면서)
 - inputs/kakao-raw.txt (유용한 순·최신순이 섞인 첫 복사본) → archive/2026-11-16-kakao-raw-섞인정렬.txt (2026-11-16, 최신순으로 다시 복사한 글로 바꾸면서)
+
+## 2026-11-17 · 지금 주제(광안리 불꽃축제)와 상관없는 옛 파일을 archive/로
+
+파일 내용은 고치지 않고 자리만 옮겼다. 지운 파일은 없다.
+
+- research/_check.md → archive/2026-11-16-_check.md (부전2동 노트 확인 메모)
+- research/2026-11-12-bujeon-2-dong.md → archive/2026-11-12-bujeon-2-dong.md (다른 동네 주제)
+- research/2026-11-12-gwangalli-eobang-festival.md → archive/2026-11-12-gwangalli-eobang-festival.md (어방축제, 불꽃축제 아님)
+- research/2026-11-13-gwangalli-eobang.md → archive/2026-11-13-gwangalli-eobang.md (어방축제, 불꽃축제 아님)
+- metrics.md → archive/2026-11-16-metrics-허심청.md (허심청 주제)
+- emotion-keywords.md → archive/2026-11-16-emotion-keywords-허심청.md (허심청 주제)
+- 옮기기 전 파일 수: 143 / 옮긴 뒤 파일 수: 143 (.git 폴더 빼고)
