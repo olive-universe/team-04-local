@@ -22,3 +22,8 @@ desktop.ini
 .claude/settings.local.json
 CLAUDE.local.md
 **/archive/files/
+
+# 리뷰 글 원문이 담긴 CSV는 공개 저장소에 올리지 않는다 (2026-11-17)
+taehwan/inputs/google_reviews.csv
+taehwan/inputs/team_reviews.csv
+taehwan/inputs/huhshimchung_reviews_100.csv
