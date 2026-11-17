@@ -4,6 +4,12 @@
 *.key
 secrets/
 
+# 원본 자료 (리뷰·자막·태깅 결과): 공개 저장소라 올리지 않음
+inputs/
+transcripts/
+raw/
+tagged.csv
+
 # 운영체제·편집기 임시 파일
 .DS_Store
 Thumbs.db
@@ -14,3 +20,4 @@ desktop.ini
 
 # Claude Code 개인 설정
 .claude/settings.local.json
+CLAUDE.local.md
