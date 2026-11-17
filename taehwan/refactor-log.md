@@ -54,3 +54,8 @@
 - inputs/busan_port_container_2025.csv → old/busan_port_container_2025.csv (항만, 주제와 무관)
 - day4-afternoon-plan.md → old/day4-afternoon-plan.md (4일차 계획, 지난 일)
 - GitHub에서만 뺌(git rm --cached, .gitignore에 추가, 내 PC에는 그대로): inputs/google_reviews.csv, inputs/team_reviews.csv, inputs/huhshimchung_reviews_100.csv — 리뷰 글 원문이라 공개 저장소에 두지 않음. 예전 커밋 기록에는 남아 있음.
+
+## 2026-11-17 · 로블록스 작업을 팀 공개 저장소에서 뺌 (개인 저작물, 비공개)
+
+- taehwan/assets/gwangalli/ 전체(54개 중 assets 50여 개)와 로블록스 관련 노트(prompts·research)를 저장소에서 지움. 원본은 태환 개인 PC에 있음(내용 같음을 확인). .gitignore에 taehwan/assets/gwangalli/ 추가.
+- 예전 커밋 기록에는 남아 있음(기록 삭제는 하지 않음).
