@@ -1,21 +1,20 @@
 ﻿item_id,file,media,place,tags,source,url,created,collected,collector,plan_row,summary,rights,public_ok
-g01,g01_2026-11-16_구글맵_광안리_외국어리뷰-번역본.txt,text,광안리,,구글맵,https://www.google.com/maps/place/%EA%B4%91%EC%95%88%EB%A6%AC%ED%95%B4%EC%88%98%EC%9A%95%EC%9E%A5/data=!4m6!3m5!1s0x3568ed2f27c70ec7:0xff6df0e14d9216fb!9m1!1b1!16s%2Fm%2F03hp9yc!20s8Q7F5439%2B7F7?entry=ttu&g_ep=EgoyMDI2MTExMC4wIKXMDSoASAFQAw%3D%3D,,2026-11-16,taehwan,1,,표시 없음,링크만
-g02,g02_2026-11-16_구글맵_광안리_외국어리뷰-원문.txt,text,광안리,,구글맵,,,,taehwan,1,,표시 없음,링크만
-g03,g03_2026-11-17_카카오맵_광안리_구간1-로드뷰관찰.md,image,광안리,평지·계단,카카오맵,https://map.kakao.com/?map_type=TYPE_MAP&target=walk&sName=%EA%B4%91%EC%95%88%EC%97%AD%20%EB%B6%80%EC%82%B02%ED%98%B8%EC%84%A0&eName=%EA%B4%91%EC%95%88%EB%A6%AC%ED%95%B4%EC%88%98%EC%9A%95%EC%9E%A5,촬영 2026년 03월,2026-11-17,taehwan,,,표시 없음,링크만
-g04,g04_2026-11-17_한국관광콘텐츠랩_광안리_부산불꽃축제-RHoU0a.jpg,image,광안리,,한국관광콘텐츠랩,https://api.visitkorea.or.kr/#/hubTourSearch,촬영연월 201710,2026-11-17,taehwan,,,공공누리 제1유형,예
-g06,g06_2026-11-17_구글맵_광안리_외국어리뷰-원문.md,text,광안리,,구글맵,https://www.google.com/maps/place/%EA%B4%91%EC%95%88%EB%A6%AC%ED%95%B4%EC%88%98%EC%9A%95%EC%9E%A5/data=!4m6!3m5!1s0x3568ed2f27c70ec7:0xff6df0e14d9216fb!9m1!1b1!16s%2Fm%2F03hp9yc!20s8Q7F5439%2B7F7,,2026-11-17,taehwan,1,,표시 없음,링크만
-g08,g08_2026-11-17_클로드코드문서_해당없음_Chrome연결안내-원문.txt,text,해당없음,,Claude Code 공식 문서,https://code.claude.com/docs/en/chrome,,2026-11-17,taehwan,,,표시 없음,아니오
-g10,g10_2026-11-17_유튜브_광안리_불꽃축제-관람영상-자막.txt,video,광안리,,유튜브,https://www.youtube.com/watch?v=IEVu4JKg5gM,2026-11-10,2026-11-17,taehwan,3,,표시 없음,링크만
-g11,g11_2026-11-17_네이버블로그_광안리_불꽃축제-당일치기관람후기.txt,text,광안리,,네이버 블로그,https://blog.naver.com/an1720/224477396781,2026-11-15,2026-11-17,taehwan,2,,표시 없음,링크만
-g12,g12_2026-11-17_네이버블로그_광안리_불꽃축제-호텔인피니티풀관람후기.txt,text,광안리,엘리베이터,네이버 블로그,https://blog.naver.com/codus8232/224480441527,,2026-11-17,taehwan,2,,표시 없음,링크만
-g13,g13_2026-11-17_부산시_광안리_불꽃축제-2025교통통제공지.txt,text,광안리,,부산시 누리집,https://www.busan.go.kr/nbnews/1705229,2025-11-07,2026-11-17,taehwan,5,,표시 없음,링크만
-g14,g14_2026-11-17_부산시_광안리_불꽃축제-2026교통통제공지.txt,text,광안리,,부산시 누리집,https://www.busan.go.kr/nbnews/1761578,2026-10-30,2026-11-17,taehwan,5,,표시 없음,링크만
-g15,g15_2026-11-17_부산시영문_광안리_불꽃축제-행사안내-영어.txt,text,광안리,외국어 안내,부산시 누리집,https://www.busan.go.kr/eng/bsevents/1752782,,2026-11-17,taehwan,5,,표시 없음,링크만
-g16,g16_2026-11-17_부산축제조직위원회_광안리_불꽃축제-교통통제.txt,text,광안리,,부산불꽃축제 누리집,https://busanfireworks.com/content/traffic,,2026-11-17,taehwan,5,,표시 없음,링크만
-g17,g17_2026-11-17_부산축제조직위원회_광안리_불꽃축제-찾아오시는길-영어.txt,text,광안리,외국어 안내,부산불꽃축제 누리집,https://busanfireworks.com/content/location_en,,2026-11-17,taehwan,5,,표시 없음,링크만
-g18,g18_2026-11-17_부산축제조직위원회_광안리_불꽃축제-찾아오시는길.txt,text,광안리,,부산불꽃축제 누리집,https://busanfireworks.com/content/location,,2026-11-17,taehwan,5,,표시 없음,링크만
-g19,g19_2026-11-17_부산축제조직위원회_광안리_불꽃축제-티켓예매.txt,text,광안리,,부산불꽃축제 누리집,https://busanfireworks.com/reservation,,2026-11-17,taehwan,5,,표시 없음,링크만
-g20,g20_2026-11-17_부산축제조직위원회_광안리_불꽃축제-행사일정표.txt,text,광안리,,부산불꽃축제 누리집,https://busanfireworks.com/program/schedule.php,,2026-11-17,taehwan,5,,표시 없음,링크만
+g02,g02_2026-11-16_구글맵_광안리_외국어리뷰-원문.txt,text,광안리,,구글맵,https://www.google.com/maps/place/%EA%B4%91%EC%95%88%EB%A6%AC%ED%95%B4%EC%88%98%EC%9A%95%EC%9E%A5/data=!4m6!3m5!1s0x3568ed2f27c70ec7:0xff6df0e14d9216fb!9m1!1b1!16s%2Fm%2F03hp9yc!20s8Q7F5439%2B7F7?entry=ttu&g_ep=EgoyMDI2MTExMC4wIKXMDSoASAFQAw%3D%3D,,2026-11-16,taehwan,1,구글맵 광안리해수욕장 리뷰 최신순 페이지 통째 복사(11-16) — 외국어 리뷰 26건 원문 포함(영어 11·중국어 8 등),표시 없음,링크만
+g03,g03_2026-11-17_카카오맵_광안리_구간1-로드뷰관찰.md,image,광안리,평지·계단,카카오맵,https://map.kakao.com/?map_type=TYPE_MAP&target=walk&sName=%EA%B4%91%EC%95%88%EC%97%AD%20%EB%B6%80%EC%82%B02%ED%98%B8%EC%84%A0&eName=%EA%B4%91%EC%95%88%EB%A6%AC%ED%95%B4%EC%88%98%EC%9A%95%EC%9E%A5,촬영 2026년 03월,2026-11-17,taehwan,,"카카오맵 로드뷰 구간1(광안역 5번 출구→광안리해수욕장, 15분·985m·지하도 1회) 2장면 관찰 메모, 캡처 없음",표시 없음,링크만
+g04,g04_2026-11-17_한국관광콘텐츠랩_광안리_부산불꽃축제-RHoU0a.jpg,image,광안리,,한국관광콘텐츠랩,https://api.visitkorea.or.kr/#/hubTourSearch,촬영연월 201710,2026-11-17,taehwan,,"광안대교와 불꽃이 함께 찍힌 가로 야경 사진(2017년 10월 촬영, 워터마크 있음)",공공누리 제1유형,예
+g06,g06_2026-11-17_구글맵_광안리_외국어리뷰-원문.md,text,광안리,,구글맵,https://www.google.com/maps/place/%EA%B4%91%EC%95%88%EB%A6%AC%ED%95%B4%EC%88%98%EC%9A%95%EC%9E%A5/data=!4m6!3m5!1s0x3568ed2f27c70ec7:0xff6df0e14d9216fb!9m1!1b1!16s%2Fm%2F03hp9yc!20s8Q7F5439%2B7F7,,2026-11-17,taehwan,1,"구글맵 외국어 리뷰 원문 8건(11-17, 최신순 30건 열어 영어·일본어·중국어)",표시 없음,링크만
+g08,g08_2026-11-17_클로드코드문서_해당없음_Chrome연결안내-원문.txt,text,해당없음,,Claude Code 공식 문서,https://code.claude.com/docs/en/chrome,,2026-11-17,taehwan,,Claude Code Chrome 연결 공식 문서 원문 — 축제와 무관,표시 없음,아니오
+g10,g10_2026-11-17_유튜브_광안리_불꽃축제-관람영상-자막.txt,video,광안리,,유튜브,https://www.youtube.com/watch?v=IEVu4JKg5gM,2026-11-10,2026-11-17,taehwan,3,g09 영상의 자동 생성 한국어 자막 274줄(17:33),표시 없음,링크만
+g11,g11_2026-11-17_네이버블로그_광안리_불꽃축제-당일치기관람후기.txt,text,광안리,,네이버 블로그,https://blog.naver.com/an1720/224477396781,2026-11-15,2026-11-17,taehwan,2,"2026 당일치기 관람 후기 — 행사 시간표, R석 100,000원·S석 70,000원, 4시부터 인파, 끝나고 지하철까지 1시간",표시 없음,링크만
+g12,g12_2026-11-17_네이버블로그_광안리_불꽃축제-호텔인피니티풀관람후기.txt,text,광안리,엘리베이터,네이버 블로그,https://blog.naver.com/codus8232/224480441527,,2026-11-17,taehwan,2,"호텔 아쿠아펠리스 인피니티풀 관람 후기 — 얼리버드 1인 120,000원, 엘리베이터 동선, 18시 30분 입장",표시 없음,링크만
+g13,g13_2026-11-17_부산시_광안리_불꽃축제-2025교통통제공지.txt,text,광안리,,부산시 누리집,https://www.busan.go.kr/nbnews/1705229,2025-11-07,2026-11-17,taehwan,5,"제20회(2025) 불꽃축제 교통통제 안내 — 2025.11.15 19시, 광안리·이기대·동백섬, 공식 누리집 안내",표시 없음,링크만
+g14,g14_2026-11-17_부산시_광안리_불꽃축제-2026교통통제공지.txt,text,광안리,,부산시 누리집,https://www.busan.go.kr/nbnews/1761578,2026-10-30,2026-11-17,taehwan,5,"제21회(2026) 불꽃축제 교통통제 안내 공지 — 본문은 ""홈페이지 바로가기 클릭"" 한 줄",표시 없음,링크만
+g15,g15_2026-11-17_부산시영문_광안리_불꽃축제-행사안내-영어.txt,text,광안리,외국어 안내,부산시 누리집,https://www.busan.go.kr/eng/bsevents/1752782,,2026-11-17,taehwan,5,"제21회 불꽃축제 영어 안내 — 2026-11-07 19:00–20:00, 프로그램 시간표, 20:00 퇴장 안내",표시 없음,링크만
+g16,g16_2026-11-17_부산축제조직위원회_광안리_불꽃축제-교통통제.txt,text,광안리,,부산불꽃축제 누리집,https://busanfireworks.com/content/traffic,,2026-11-17,taehwan,5,공식 교통안내 — 교통통제·버스우회노선·광안역 정류소 임시폐쇄(내용은 그림이라 제목만),표시 없음,링크만
+g17,g17_2026-11-17_부산축제조직위원회_광안리_불꽃축제-찾아오시는길-영어.txt,text,광안리,외국어 안내,부산불꽃축제 누리집,https://busanfireworks.com/content/location_en,,2026-11-17,taehwan,5,"공식 Location(영어) — 광안역 3번 출구, 주차 없음, 광안리 버스 38·42…(한국어판 g18과 다름)",표시 없음,링크만
+g18,g18_2026-11-17_부산축제조직위원회_광안리_불꽃축제-찾아오시는길.txt,text,광안리,,부산불꽃축제 누리집,https://busanfireworks.com/content/location,,2026-11-17,taehwan,5,"공식 찾아오시는 길(한국어) — 광안역 3번 출구, 주차 없음, 광안리 버스 24·27…(영어판 g17과 다름)",표시 없음,링크만
+g19,g19_2026-11-17_부산축제조직위원회_광안리_불꽃축제-티켓예매.txt,text,광안리,,부산불꽃축제 누리집,https://busanfireworks.com/reservation,,2026-11-17,taehwan,5,공식 티켓예매 — 판매처 5건과 판매 기간(좌석 가격은 글자로 없음),표시 없음,링크만
+g20,g20_2026-11-17_부산축제조직위원회_광안리_불꽃축제-행사일정표.txt,text,광안리,,부산불꽃축제 누리집,https://busanfireworks.com/program/schedule.php,,2026-11-17,taehwan,5,공식 행사일정표 — 13:00~20:00 프로그램별 시간·소요시간,표시 없음,링크만
 H001,2026-11-17_유튜브_광안리_외국어댓글-원문.md,text,광안리해수욕장,,"유튜브(영상 댓글, 최신순)",https://www.youtube.com/watch?v=RosnDkUuhX0;https://www.youtube.com/watch?v=OM6vvaIDOFk,약 2026-09 ~ 2026-11-16,2026-11-17,hyeseon,,,,
 H002,2026-11-17_유튜브_광안리_자막-자동생성-한국어.txt,video,광안리,,유튜브,https://www.youtube.com/watch?v=LQ8yUP4YKAg,2026-07-05,2026-11-17,hyeseon,,,,
 H004,2026-11-17_출처모름_민락수변공원_사진-원본.JPG,image,민락수변공원,평지·계단,,,,2026-11-17,hyeseon,,,,
