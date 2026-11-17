@@ -37,3 +37,10 @@
 - raw/google-raw-1-번역본.txt → raw/text/2026-11-16_구글맵_광안리_외국어리뷰-번역본.txt
 - raw/google-raw-2-원문.txt → raw/text/2026-11-16_구글맵_광안리_외국어리뷰-원문.txt
 - 경로가 적힌 inputs/google_reviews_source.md 2줄을 새 경로로 고쳤다. 00-먼저-읽기.md는 폴더 지도를 새로 쓸 때 고친다.
+
+## 2026-11-17 · archive/의 옛 파일을 old/로 (팀 규칙 바뀜: archive/는 정리본 자리)
+
+팀 CLAUDE.md 규칙이 "안 쓰는 것은 내 이름 폴더의 old/로"로 바뀌어(커밋 2e53738) 옛 파일 10개를 옮겼다. 내용은 고치지 않았다(git mv). 위 기록들의 `archive/…` 경로는 이제 `old/…`에서 찾는다.
+
+- archive/ → old/ : 2026-11-12-bujeon-2-dong.md, 2026-11-12-gwangalli-eobang-festival.md, 2026-11-12-주제1.md, 2026-11-12-주제2.md, 2026-11-13-gwangalli-eobang.md, 2026-11-16-_check.md, 2026-11-16-emotion-keywords-허심청.md, 2026-11-16-fieldwork-plan-허심청.md, 2026-11-16-metrics-허심청.md, CLAUDE.old.md
+- archive/에 남은 것: metadata.csv (정리본 표)
