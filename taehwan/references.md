@@ -85,9 +85,22 @@
 1. **공개해도 되는 자료가 하나도 없다.** public_ok가 10줄 모두 빈칸이다. 사람이 채워야 한다.
    - g04·g05 사진은 rights가 `공공누리 제1유형`이라 public_ok를 '예'로 채울 수 있는 후보다. 다만 2017년 10월 사진이고 워터마크가 있다(g05). 그래서 이번 카드에서는 장면 근거로 쓰지 않았다.
 2. **외국인이 직접 나오는 영상 장면이 없다.** 영상은 한국인 브이로그 1편(g10)뿐이고, 외국인 자료는 리뷰 글(g07)뿐이다.
-   - 더 모을 곳: 외국인이 2026 불꽃축제를 찍은 유튜브 영상(fieldwork-plan.md '유튜브 영상' 줄, 담당 김혜성)
+   - 더 모을 곳: 외국인이 2026 불꽃축제를 찍은 유튜브 영상(fieldwork-plan.md '유튜브 영상' 줄, 담당 김혜선)
 3. **역 → 해변 사이 축제 날 길(통제·인파)이 없다.** g03은 2026년 3월 평소 화면이다.
    - 더 모을 곳: 부산시 제21회 교통통제 안내(https://www.busan.go.kr/nbnews/1761578 — 오전 수집계획 2번, 아직 원본 없음), 축제 날 영상의 이동 장면
 4. **영상은 자막만 읽었고 화면은 보지 않았다.** 카드 2·3·5의 분:초 장면을 화면으로 확인해야 한다.
 5. 광안리해수욕장 모래사장 쪽 자리 잡기 영상이 없다. g10은 민락수변공원 쪽이다.
    - 더 모을 곳: 네이버 블로그 관람 후기(fieldwork-plan.md '네이버 블로그' 줄, 담당 김이지) — 관람 위치가 적힌 글
+
+---
+
+## 세계관 바이블 구조를 빌려 온 곳 (2026-11-19 확인)
+
+내용은 가져오지 않고 **칸 구조만** 빌렸다. 코드·스킬은 설치하지 않았다.
+
+| 저장소 | 라이선스 | 빌린 것 | 바꾼 점 |
+|---|---|---|---|
+| umidjon-2231/comic-canon — https://github.com/umidjon-2231/comic-canon | 코드 MIT, 내용 CC BY 4.0 (https://creativecommons.org/licenses/by/4.0/) · Copyright (c) 2026 Tojiboyev Umidjon | canon(바뀌지 않는 사실)과 이야기를 나누는 방식, ID 방식(LOC·EVT·CHR), world·timeline·glossary 칸, continuity-rules(모순 찾는 규칙) | 만화 장면 대신 브랜드 글·그림에 맞게 칸 이름과 규칙을 한국어로 다시 씀. 힘(power) 체계 칸은 뺌. [사실]/[각색]/[창작] 표시와 출처 규칙을 더함 |
+| Rumi-3653/story-bible — https://github.com/Rumi-3653/story-bible | MIT · Copyright (c) 2026 Rumi-3653 | 인물 카드 세 층(그림·이야기·목소리), 세계관 카드의 '금지'·'일부러 비워 두는 곳' 칸 | 목소리 층의 TTS 설정 칸은 빼고 '말투'로 바꿈 |
+
+- 쓰지 않은 것: 별이 더 많은 Obsidian 세계관 템플릿 3개(witchka/Obsidian-Worldbuilding-Templates, juliandeleonguerrero/obsidian-worldbuilding-template, hopeoverture/Worldbuilding-System)는 라이선스가 없어서 쓰지 않았다. pixellion2262-fwtk2/series-bible(MIT)은 README에 내용이 거의 없어서 쓰지 않았다.

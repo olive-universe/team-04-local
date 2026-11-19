@@ -59,3 +59,8 @@
 
 - taehwan/assets/gwangalli/ 전체(54개 중 assets 50여 개)와 로블록스 관련 노트(prompts·research)를 저장소에서 지움. 원본은 태환 개인 PC에 있음(내용 같음을 확인). .gitignore에 taehwan/assets/gwangalli/ 추가.
 - 예전 커밋 기록에는 남아 있음(기록 삭제는 하지 않음).
+
+## 2026-11-19 · 세계관을 바이블 폴더로 다시 쓰면서 옛 다섯 칸을 old/로
+
+- brand/worldview.md → old/worldview-v1-2026-11-19.md (내용은 고치지 않음. 새 세계관은 brand/bible/, 프롬프트 prompts/12-worldview-deep.md)
+- 이 파일을 가리키던 곳: .claude/skills/cheoeum-bulkkot-taehwan/SKILL.md, brand/persona.md, 00-먼저-읽기.md 9-3 → 바이블 E단계에서 고친다
