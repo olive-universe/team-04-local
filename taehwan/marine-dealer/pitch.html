@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self' file:">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>마린딜러 · 출시 기준 점수와 로드맵</title>
+<link rel="icon" href="./assets/logo-64.png">
+<style>
+:root{--navy:#1b2a57;--deep:#121d3f;--mint:#2bb59f;--mint-l:#6fe0c8;--sky:#d7eef4;--bg:#f5f7f6;--g4:#dfe4e6;--g9:#66717d;--g11:#56616d;--g12:#1a2433;--sun:#f2b33d}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--g12);font-family:"Pretendard","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+.slide{max-width:1200px;margin:0 auto;padding:40px 32px 32px;min-height:100vh;display:flex;flex-direction:column;gap:26px}
+header{display:flex;align-items:center;gap:14px}
+header img{width:48px;height:48px;border-radius:24%}
+header b{font-size:22px;color:var(--navy);letter-spacing:-.4px}
+header span{color:var(--g11);font-size:14px}
+header a{margin-left:auto;color:var(--navy);font-weight:700;font-size:14px;text-decoration:none;border:1px solid var(--g4);background:#fff;border-radius:999px;padding:8px 14px}
+h1{font-size:clamp(28px,3.6vw,44px);letter-spacing:-.04em;line-height:1.15;margin:0;color:var(--navy)}
+.lead{margin:6px 0 0;color:var(--g11);font-size:16px}
+.grid{display:grid;grid-template-columns:1.1fr 1fr;gap:20px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid var(--g4);border-radius:20px;padding:24px}
+.card h2{margin:0 0 16px;font-size:17px;color:var(--navy)}
+.bars{display:grid;gap:18px}
+.bar .l{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.bar .l span{font-weight:700;font-size:15px}
+.bar .l b{font-size:30px;letter-spacing:-.03em;color:var(--navy)}
+.bar .t{height:16px;background:#e9eded;border-radius:9px;overflow:hidden}
+.bar .t i{display:block;height:100%;border-radius:9px}
+.bar.base .t i{background:#a9b4bf}.bar.base b{color:var(--g11)}
+.bar.now .t i{background:var(--navy)}
+.bar.goal .t i{background:repeating-linear-gradient(135deg,var(--mint) 0 8px,#7fd6c5 8px 16px)}
+.bar.goal b{color:#137257}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:8px 6px;border-bottom:1px solid #e9eded;text-align:right}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--g11);font-weight:700;font-size:12.5px}
+td.up{color:var(--navy);font-weight:800}
+td.down{color:#b5352c;font-weight:800}
+.road{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+@media(max-width:900px){.road{grid-template-columns:1fr 1fr}}
+.step{border-radius:16px;padding:16px;background:#fff;border:1px solid var(--g4);position:relative}
+.step.done{background:var(--navy);color:#fff;border-color:var(--navy)}
+.step small{display:block;font-weight:800;font-size:12px;color:var(--g9)}
+.step.done small{color:var(--mint-l)}
+.step b{display:block;font-size:15.5px;margin:4px 0 6px}
+.step p{margin:0;font-size:13px;color:var(--g11)}
+.step.done p{color:#c9d4e6}
+.step em{position:absolute;right:12px;top:12px;font-style:normal;font-weight:800;font-size:20px;color:var(--navy)}
+.step.done em{color:#fff}
+.note{font-size:12.5px;color:var(--g9);margin:0}
+</style>
+</head>
+<body>
+<main class="slide">
+  <header><img src="./assets/logo-128.png" alt=""><div><b>마린딜러</b><br><span>올리브 유니버스 · 혜선 · 이지 · 유진 · 태환</span></div><a href="./index.html">시연 화면으로</a></header>
+
+  <div>
+    <h1>실제 출시 기준으로 쟀습니다</h1>
+    <p class="lead">같은 100점 기준표로, 비교 사이트를 40점으로 놓고 마린딜러를 다시 채점했습니다.</p>
+  </div>
+
+  <div class="grid">
+    <section class="card" aria-labelledby="h-score">
+      <h2 id="h-score">출시 기준 점수</h2>
+      <div class="bars">
+        <div class="bar base"><div class="l"><span>비교 사이트 (기준선)</span><b>40</b></div><div class="t"><i style="width:40%"></i></div></div>
+        <div class="bar now"><div class="l"><span>마린딜러 · 지금</span><b>60</b></div><div class="t"><i style="width:60%"></i></div></div>
+        <div class="bar goal"><div class="l"><span>마린딜러 · 출시 목표</span><b>90</b></div><div class="t"><i style="width:90%"></i></div></div>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="h-area">
+      <h2 id="h-area">영역별 (배점)</h2>
+      <table>
+        <thead><tr><th>영역</th><th>배점</th><th>비교 사이트</th><th>마린딜러</th></tr></thead>
+        <tbody>
+          <tr><td>거래 핵심 기능</td><td>25</td><td>8</td><td class="up">12</td></tr>
+          <tr><td>안전거래 · 결제</td><td>15</td><td>2</td><td class="up">4</td></tr>
+          <tr><td>신뢰 장치 (검수 · 사기 차단)</td><td>15</td><td>3</td><td class="up">11</td></tr>
+          <tr><td>회사 신뢰 · 법적 표시</td><td>15</td><td>13</td><td class="down">8</td></tr>
+          <tr><td>보안 · 개인정보 기술</td><td>10</td><td>6</td><td>6</td></tr>
+          <tr><td>사용성 · 접근성 · 다국어</td><td>10</td><td>3</td><td class="up">10</td></tr>
+          <tr><td>디자인 · 브랜드</td><td>10</td><td>5</td><td class="up">9</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+
+  <section aria-labelledby="h-road">
+    <h2 id="h-road" style="margin:0 0 12px;font-size:17px;color:var(--navy)">90점까지의 길</h2>
+    <div class="road">
+      <div class="step done"><small>지금</small><b>화면 + 실제 작동</b><p>매물 등록 저장, AI 사전 점검 계산, 사진 지문 비교, 안전거래 흐름</p><em>60</em></div>
+      <div class="step"><small>다음</small><b>서버 MVP</b><p>회원 · 본인인증, 매물 · 사진 서버 저장, 관리자 화면</p><em>70</em></div>
+      <div class="step"><small>그다음</small><b>돈 · 법</b><p>결제 · 에스크로 사업자 제휴, 법률 검토, 사업자 등록</p><em>83</em></div>
+      <div class="step"><small>그다음</small><b>실제 AI · 검수</b><p>검수원 앱, AI 요약 · 내비게이터 연결, 서류 위조 검사</p><em>88</em></div>
+      <div class="step"><small>출시</small><b>운영</b><p>검수 센터, 고객센터, 실제 매물 사진, 번역 검수</p><em>90</em></div>
+    </div>
+  </section>
+
+  <p class="note">자체 기준표로 매긴 점수입니다. 비교 사이트 점수는 화면 녹화로 본 범위의 추정입니다. 마린딜러의 매물 · 금액 · 거래는 시연용 가상 데이터이며, 제휴 · 실제 거래는 없습니다.</p>
+</main>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ko"><head><meta charset="utf-8"><title>매물 사진 지문(dHash) 계산</title></head>
+<body>
+<!-- 사용법: 크롬을 --allow-file-access-from-files 로 열어 --dump-dom 결과의 #out JSON을 index.html 의 KNOWN_PHOTOS 에 넣는다.
+     index.html 의 dhash()와 같은 계산(9x8 캔버스, 밝기 비교 64비트)을 쓴다. -->
+<pre id="out">pending</pre>
+<script>
+// 2026-11-24: 카드 사진 4장을 Unsplash 실사진으로 교체 (assets/candidates/CREDITS.md)
+const FILES=[
+  ['yacht-01-main.jpg','Jeanneau Sun Odyssey 349'],['us-azimut-alinakacharho.jpg','Azimut 55'],['us-whaler-austinhervias.jpg','Boston Whaler 280 Outrage'],
+  ['us-oceanis-evansmogor.jpg','Beneteau Oceanis 46.1'],['us-axopar-danielmainye.jpg','Axopar 37'],['fraud-031.jpg','Princess V40'],['fraud-027.jpg','Bavaria SR36']
+];
+function dhashImg(img){
+  const c=document.createElement('canvas'); c.width=9; c.height=8;
+  const x=c.getContext('2d',{willReadFrequently:true}); x.imageSmoothingEnabled=true; x.imageSmoothingQuality='high';
+  x.drawImage(img,0,0,9,8); const d=x.getImageData(0,0,9,8).data; let bits='';
+  for(let y=0;y<8;y++) for(let i=0;i<8;i++){ const a=(y*9+i)*4, b=a+4;
+    const ga=d[a]*.299+d[a+1]*.587+d[a+2]*.114, gb=d[b]*.299+d[b+1]*.587+d[b+2]*.114; bits+=ga>gb?'1':'0'; }
+  return BigInt('0b'+bits).toString(16).padStart(16,'0');
+}
+Promise.all(FILES.map(([f,label])=>new Promise((ok,no)=>{ const im=new Image(); im.onload=()=>{ try{ ok({f,label,h:dhashImg(im)}); }catch(e){ no(e); } }; im.onerror=no; im.src='../assets/'+f; })))
+  .then(r=>document.getElementById('out').textContent=JSON.stringify(r))
+  .catch(e=>document.getElementById('out').textContent='ERROR '+e);
+</script>
+</body></html>
