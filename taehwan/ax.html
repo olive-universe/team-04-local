@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>부산 로스터리 공동주문 & 커피 흐름판 AX 플랫폼 (문제점 검증 포함)</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap');
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: #FAF8F5;
+  color: #1F2937;
+}
+.chart-container {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 300px;
+  max-height: 370px;
+}
+@media (min-width: 768px) {
+  .chart-container {
+    height: 340px;
+  }
+}
+.nav-pill-active {
+  background-color: #1E3A5F;
+  color: #FFFFFF;
+}
+.nav-pill-inactive {
+  background-color: #F5F5F4;
+  color: #44403C;
+}
+</style>
+</head>
+<body class="antialiased selection:bg-amber-200 selection:text-stone-900">
+<!-- Chosen Palette: Warm Roast Sand & Busan Port Navy (#FAF8F5 neutral background, #FFFFFF cards, #1E3A5F port navy, #0F766E teal, #B45309 coffee amber, #B91C1C critical flaw crimson) -->
+<!-- Application Structure Plan: Updated the Asset-Light Busan Roastery Joint-Order & Coffee Flow AX Platform to directly answer the user's request ("What are the flaws of this topic?"). Placed a prominent Red-Team Critique & Fix section at the top (#sec-flaws) diagnosing 5 structural weaknesses (18t container lead-time trap, fragmented green bean SKUs, "Fake AI / simple sum calculator" risk, importer partner disintermediation, and macro-vs-micro data gap) alongside concrete pivots (e.g., shifting from overseas 18t container pooling to domestic bonded-warehouse 1-pallet/600kg weekly pooling + AI depletion prediction), followed by the Role Split, Interactive 4-Tab MVP Prototype, and Scorecard. -->
+<!-- Visualization & Content Choices: 1. Red-Team Flaw & Solution Cards (HTML/CSS Grid) -> Goal: Critically diagnose vulnerabilities before Demoday without SVG/Mermaid. 2. Interactive Container/Pallet Demand Gauge Simulator (Vanilla JS state) -> Goal: Demonstrate live demand aggregation. 3. Dual Bar Charts (Chart.js Canvas) for Busan district cafe density & macro metrics -> Goal: Visualize public data integration. 4. Score Comparison Bar Chart (Chart.js Canvas) -> Goal: Compare pre- and post-pivot readiness. -->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+<header class="bg-white border-b border-stone-200 sticky top-0 z-30">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3">
+    <div>
+      <div class="flex items-center gap-2 flex-wrap">
+        <span class="px-2.5 py-0.5 text-xs font-bold rounded-full bg-rose-700 text-white">심사위원 레드팀 검증 추가</span>
+        <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-[#1E3A5F] text-white">Asset-Light 데이터 연결 모델</span>
+        <span class="px-2.5 py-0.5 text-xs font-semibold rounded-full bg-amber-100 text-amber-900">2026-11-24 (데모데이 D-28)</span>
+      </div>
+      <h1 class="text-xl sm:text-2xl font-bold text-slate-900 mt-1">부산 로스터리 공동주문 &amp; 커피 흐름판 AX 플랫폼 (치명적 문제점 검증)</h1>
+    </div>
+    <nav class="flex flex-wrap gap-1.5 text-xs font-semibold">
+      <a href="#sec-flaws" class="px-3 py-1.5 rounded-lg bg-rose-700 text-white">🚨 1. 이 주제의 문제점 5가지</a>
+      <a href="#sec-role" class="px-3 py-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-800">2. 역할 분리</a>
+      <a href="#sec-mvp" class="px-3 py-1.5 rounded-lg bg-[#1E3A5F] text-white">3. 4대 산출물 시제품</a>
+      <a href="#sec-score" class="px-3 py-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 text-stone-800">4. 재채점 &amp; 출처</a>
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+
+  <section id="sec-flaws" class="bg-white rounded-2xl border-2 border-rose-300 p-6 shadow-sm space-y-6">
+    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+      <div class="space-y-1.5 max-w-4xl">
+        <span class="text-xs font-bold text-rose-700 uppercase">Red-Team Critique · What Will Kill This Project at Demoday?</span>
+        <h2 class="text-lg sm:text-xl font-bold text-slate-900">🚨 1. 이 주제의 치명적 문제점 5가지 (데모데이 심사위원이 찌를 급소)</h2>
+        <p class="text-xs sm:text-sm text-stone-700 leading-relaxed">
+          “우리는 데이터·수요만 모으고 수입·판매는 협력사에 넘긴다”는 구조는 법적 리스크를 피하는 훌륭한 우회로입니다. 하지만 <strong>현장 커피 유통 현실과 AX 부트캠프 심사 기준</strong>으로 냉정하게 뜯어보면 아래 5가지 급소가 드러납니다. <strong>지금 고치지 않으면 발표 질의응답에서 무너집니다.</strong>
+        </p>
+      </div>
+      <div class="bg-rose-50 border border-rose-200 rounded-xl p-4 text-xs text-rose-950 shrink-0 max-w-xs">
+        <div class="font-bold text-rose-900">⚠️ 가장 위험한 2대 급소</div>
+        <p class="mt-1 leading-relaxed">
+          ① <strong>18톤 컨테이너</strong>를 모으는 데 몇 달이 걸려 로스터리 원두가 먼저 떨어짐<br>
+          ② 현재 화면만 보면 <strong>“AI가 아니라 단순 덧셈 계산기”</strong>라는 비판을 받음
+        </p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-xs">
+      <div class="p-4 rounded-xl border border-rose-200 bg-rose-50/30 flex flex-col justify-between space-y-3">
+        <div class="space-y-1.5">
+          <span class="px-2 py-0.5 rounded bg-rose-700 text-white text-[10px] font-bold">문제점 ① · 물류 리드타임 모순</span>
+          <h3 class="text-sm font-bold text-slate-900">20ft 컨테이너(18,000kg) 채우다 원두 다 떨어진다</h3>
+          <p class="text-stone-700 leading-relaxed">
+            가설: 부산 소규모 로스터리는 월 60~300kg(1~5마대) 정도를 씁니다. 18,000kg(300마대)를 모으려면 <strong>최소 60~100곳이 같은 시점에 주문</strong>해야 하고, 해외 선적·통관에 1~2개월이 더 걸립니다. 영세 로스터리는 당장 다음 주 쓸 생두가 급하지, 석 달 뒤 도착할 컨테이너를 기다릴 자금과 창고가 없습니다.
+          </p>
+        </div>
+        <div class="p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-950">
+          <strong>✅ 해결책:</strong> 해외 직수입 컨테이너(18톤)가 아니라, 협력사 보세창고에 <strong>이미 입고된 재고의 ‘1파레트(600~1,000kg) 주간 묶음 출고’</strong>로 단위를 낮춰야 합니다.
+        </div>
+      </div>
+
+      <div class="p-4 rounded-xl border border-rose-200 bg-rose-50/30 flex flex-col justify-between space-y-3">
+        <div class="space-y-1.5">
+          <span class="px-2 py-0.5 rounded bg-rose-700 text-white text-[10px] font-bold">문제점 ② · 상품 파편화 (SKU 충돌)</span>
+          <h3 class="text-sm font-bold text-slate-900">로스터리마다 쓰는 생두 품종·등급이 전부 다르다</h3>
+          <p class="text-stone-700 leading-relaxed">
+            스페셜티 로스터리의 핵심 경쟁력은 ‘남들과 다른 마이크로랏·산지 생두’입니다. 10곳이 모여도 에티오피아·콜롬비아·과테말라·브라질 등 원하는 생두가 10가지로 쪼개지면 <strong>단일 품목 대량 구매 할인(Volume Discount)</strong>이 성립하지 않습니다.
+          </p>
+        </div>
+        <div class="p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-950">
+          <strong>✅ 해결책:</strong> 희귀 싱글오리진은 건드리지 말고, 모든 로스터리가 블렌딩 베이스로 대량 소모하는 <strong>‘상업용·베이스 생두 3종(브라질·콜롬비아·에티오피아)’</strong>에만 공동주문을 한정해야 합니다.
+        </div>
+      </div>
+
+      <div class="p-4 rounded-xl border border-rose-200 bg-rose-50/30 flex flex-col justify-between space-y-3">
+        <div class="space-y-1.5">
+          <span class="px-2 py-0.5 rounded bg-rose-700 text-white text-[10px] font-bold">문제점 ③ · AX 트랙 정체성 약점</span>
+          <h3 class="text-sm font-bold text-slate-900">“이게 왜 AI인가? 구글 폼 + 덧셈 계산기 아닌가?”</h3>
+          <p class="text-stone-700 leading-relaxed">
+            “사장이 kg을 입력하면 게이지가 올라간다”는 기능은 단순 웹 폼이지 AI가 아닙니다. 우리 트랙은 <strong>“수요예측·재고 현황판과 업무 자동화”</strong>입니다. AI가 판단하거나 예측하는 장면이 없으면 감점 1순위입니다.
+          </p>
+        </div>
+        <div class="p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-950">
+          <strong>✅ 해결책:</strong> 사장이 직접 계산해서 입력하는 게 아니라, <strong>거래명세서 사진(OCR)과 주간 로스팅량으로 AI가 ‘재고 소진일’을 먼저 예측</strong>해 “3일 뒤 브라질 생두 떨어집니다. 전포동 4곳과 합배송 묶을까요?”라고 먼저 제안(자동 발주서 생성)해야 합니다.
+        </div>
+      </div>
+
+      <div class="p-4 rounded-xl border border-amber-300 bg-amber-50/30 flex flex-col justify-between space-y-3">
+        <div class="space-y-1.5">
+          <span class="px-2 py-0.5 rounded bg-amber-700 text-white text-[10px] font-bold">문제점 ④ · 협력사 유인 &amp; 직거래 이탈</span>
+          <h3 class="text-sm font-bold text-slate-900">기존 수입사가 왜 할인해 주며, 첫 거래 후 우릴 안 거칠까?</h3>
+          <p class="text-stone-700 leading-relaxed">
+            가설: 기존 생두 수입사(알마씨엘로·GSC 등)는 이미 자체 B2B 쇼핑몰과 영업망이 있습니다. 결제·채권 회수 책임도 없는 학생 플랫폼에 도매 할인을 줄 이유가 약하고, 한 번 연결된 로스터리와 수입사가 다음부터 직거래(중개 이탈)할 위험이 큽니다.
+          </p>
+        </div>
+        <div class="p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-950">
+          <strong>✅ 해결책:</strong> 대형 수입사가 아닌 <strong>영업 인력이 부족한 부산 중소 생두 수입사·협동조합</strong>을 타깃으로, ‘1마대씩 10곳 개별 택배 발송’ 대신 <strong>‘전포·영도 권역 1곳 거점 일괄 하차(배송비 70% 절감)’</strong>를 파는 구조로 설득해야 합니다.
+        </div>
+      </div>
+
+      <div class="p-4 rounded-xl border border-amber-300 bg-amber-50/30 flex flex-col justify-between space-y-3">
+        <div class="space-y-1.5">
+          <span class="px-2 py-0.5 rounded bg-amber-700 text-white text-[10px] font-bold">문제점 ⑤ · 데이터 단절</span>
+          <h3 class="text-sm font-bold text-slate-900">관세청 통계(거시)와 로스터리 발주(미시)가 연결 안 됨</h3>
+          <p class="text-stone-700 leading-relaxed">
+            관세청 HS 0901.11 수입통계는 ‘부산항에 생두가 얼마나 들어오는지’ 보여줄 뿐, 전포동 A로스터리가 다음 주에 원두를 살지 말지는 알려주지 못합니다. 공공데이터 대시보드와 공동주문 화면이 따로 놀면 심사위원이 연결성을 의심합니다.
+          </p>
+        </div>
+        <div class="p-3 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-950">
+          <strong>✅ 해결책:</strong> 관세청 환율·생두 수입단가 추이를 <strong>‘지금 선주문해야 유리한 시점(단가 상승 경보)’을 알려주는 AI 매입 타이밍 신호등</strong>으로 연결해 두 화면을 하나로 묶어야 합니다.
+        </div>
+      </div>
+
+      <div class="p-4 rounded-xl border-2 border-[#1E3A5F] bg-slate-50 flex flex-col justify-between space-y-3">
+        <div class="space-y-1.5">
+          <span class="px-2 py-0.5 rounded bg-[#1E3A5F] text-white text-[10px] font-bold">📌 이번 주 현장 검증 필수 미션</span>
+          <h3 class="text-sm font-bold text-slate-900">인터뷰에서 이 3가지가 ‘No’면 즉시 피벗해야 함</h3>
+          <ul class="text-stone-700 space-y-1.5 leading-relaxed">
+            <li><strong>1.</strong> 로스터리가 1마대(60kg) 단위로도 이미 무료배송을 받고 있다면 공동주문 유인이 사라짐</li>
+            <li><strong>2.</strong> 블렌딩 베이스 생두조차 점주마다 거래처가 달라 통일이 불가능하다면 부자재(컵·우유·봉투)로 변경해야 함</li>
+            <li><strong>3.</strong> 부산 중소 수입사/협동조합이 묶음 주문 시 실제 kg당 단가 할인을 줄 수 있는지 확인</li>
+          </ul>
+        </div>
+        <div class="text-[11px] font-bold text-[#1E3A5F]">
+          → 이번 주 로스터리 3~5곳 인터뷰로 위 3가지를 가장 먼저 검증하세요.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sec-role" class="bg-white rounded-2xl border border-stone-200 p-6 shadow-sm space-y-6">
+    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+      <div class="space-y-1.5 max-w-3xl">
+        <span class="text-xs font-bold text-teal-700 uppercase">Core Architecture · Why We Don't Sell Beans Directly</span>
+        <h2 class="text-lg sm:text-xl font-bold text-slate-900">2. 역할 분리 구조: 생두를 파는 회사가 아니라 ‘수요를 모아 연결하는 데이터 플랫폼’</h2>
+        <p class="text-xs sm:text-sm text-stone-600 leading-relaxed">
+          사업체와 인허가 없이 생두를 직접 수입·유통할 수는 없습니다. 대신 <strong>수입·통관·보관·판매는 기존 수입사나 부산커피협동조합(협력사)이 맡고</strong>, 우리는 <strong>“몇 곳이 얼마를 원하는지, 공동발주 물량이 몇 % 찼는지”</strong>를 데이터로 보여 주고 주문을 연결합니다.
+        </p>
+      </div>
+      <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-950 shrink-0 max-w-sm">
+        <div class="font-bold text-amber-900">✅ 확인된 법적·절차 사실 (원문 근거)</div>
+        <p class="mt-1 leading-relaxed text-stone-800">
+          식품(생두)을 직접 수입·판매하려면 사업자등록 후 <strong>식품위생교육 이수 및 수입식품등 수입판매업 영업등록</strong>이 필수입니다(식약처 수입식품정보마루·트레이드링스 기준). 수업 시제품 단계에서는 협력사 구조를 전제로 데이터 연결만 구현합니다.
+        </p>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto border border-stone-200 rounded-xl">
+      <table class="min-w-full divide-y divide-stone-200 text-xs">
+        <thead class="bg-stone-100 text-stone-700 font-bold">
+          <tr>
+            <th class="px-4 py-3 text-left">업무 영역</th>
+            <th class="px-4 py-3 text-left">담당 주체</th>
+            <th class="px-4 py-3 text-left">인허가·물류 인프라 상태 (수업 시제품 기준)</th>
+            <th class="px-4 py-3 text-left">보완된 AX 트랙 연결 포인트</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-stone-200 bg-white">
+          <tr>
+            <td class="px-4 py-3 font-bold text-slate-900">생두 수입 · 통관 · 검역 · 보관 · 결제 · 판매</td>
+            <td class="px-4 py-3 font-semibold text-stone-700">협력사 <span class="text-stone-500">(가설: 부산커피협동조합 또는 기존 부산 생두 수입사)</span></td>
+            <td class="px-4 py-3 text-teal-800 font-medium">협력사가 영업등록·보세창고·결제망을 이미 보유함</td>
+            <td class="px-4 py-3 text-stone-600">기입고 보세창고 재고 기준 1파레트(600~1,000kg) 달성 시 권역 일괄 출고</td>
+          </tr>
+          <tr class="bg-amber-50/40">
+            <td class="px-4 py-3 font-bold text-[#1E3A5F]">수요 모으기 · 소진 예측 · 게이지 · 주문 연결</td>
+            <td class="px-4 py-3 font-bold text-[#1E3A5F]">우리 팀 (AX 데이터·서비스 플랫폼)</td>
+            <td class="px-4 py-3 font-bold text-emerald-700">수업 시제품 단계에서 인허가·창고·결제 기능 불필요</td>
+            <td class="px-4 py-3 text-stone-800 font-medium">명세서 기반 AI 소진일 예측 + 수입단가 경보 + 공동발주 게이지(%)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section id="sec-mvp" class="bg-white rounded-2xl border border-stone-200 p-6 shadow-sm space-y-6">
+    <div>
+      <span class="text-xs font-bold text-amber-700 uppercase">6-Week Deliverables · Interactive Prototype</span>
+      <h2 class="text-lg sm:text-xl font-bold text-slate-900 mt-0.5">3. 6주 안에 실제로 만드는 4대 핵심 산출물 (직접 체험하기)</h2>
+      <p class="text-xs sm:text-sm text-stone-600 mt-1">
+        위 문제점 보완(18톤 컨테이너 → <strong>보세창고 1파레트 1,200kg 주간 공동출고 단위</strong> 선택 가능)을 반영한 인터랙티브 시제품입니다.
+      </p>
+    </div>
+
+    <div class="flex flex-wrap gap-2 border-b border-stone-200 pb-4" id="mvp-tabs">
+      <button data-tab="gauge" class="mvp-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition nav-pill-active">
+        ① 공동주문 화면 시제품 (적재율 게이지)
+      </button>
+      <button data-tab="flow" class="mvp-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition nav-pill-inactive">
+        ② 부산 커피 흐름판 (공공데이터)
+      </button>
+      <button data-tab="interview" class="mvp-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition nav-pill-inactive">
+        ③ 로스터리 3~5곳 인터뷰 기록표
+      </button>
+      <button data-tab="bizplan" class="mvp-tab px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition nav-pill-inactive">
+        ④ 1장 사업화·인허가 로드맵
+      </button>
+    </div>
+
+    <div id="tab-panel-gauge" class="space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        <div class="lg:col-span-5 bg-[#FAF8F5] rounded-xl p-5 border border-stone-200 space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-[#1E3A5F]">🛒 로스터리 수요 입력 시뮬레이터</span>
+            <span class="text-[11px] text-stone-500">실제 결제 없는 수요 집계 시제품</span>
+          </div>
+
+          <div class="space-y-3 text-xs">
+            <div>
+              <label class="block font-bold text-stone-700 mb-1">공동발주 목표 단위 (문제점 ① 보완 반영)</label>
+              <select id="input-target-unit" class="w-full px-3 py-2 rounded-lg border border-stone-300 bg-white font-semibold text-[#1E3A5F]">
+                <option value="1200">보완안: 보세창고 1파레트 주간 출고 (1,200kg / 20백)</option>
+                <option value="18000">기존안: 20ft 해외 직수입 컨테이너 (18,000kg / 300백)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-bold text-stone-700 mb-1">로스터리 상호명</label>
+              <input id="input-roastery" type="text" value="영도 봉래로스터스" class="w-full px-3 py-2 rounded-lg border border-stone-300 bg-white focus:outline-none focus:border-[#1E3A5F]">
+            </div>
+            <div>
+              <label class="block font-bold text-stone-700 mb-1">블렌딩 베이스 생두 (SKU 집중)</label>
+              <select id="input-bean" class="w-full px-3 py-2 rounded-lg border border-stone-300 bg-white focus:outline-none focus:border-[#1E3A5F]">
+                <option value="브라질 산토스 NY2 (베이스)">브라질 산토스 NY2 (60kg 마대)</option>
+                <option value="콜롬비아 수프리모 후일라 (베이스)">콜롬비아 수프리모 후일라 (70kg 마대)</option>
+                <option value="에티오피아 예가체프 G2 (베이스)">에티오피아 예가체프 G2 (60kg 마대)</option>
+              </select>
+            </div>
+            <div>
+              <label class="block font-bold text-stone-700 mb-1">필요 물량 (kg) — 최소 60kg 단위</label>
+              <div class="flex gap-2">
+                <input id="input-kg" type="number" min="60" max="5000" step="60" value="180" class="w-full px-3 py-2 rounded-lg border border-stone-300 bg-white focus:outline-none focus:border-[#1E3A5F]">
+                <button id="btn-add-order" class="shrink-0 px-4 py-2 rounded-lg bg-[#1E3A5F] hover:bg-slate-800 text-white font-bold transition">
+                  + 수요 담기
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-2 border-t border-stone-200 flex items-center justify-between text-[11px] text-stone-500">
+            <span>※ 파레트 단위(1,200kg) 선택 시 현실적 주간 마감 시연 가능</span>
+            <button id="btn-reset-orders" class="text-rose-700 underline font-semibold">초기화</button>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 space-y-4">
+          <div class="p-5 rounded-xl border-2 border-[#1E3A5F] bg-white space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <div>
+                <span class="text-xs font-bold text-teal-700" id="unit-subtitle">부산권역 주간 보세창고 1파레트 공동출고 현황</span>
+                <h3 class="text-base sm:text-lg font-bold text-slate-900">목표 적재율 게이지: <span id="gauge-percent-text" class="text-[#1E3A5F] text-2xl font-extrabold">75.0%</span></h3>
+              </div>
+              <div class="text-right text-xs">
+                <div class="text-stone-500">현재 모인 총 물량 / 목표</div>
+                <div class="font-bold text-slate-900 text-sm"><span id="gauge-kg-text">900</span> kg / <span id="gauge-cap-text">1,200</span> kg</div>
+              </div>
+            </div>
+
+            <div class="w-full h-7 bg-stone-200 rounded-full overflow-hidden p-1">
+              <div id="gauge-bar-fill" class="h-full rounded-full bg-gradient-to-r from-[#1E3A5F] via-teal-600 to-emerald-500 transition-all duration-500 flex items-center justify-end pr-2 text-[11px] font-bold text-white" style="width: 75%;">
+                75%
+              </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2 text-center text-xs">
+              <div id="tier-1" class="p-2.5 rounded-lg border bg-emerald-50 border-emerald-300 text-emerald-900 font-bold">
+                1단계 (50% 달성)<br><span class="text-[11px] font-normal">권역 합배송 출발 확정 ✓</span>
+              </div>
+              <div id="tier-2" class="p-2.5 rounded-lg border bg-stone-50 border-stone-200 text-stone-500">
+                2단계 (80% 달성)<br><span class="text-[11px] font-normal">협력사 도매 추가할인 구간</span>
+              </div>
+              <div id="tier-3" class="p-2.5 rounded-lg border bg-stone-50 border-stone-200 text-stone-500">
+                3단계 (100% 만선)<br><span class="text-[11px] font-normal">목표 마감 · PO 자동전송</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="border border-stone-200 rounded-xl overflow-hidden">
+            <div class="bg-stone-100 px-4 py-2.5 flex items-center justify-between text-xs font-bold text-stone-700">
+              <span>참여 부산 로스터리 실시간 수요 집계표 (<span id="roastery-count">5</span>곳 참여 중)</span>
+              <span class="text-teal-800">협력사 전달용 자동 집계 데이터</span>
+            </div>
+            <div class="max-h-48 overflow-y-auto">
+              <table class="min-w-full divide-y divide-stone-200 text-xs">
+                <thead class="bg-stone-50 text-stone-500">
+                  <tr>
+                    <th class="px-3 py-2 text-left">로스터리</th>
+                    <th class="px-3 py-2 text-left">신청 생두</th>
+                    <th class="px-3 py-2 text-right">물량(kg)</th>
+                    <th class="px-3 py-2 text-right">목표 지분</th>
+                  </tr>
+                </thead>
+                <tbody id="order-list-body" class="divide-y divide-stone-200 bg-white"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-panel-flow" class="hidden space-y-6">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-[#FAF8F5] rounded-xl p-5 border border-stone-200 flex flex-col justify-between">
+          <div class="mb-3">
+            <span class="text-xs font-bold text-[#1E3A5F]">공공데이터 1 · 소상공인 상가정보 API (구·군별 카페 분포)</span>
+            <h3 class="text-base font-bold text-slate-900 mt-0.5">부산 주요 구·군별 카페 밀집도 (총 9,182개 중 개인 8,289개)</h3>
+            <p class="text-xs text-stone-600 mt-1">
+              부산진구(1,186개)·해운대구(평균 매출 2억 1,300만 원) 등 로스터리·개인 카페 밀집 권역을 같은 분모로 비교해 합배송 거점을 선정합니다.
+            </p>
+          </div>
+          <div class="chart-container">
+            <canvas id="cafeDistrictChart"></canvas>
+          </div>
+          <div class="text-[11px] text-stone-500 mt-2">
+            출처: 부산일보(2026.07.27, 기관 통계·카드소비 인용, 열어서 확인함) &amp; 소상공인 상가정보 API(data.go.kr/data/15012005)
+          </div>
+        </div>
+
+        <div class="bg-[#FAF8F5] rounded-xl p-5 border border-stone-200 flex flex-col justify-between">
+          <div class="mb-3">
+            <span class="text-xs font-bold text-teal-700">공공데이터 2 · 관세청 수출입무역통계 (HS 0901.11 생두)</span>
+            <h3 class="text-base font-bold text-slate-900 mt-0.5">부산 커피 시장 구조 지표 (폐업 압박 vs 신규 수요 증가)</h3>
+            <p class="text-xs text-stone-600 mt-1">
+              관세청 수출입무역통계(tradedata.go.kr)에서 <strong>품목코드 HS 0901.11(볶지 않은 커피 생두) · 부산세관</strong> CSV를 결합해 입항 단가 변동 경보를 산출합니다.
+            </p>
+          </div>
+          <div class="chart-container">
+            <canvas id="coffeeMacroChart"></canvas>
+          </div>
+          <div class="text-[11px] text-stone-500 mt-2">
+            ※ 관세청 HS 0901.11 월별 부산세관 수입 중량·금액 CSV는 tradedata.go.kr에서 로그인 없이 즉시 다운로드 가능
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="tab-panel-interview" class="hidden space-y-5">
+      <div class="p-4 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-950">
+        <strong>📋 현장 인터뷰 가이드 (이번 주 목표: 전포·영도 로스터리 3~5곳):</strong> 영업비밀인 거래명세서 원본을 무리하게 요구하지 말고, ① 현재 매입처·주기 ② 1마대(60kg) 주문 시 배송비·단가 불편 ③ 베이스 생두 공동주문 시 희망 할인율 3가지만 확인해 기록합니다.
+      </div>
+
+      <div class="overflow-x-auto border border-stone-200 rounded-xl">
+        <table class="min-w-full divide-y divide-stone-200 text-xs">
+          <thead class="bg-stone-100 text-stone-700 font-bold">
+            <tr>
+              <th class="px-3 py-3 text-left">대상 로스터리 (권역)</th>
+              <th class="px-3 py-3 text-left">현재 어디서·얼마나 사나</th>
+              <th class="px-3 py-3 text-left">무엇이 불편한가 (페인포인트)</th>
+              <th class="px-3 py-3 text-left">공동주문 참여 조건</th>
+              <th class="px-3 py-3 text-center">상태</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-stone-200 bg-white">
+            <tr>
+              <td class="px-3 py-3 font-bold text-slate-900">로스터리 #1 (부산진구 전포동)</td>
+              <td class="px-3 py-3 text-stone-500">[확인 필요: 월 생두 사용량 kg 및 거래 수입사 수]</td>
+              <td class="px-3 py-3 text-stone-500">[확인 필요: 소량 주문 시 택배비·단가 할증 여부]</td>
+              <td class="px-3 py-3 text-stone-500">[확인 필요: 희망 할인율 % 및 선호 베이스 품종]</td>
+              <td class="px-3 py-3 text-center"><span class="px-2 py-0.5 rounded bg-amber-100 text-amber-900 font-bold">방문 예정</span></td>
+            </tr>
+            <tr>
+              <td class="px-3 py-3 font-bold text-slate-900">로스터리 #2 (부산진구 전포동)</td>
+              <td class="px-3 py-3 text-stone-500">[확인 필요: 월 생두 사용량 kg 및 거래 수입사 수]</td>
+              <td class="px-3 py-3 text-stone-500">[확인 필요: 인기 생두 품절·입항 지연 경험]</td>
+              <td class="px-3 py-3 text-stone-500">[확인 필요: 희망 할인율 % 및 결제 방식]</td>
+              <td class="px-3 py-3 text-center"><span class="px-2 py-0.5 rounded bg-amber-100 text-amber-900 font-bold">방문 예정</span></td>
+            </tr>
+            <tr>
+              <td class="px-3 py-3 font-bold text-slate-900">로스터리 #3 (영도구 봉래·청학동)</td>
+              <td class="px-3 py-3 text-stone-500">[확인 필요: 월 생두 사용량 kg 및 거래 수입사 수]</td>
+              <td class="px-3 py-3 text-stone-500">[확인 필요: 도서·언덕 권역 화물 배송비 부담]</td>
+              <td class="px-3 py-3 text-stone-500">[확인 필요: 주 1회 거점 합배송 수용 여부]</td>
+              <td class="px-3 py-3 text-center"><span class="px-2 py-0.5 rounded bg-amber-100 text-amber-900 font-bold">방문 예정</span></td>
+            </tr>
+            <tr>
+              <td class="px-3 py-3 font-bold text-slate-900">로스터리 #4 (해운대·수영구)</td>
+              <td class="px-3 py-3 text-stone-500">[확인 필요: 월 생두 사용량 kg 및 거래 수입사 수]</td>
+              <td class="px-3 py-3 text-stone-500">[확인 필요: 시그니처 블렌딩용 베이스 생두 확보 난이도]</td>
+              <td class="px-3 py-3 text-stone-500">[확인 필요: 사전 예약(선주문) 가능 기간]</td>
+              <td class="px-3 py-3 text-center"><span class="px-2 py-0.5 rounded bg-stone-100 text-stone-600 font-bold">섭외 중</span></td>
+            </tr>
+            <tr>
+              <td class="px-3 py-3 font-bold text-teal-900">협력사 후보 (부산 수입사/협동조합)</td>
+              <td class="px-3 py-3 text-stone-500">[확인 필요: 1파레트(600~1,200kg) 기준 도매가]</td>
+              <td class="px-3 py-3 text-stone-500">[확인 필요: 소규모 로스터리 개별 영업·택배 발송 공수]</td>
+              <td class="px-3 py-3 text-stone-500">[확인 필요: 5~10곳 묶음 주문 시 제공 가능한 할인폭]</td>
+              <td class="px-3 py-3 text-center"><span class="px-2 py-0.5 rounded bg-teal-100 text-teal-900 font-bold">핵심 인터뷰</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="tab-panel-bizplan" class="hidden space-y-5">
+      <div class="p-5 rounded-xl bg-[#FAF8F5] border border-stone-200 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <h3 class="text-base font-bold text-slate-900">데모데이 발표용 1장 로드맵: 시제품(수업) → 실제 창업(협력사 제휴 및 인허가)</h3>
+          <span class="px-2.5 py-1 rounded bg-[#1E3A5F] text-white text-xs font-bold">현실성 입증 슬라이드</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3 text-xs">
+          <div class="p-4 rounded-xl bg-white border-2 border-teal-600 space-y-1.5">
+            <span class="px-2 py-0.5 rounded bg-teal-700 text-white text-[10px] font-bold">PHASE 1 · 현재 (6주 과정)</span>
+            <div class="font-bold text-slate-900 text-sm">데이터·수요 연결 시제품</div>
+            <p class="text-stone-600 leading-relaxed">
+              • 별도 인허가 없이 AI 소진 예측·공동발주 게이지·커피 흐름판 운영<br>
+              • 기존 수입사·협동조합(협력사)과 B2B 리드 연결 모델 검증
+            </p>
+          </div>
+          <div class="p-4 rounded-xl bg-white border border-stone-200 space-y-1.5">
+            <span class="px-2 py-0.5 rounded bg-stone-700 text-white text-[10px] font-bold">PHASE 2 · 창업 초기</span>
+            <div class="font-bold text-slate-900 text-sm">1. 사업자등록 &amp; 통신판매업</div>
+            <p class="text-stone-600 leading-relaxed">
+              • 공동구매 중개 수수료 수취를 위한 법인/개인 사업자등록<br>
+              • 협력사(수입판매업 보유) 명의의 직접 결제·출고 연동
+            </p>
+          </div>
+          <div class="p-4 rounded-xl bg-white border border-stone-200 space-y-1.5">
+            <span class="px-2 py-0.5 rounded bg-stone-700 text-white text-[10px] font-bold">PHASE 3 · 직접 소싱 확장</span>
+            <div class="font-bold text-slate-900 text-sm">2. 식품위생교육 이수</div>
+            <p class="text-stone-600 leading-relaxed">
+              • 한국식품산업협회 등 지정 기관 위생교육 수료<br>
+              • 자체 브랜드 생두 소분·보관 시설(창고) 요건 확보
+            </p>
+          </div>
+          <div class="p-4 rounded-xl bg-white border border-stone-200 space-y-1.5">
+            <span class="px-2 py-0.5 rounded bg-amber-700 text-white text-[10px] font-bold">PHASE 4 · 풀필먼트 스케일업</span>
+            <div class="font-bold text-slate-900 text-sm">3. 수입식품등 수입판매업 등록</div>
+            <p class="text-stone-600 leading-relaxed">
+              • 식약처 지방청 수입판매업 영업등록 및 수입신고·정밀검사 진행<br>
+              • 가설: CJ대한통운 부산항 풀필먼트와 결합해 전국 로스터리 배송
+            </p>
+          </div>
+        </div>
+
+        <div class="text-[11px] text-stone-500 flex flex-wrap gap-4 pt-1">
+          <span>근거 출처 1: <a href="https://www.tradlinx.com/blog/guide/%EC%8B%9D%ED%92%88-%EC%88%98%EC%9E%85-%EB%B0%A9%EB%B2%95-%EC%88%98%EC%9E%85-%EC%A0%84-%ED%95%84%EC%88%98-%EC%A0%88%EC%B0%A8" target="_blank" rel="noopener noreferrer" class="underline text-[#1E3A5F]">트레이드링스: 식품 수입 방법</a></span>
+          <span>근거 출처 2: <a href="https://impfood.mfds.go.kr/CFCCC01F02" target="_blank" rel="noopener noreferrer" class="underline text-[#1E3A5F]">식약처 수입식품정보마루 영업등록 안내</a></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sec-score" class="bg-white rounded-2xl border border-stone-200 p-6 shadow-sm space-y-6">
+    <div>
+      <span class="text-xs font-bold text-teal-700 uppercase">Judge Re-Evaluation · 83 / 100 Points</span>
+      <h2 class="text-lg sm:text-xl font-bold text-slate-900 mt-0.5">4. 역할 분리(데이터·연결 전담) 적용 후 100점 재채점 결과 &amp; 출처 목록</h2>
+      <p class="text-xs sm:text-sm text-stone-600 mt-1">
+        직접 수입·보관 리스크를 협력사로 분리해 83점을 확보했으나, 위 1번 섹션의 <strong>문제점 5가지(파레트 단위 현실화·AI 소진 예측 추가)</strong>를 MVP에 반영해야 실제 데모데이 심사를 방어할 수 있습니다.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+      <div class="lg:col-span-6 bg-[#FAF8F5] rounded-xl p-4 border border-stone-200">
+        <div class="text-xs font-bold text-stone-700 mb-2 text-center">기획 고도화 단계별 점수 변화 (커트라인 70점)</div>
+        <div class="chart-container">
+          <canvas id="pivotScoreChart"></canvas>
+        </div>
+      </div>
+
+      <div class="lg:col-span-6 overflow-x-auto border border-stone-200 rounded-xl">
+        <table class="min-w-full divide-y divide-stone-200 text-xs">
+          <thead class="bg-stone-100 text-stone-700 font-bold">
+            <tr>
+              <th class="px-3 py-2.5 text-left">평가 항목 (배점)</th>
+              <th class="px-3 py-2.5 text-center">점수</th>
+              <th class="px-3 py-2.5 text-left">채점 근거 (사실 vs 가설 구분)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-stone-200 bg-white">
+            <tr>
+              <td class="px-3 py-2.5 font-bold">문제 근거 (20)</td>
+              <td class="px-3 py-2.5 text-center font-bold text-[#1E3A5F]">15점</td>
+              <td class="px-3 py-2.5 text-stone-700">부산 카페 폐업 1,470개 &gt; 창업 1,375개, 생존율 43.7% 확인(부산일보). 로스터리 인터뷰 3~5곳 보강 필수.</td>
+            </tr>
+            <tr>
+              <td class="px-3 py-2.5 font-bold">참신함 (20)</td>
+              <td class="px-3 py-2.5 text-center font-bold text-[#1E3A5F]">17점</td>
+              <td class="px-3 py-2.5 text-stone-700">일반 식자재 앱과 달리 부산 로스터리 공동수입 적재율(%) 실시간 집계 모델 미발견.</td>
+            </tr>
+            <tr>
+              <td class="px-3 py-2.5 font-bold">부산다움 (10)</td>
+              <td class="px-3 py-2.5 text-center font-bold text-[#1E3A5F]">9점</td>
+              <td class="px-3 py-2.5 text-stone-700">국내 주요 생두 수입 관문인 부산항과 9,182개 카페 생태계에 기반한 로컬 특화 모델.</td>
+            </tr>
+            <tr>
+              <td class="px-3 py-2.5 font-bold">데이터 가용성 (15)</td>
+              <td class="px-3 py-2.5 text-center font-bold text-[#1E3A5F]">13점</td>
+              <td class="px-3 py-2.5 text-stone-700">관세청 HS 0901.11 CSV + 소상공인 상가정보 API 즉시 확보 가능(원문 URL 확인).</td>
+            </tr>
+            <tr>
+              <td class="px-3 py-2.5 font-bold">AX 보여 주기 (15)</td>
+              <td class="px-3 py-2.5 text-center font-bold text-[#1E3A5F]">13점</td>
+              <td class="px-3 py-2.5 text-stone-700">단순 입력 게이지를 넘어 명세서 OCR 기반 소진 예측·자동 발주서 생성 시연 시 13점 유지 가능.</td>
+            </tr>
+            <tr>
+              <td class="px-3 py-2.5 font-bold">3주 안에 만들기 (10)</td>
+              <td class="px-3 py-2.5 text-center font-bold text-emerald-700">10점</td>
+              <td class="px-3 py-2.5 text-stone-700">수입·통관·결제를 협력사로 분리하여 인허가·재고 없이 3주 내 시제품 100% 구현 가능.</td>
+            </tr>
+            <tr>
+              <td class="px-3 py-2.5 font-bold">돈·사업성 (10)</td>
+              <td class="px-3 py-2.5 text-center font-bold text-[#1E3A5F]">6점</td>
+              <td class="px-3 py-2.5 text-stone-700">가설: 공동발주 성사 시 협력사 B2B 중개 수수료 수익 모델(협력사 인터뷰로 할인율 검증 필요).</td>
+            </tr>
+            <tr class="bg-emerald-50/60 font-bold">
+              <td class="px-3 py-2.5 text-slate-900">총점 합계</td>
+              <td class="px-3 py-2.5 text-center text-emerald-700 text-sm">83점</td>
+              <td class="px-3 py-2.5 text-emerald-900">추천 기준(70점) 통과 · 위 문제점 5가지 보완 조건부</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="overflow-x-auto border border-stone-200 rounded-xl">
+      <table class="min-w-full divide-y divide-stone-200 text-xs">
+        <thead class="bg-stone-100 text-stone-700 font-bold">
+          <tr>
+            <th class="px-3 py-2.5 text-left">출처 제목</th>
+            <th class="px-3 py-2.5 text-left">매체·기관</th>
+            <th class="px-3 py-2.5 text-left">원천 종류</th>
+            <th class="px-3 py-2.5 text-center">확인 여부</th>
+            <th class="px-3 py-2.5 text-center">원문 URL</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-stone-200 bg-white">
+          <tr class="bg-emerald-50/30">
+            <td class="px-3 py-2.5 font-medium">부산 카페 9,182개·폐업 1,470개·3년 생존율 43.7%·부산진구 1,186개 기사</td>
+            <td class="px-3 py-2.5">부산일보 (2026.07.27)</td>
+            <td class="px-3 py-2.5">기사 자체 취재(기관 통계 인용)</td>
+            <td class="px-3 py-2.5 text-center"><span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold">열어서 확인함</span></td>
+            <td class="px-3 py-2.5 text-center"><a href="https://www.busan.com/view/busan/view.php?code=2026072718314026046" target="_blank" rel="noopener noreferrer" class="text-[#1E3A5F] underline font-semibold">열기 ↗</a></td>
+          </tr>
+          <tr>
+            <td class="px-3 py-2.5 font-medium">식품 수입 방법 — 수입 전 필수 절차 (사업자등록·위생교육·수입판매업)</td>
+            <td class="px-3 py-2.5">트레이드링스</td>
+            <td class="px-3 py-2.5">물류 플랫폼 가이드</td>
+            <td class="px-3 py-2.5 text-center"><span class="px-2 py-0.5 rounded-full bg-stone-100 text-stone-700 font-bold">제시 출처 확인</span></td>
+            <td class="px-3 py-2.5 text-center"><a href="https://www.tradlinx.com/blog/guide/%EC%8B%9D%ED%92%88-%EC%88%98%EC%9E%85-%EB%B0%A9%EB%B2%95-%EC%88%98%EC%9E%85-%EC%A0%84-%ED%95%84%EC%88%98-%EC%A0%88%EC%B0%A8" target="_blank" rel="noopener noreferrer" class="text-[#1E3A5F] underline font-semibold">열기 ↗</a></td>
+          </tr>
+          <tr>
+            <td class="px-3 py-2.5 font-medium">수입식품정보마루 — 수입식품등 수입·판매업 영업등록 절차 안내</td>
+            <td class="px-3 py-2.5">식품의약품안전처</td>
+            <td class="px-3 py-2.5">기관 통계·법령 안내</td>
+            <td class="px-3 py-2.5 text-center"><span class="px-2 py-0.5 rounded-full bg-stone-100 text-stone-700 font-bold">제시 출처 확인</span></td>
+            <td class="px-3 py-2.5 text-center"><a href="https://impfood.mfds.go.kr/CFCCC01F02" target="_blank" rel="noopener noreferrer" class="text-[#1E3A5F] underline font-semibold">열기 ↗</a></td>
+          </tr>
+          <tr>
+            <td class="px-3 py-2.5 font-medium">관세청 수출입무역통계 (품목별·세관별 생두 HS 0901.11 수입 실적 CSV)</td>
+            <td class="px-3 py-2.5">관세청</td>
+            <td class="px-3 py-2.5">기관 통계(공공데이터)</td>
+            <td class="px-3 py-2.5 text-center"><span class="px-2 py-0.5 rounded-full bg-stone-100 text-stone-700 font-bold">다운로드 가능 확인</span></td>
+            <td class="px-3 py-2.5 text-center"><a href="https://tradedata.go.kr" target="_blank" rel="noopener noreferrer" class="text-[#1E3A5F] underline font-semibold">열기 ↗</a></td>
+          </tr>
+          <tr>
+            <td class="px-3 py-2.5 font-medium">소상공인시장진흥공단 상가(상권)정보 API (구·동별 카페/로스터리 위치 표)</td>
+            <td class="px-3 py-2.5">공공데이터포털</td>
+            <td class="px-3 py-2.5">기관 통계(공공데이터)</td>
+            <td class="px-3 py-2.5 text-center"><span class="px-2 py-0.5 rounded-full bg-stone-100 text-stone-700 font-bold">API 포털 확인</span></td>
+            <td class="px-3 py-2.5 text-center"><a href="https://www.data.go.kr/data/15012005/openapi.do" target="_blank" rel="noopener noreferrer" class="text-[#1E3A5F] underline font-semibold">열기 ↗</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<script>
+const initialOrders = [
+  { roastery: "전포 모모로스터리 (예시)", bean: "브라질 산토스 NY2 (베이스)", kg: 300 },
+  { roastery: "영도 하버커피랩 (예시)", bean: "콜롬비아 수프리모 후일라 (베이스)", kg: 240 },
+  { roastery: "광안 웨이브빈스 (예시)", bean: "브라질 산토스 NY2 (베이스)", kg: 180 },
+  { roastery: "해운대 마린로스팅 (예시)", bean: "에티오피아 예가체프 G2 (베이스)", kg: 120 },
+  { roastery: "서면 브루잉하우스 (예시)", bean: "브라질 산토스 NY2 (베이스)", kg: 60 }
+];
+
+let currentOrders = [...initialOrders];
+
+function renderOrdersAndGauge() {
+  const capacity = Number(document.getElementById("input-target-unit").value) || 1200;
+  const totalKg = currentOrders.reduce((acc, item) => acc + item.kg, 0);
+  const rawPct = (totalKg / capacity) * 100;
+  const displayPct = Math.min(100, rawPct).toFixed(1);
+
+  document.getElementById("unit-subtitle").textContent =
+    capacity === 1200
+      ? "부산권역 주간 보세창고 1파레트 공동출고 현황 (현실적 주간 마감 단위)"
+      : "2026년 12월 2차 부산항 해외 직수입 컨테이너 현황 (18톤 단위)";
+
+  document.getElementById("gauge-percent-text").textContent = displayPct + "%";
+  document.getElementById("gauge-kg-text").textContent = totalKg.toLocaleString();
+  document.getElementById("gauge-cap-text").textContent = capacity.toLocaleString();
+  document.getElementById("roastery-count").textContent = currentOrders.length;
+
+  const bar = document.getElementById("gauge-bar-fill");
+  bar.style.width = Math.min(100, rawPct) + "%";
+  bar.textContent = Math.round(Math.min(100, rawPct)) + "%";
+
+  const t1 = document.getElementById("tier-1");
+  const t2 = document.getElementById("tier-2");
+  const t3 = document.getElementById("tier-3");
+
+  t1.className = rawPct >= 50
+    ? "p-2.5 rounded-lg border bg-emerald-50 border-emerald-300 text-emerald-900 font-bold"
+    : "p-2.5 rounded-lg border bg-stone-50 border-stone-200 text-stone-500";
+
+  t2.className = rawPct >= 80
+    ? "p-2.5 rounded-lg border bg-teal-50 border-teal-400 text-teal-950 font-bold"
+    : "p-2.5 rounded-lg border bg-stone-50 border-stone-200 text-stone-500";
+
+  t3.className = rawPct >= 100
+    ? "p-2.5 rounded-lg border bg-amber-100 border-amber-400 text-amber-950 font-bold"
+    : "p-2.5 rounded-lg border bg-stone-50 border-stone-200 text-stone-500";
+
+  const tbody = document.getElementById("order-list-body");
+  tbody.innerHTML = currentOrders.map(o => {
+    const share = ((o.kg / capacity) * 100).toFixed(1);
+    return `
+      <tr class="hover:bg-stone-50">
+        <td class="px-3 py-2 font-bold text-slate-800">${o.roastery}</td>
+        <td class="px-3 py-2 text-stone-600">${o.bean}</td>
+        <td class="px-3 py-2 text-right font-semibold text-[#1E3A5F]">${o.kg.toLocaleString()} kg</td>
+        <td class="px-3 py-2 text-right text-stone-500">${share}%</td>
+      </tr>
+    `;
+  }).join("");
+}
+
+function initCharts() {
+  const ctxDistrict = document.getElementById("cafeDistrictChart").getContext("2d");
+  new Chart(ctxDistrict, {
+    type: "bar",
+    data: {
+      labels: ["부산진구 (전포·서면)", "해운대구", "수영구 (광안·민락)", "중구·영도구 (원도심)", "기타 구·군 합계"],
+      datasets: [{
+        label: "카페 점포 수 (단위: 개)",
+        data: [1186, 1040, 720, 610, 5626],
+        backgroundColor: ["#1E3A5F", "#0F766E", "#D97706", "#3B82F6", "#94A3B8"],
+        borderRadius: 6,
+        barThickness: 28
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: { beginAtZero: true, grid: { color: "#E5E7EB" }, ticks: { font: { size: 11 } } },
+        x: { grid: { display: false }, ticks: { font: { size: 10, weight: "600" } } }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => ctx.dataIndex === 0 ? "1,186개 (부산일보 2026.07.27 확인)" : `${ctx.parsed.y.toLocaleString()}개 (상가API 추출 분모 예시)`
+          }
+        }
+      }
+    }
+  });
+
+  const ctxMacro = document.getElementById("coffeeMacroChart").getContext("2d");
+  new Chart(ctxMacro, {
+    type: "bar",
+    data: {
+      labels: ["개인 카페 비중", "3년 생존율", "60대+ 소비증가", "외국인 소비증가"],
+      datasets: [{
+        label: "비율 (%)",
+        data: [90.3, 43.7, 42.9, 73.0],
+        backgroundColor: ["#1E3A5F", "#E11D48", "#D97706", "#0F766E"],
+        borderRadius: 6,
+        barThickness: 34
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: { beginAtZero: true, max: 100, grid: { color: "#E5E7EB" }, ticks: { font: { size: 11 }, callback: v => v + "%" } },
+        x: { grid: { display: false }, ticks: { font: { size: 11, weight: "600" } } }
+      },
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            label: ctx => `${ctx.parsed.y}% (부산일보 2026.07.27 확인 수치)`
+          }
+        }
+      }
+    }
+  });
+
+  const ctxScore = document.getElementById("pivotScoreChart").getContext("2d");
+  new Chart(ctxScore, {
+    type: "bar",
+    data: {
+      labels: [
+        ["초기 자갈치 총액", "미리 보기 (비교대상)"],
+        ["1차 카페 공동발주", "(직접 유통 포함 시)"],
+        ["최종: 데이터·게이지 연결", "(협력사 역할 분리)"]
+      ],
+      datasets: [
+        {
+          label: "심사 점수 (100점 만점)",
+          data: [67, 68, 83],
+          backgroundColor: ["#94A3B8", "#D97706", "#0F766E"],
+          borderRadius: 6,
+          barThickness: 38
+        },
+        {
+          label: "추천 커트라인 (70점)",
+          data: [70, 70, 70],
+          type: "line",
+          borderColor: "#B91C1C",
+          borderWidth: 2,
+          borderDash: [6, 4],
+          pointRadius: 0,
+          fill: false
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: { beginAtZero: true, max: 100, grid: { color: "#E5E7EB" }, ticks: { font: { size: 11 } } },
+        x: { grid: { display: false }, ticks: { font: { size: 11, weight: "600" } } }
+      },
+      plugins: {
+        legend: { position: "bottom", labels: { font: { size: 11, weight: "600" } } }
+      }
+    }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  renderOrdersAndGauge();
+  initCharts();
+
+  document.getElementById("input-target-unit").addEventListener("change", renderOrdersAndGauge);
+
+  document.getElementById("btn-add-order").addEventListener("click", () => {
+    const roastery = document.getElementById("input-roastery").value.trim() || "신규 참여 로스터리";
+    const bean = document.getElementById("input-bean").value;
+    const kg = Math.max(60, Number(document.getElementById("input-kg").value) || 60);
+    currentOrders.unshift({ roastery, bean, kg });
+    renderOrdersAndGauge();
+  });
+
+  document.getElementById("btn-reset-orders").addEventListener("click", () => {
+    currentOrders = [...initialOrders];
+    renderOrdersAndGauge();
+  });
+
+  document.querySelectorAll(".mvp-tab").forEach(btn => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll(".mvp-tab").forEach(b => {
+        b.classList.remove("nav-pill-active");
+        b.classList.add("nav-pill-inactive");
+      });
+      btn.classList.remove("nav-pill-inactive");
+      btn.classList.add("nav-pill-active");
+
+      const target = btn.dataset.tab;
+      ["gauge", "flow", "interview", "bizplan"].forEach(t => {
+        const panel = document.getElementById("tab-panel-" + t);
+        if (t === target) {
+          panel.classList.remove("hidden");
+        } else {
+          panel.classList.add("hidden");
+        }
+      });
+    });
+  });
+});
+</script>
+</body>
+</html>
