@@ -2,4 +2,8 @@
 # 닉네임·프로필이 섞인 통째 복사본과 필드워크 원본은 올리지 않는다.
 raw/
 inputs/kakao-raw.txt
-archive/*kakao-raw*.txt
+old/*kakao-raw*.txt
+archive/files/
+
+# 로블록스 작업은 ~/OneDrive/Documents/gwangalli-roblox 로 분리 (개인 저작물, 2026-11-17)
+assets/gwangalli/

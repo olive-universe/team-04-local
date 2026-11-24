@@ -15,7 +15,7 @@
    brand/worldview.md, brand/persona.md, .claude/skills/cheoeum-bulkkot-taehwan/SKILL.md,
    research/2026-11-19-광안리-축제아닌-자료-정리.md, research/2026-11-19-광안리-평소-손님불편.md,
    research/2026-11-19-광안대교-조명-2026.md, research/2026-11-17-광안리-scenario.md,
-   research/2026-11-12-busan-cafe-share-by-district.md, universe/top3-taehwan.md
+   research/2026-11-12-busan-cafe-share-by-district.md, inventory/top3.md
 
 2. 오픈소스 구조 빌리기
    GitHub에서 worldbuilding / story bible 템플릿을 gh로 찾아 별·최근 업데이트·라이선스를 표로 비교한다.

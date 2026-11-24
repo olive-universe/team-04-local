@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>밸류체인 지도 v0 · 부산 식당 다국어 메뉴판 AI</title>
+  <style>
+    body { font-family: "Pretendard", "Malgun Gothic", sans-serif; max-width: 1100px; margin: 32px auto; padding: 0 16px; color: #0f172a; }
+    h1 { font-size: 22px; }
+    .legend span { display: inline-block; margin-right: 16px; font-size: 14px; }
+    .sw { display: inline-block; width: 28px; height: 4px; vertical-align: middle; margin-right: 6px; }
+    .map { border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; overflow-x: auto; }
+    pre { background: #f8fafc; border: 1px solid #e2e8f0; padding: 12px; border-radius: 6px; overflow-x: auto; font-size: 13px; }
+    .note { color: #475569; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h1>밸류체인 지도 v0 · 부산 식당 다국어 메뉴판 AI</h1>
+  <p class="note">확인한 날짜 2026-11-24 · 근거 표는 map.md에 있습니다. 점선은 근거가 없는 화살표입니다 [확인 필요].</p>
+  <p class="legend">
+    <span><i class="sw" style="background:#94a3b8"></i>단계 순서</span>
+    <span><i class="sw" style="background:#2563eb"></i>데이터</span>
+    <span><i class="sw" style="background:#16a34a"></i>돈</span>
+    <span><i class="sw" style="background:#d97706"></i>물건</span>
+    <span>굵은 테두리 = 우리 팀이 닿는 단계</span>
+  </p>
+  <div class="map"><pre class="mermaid">
+flowchart TB
+    S1["1 시장에서 식재료를 들여와요"]
+    S2["2 점주가 부산 음식을 만들어요"]
+    S3["3 외국인 손님이 시장 골목에 와요"]
+    S4["4 점주가 외국어 메뉴판을 만들어요"]
+    S5["5 테이블에서 QR로 메뉴를 봐요"]
+    S6["6 손님이 메뉴를 알고 주문해요"]
+    S7["7 손님이 돈을 내요"]
+    SUP["식자재 유통사&lt;br/&gt;CJ프레시웨이 · 식봄"]
+    BO["부산올랭&lt;br/&gt;부산시"]
+    US["우리 도구&lt;br/&gt;메뉴판 AI (아직 없음)"]
+    OWN["점주 매출"]
+    WHO["누가 낼까?"]
+    TEAM["우리 팀"]
+
+    S1 --&gt; S2
+    S2 --&gt; S3
+    S3 --&gt; S4
+    S4 --&gt; S5
+    S5 --&gt; S6
+    S6 --&gt; S7
+    SUP -.-&gt;|"F1 식재료 [확인 필요]"| S1
+    S1 -.-&gt;|"F2 식재료값 [확인 필요]"| SUP
+    S4 --&gt;|"F3 가입 정보"| BO
+    BO -.-&gt;|"F4 외국어 메뉴판 [확인 필요]"| S4
+    S4 -.-&gt;|"F5 메뉴판 사진 [확인 필요]"| US
+    US -.-&gt;|"F6 4개 국어 메뉴 · QR 카드 [확인 필요]"| S5
+    S4 --&gt;|"F7 QR로 보는 메뉴"| S5
+    S6 -.-&gt;|"F8 주문 [확인 필요]"| S2
+    S2 -.-&gt;|"F9 음식 [확인 필요]"| S6
+    S7 -.-&gt;|"F10 밥값 [확인 필요]"| OWN
+    WHO -.-&gt;|"F11 도구 이용료 [확인 필요]"| TEAM
+
+    classDef step fill:#ffffff,stroke:#475569,stroke-width:1px,color:#0f172a
+    classDef ours fill:#ffffff,stroke:#0f172a,stroke-width:4px,color:#0f172a
+    classDef actor fill:#f1f5f9,stroke:#94a3b8,stroke-width:1px,color:#334155
+    class S1,S2,S3,S7 step
+    class S4,S5,S6 ours
+    class SUP,BO,US,OWN,WHO,TEAM actor
+
+    linkStyle 0,1,2,3,4,5 stroke:#94a3b8,stroke-width:2px
+    linkStyle 6,14 stroke:#d97706,stroke-width:2px
+    linkStyle 7,15,16 stroke:#16a34a,stroke-width:2px
+    linkStyle 8,9,10,11,12,13 stroke:#2563eb,stroke-width:2px
+  </pre></div>
+  <h2>이 그림을 만든 Mermaid 글</h2>
+  <pre>flowchart TB
+    S1["1 시장에서 식재료를 들여와요"]
+    S2["2 점주가 부산 음식을 만들어요"]
+    S3["3 외국인 손님이 시장 골목에 와요"]
+    S4["4 점주가 외국어 메뉴판을 만들어요"]
+    S5["5 테이블에서 QR로 메뉴를 봐요"]
+    S6["6 손님이 메뉴를 알고 주문해요"]
+    S7["7 손님이 돈을 내요"]
+    SUP["식자재 유통사&lt;br/&gt;CJ프레시웨이 · 식봄"]
+    BO["부산올랭&lt;br/&gt;부산시"]
+    US["우리 도구&lt;br/&gt;메뉴판 AI (아직 없음)"]
+    OWN["점주 매출"]
+    WHO["누가 낼까?"]
+    TEAM["우리 팀"]
+
+    S1 --&gt; S2
+    S2 --&gt; S3
+    S3 --&gt; S4
+    S4 --&gt; S5
+    S5 --&gt; S6
+    S6 --&gt; S7
+    SUP -.-&gt;|"F1 식재료 [확인 필요]"| S1
+    S1 -.-&gt;|"F2 식재료값 [확인 필요]"| SUP
+    S4 --&gt;|"F3 가입 정보"| BO
+    BO -.-&gt;|"F4 외국어 메뉴판 [확인 필요]"| S4
+    S4 -.-&gt;|"F5 메뉴판 사진 [확인 필요]"| US
+    US -.-&gt;|"F6 4개 국어 메뉴 · QR 카드 [확인 필요]"| S5
+    S4 --&gt;|"F7 QR로 보는 메뉴"| S5
+    S6 -.-&gt;|"F8 주문 [확인 필요]"| S2
+    S2 -.-&gt;|"F9 음식 [확인 필요]"| S6
+    S7 -.-&gt;|"F10 밥값 [확인 필요]"| OWN
+    WHO -.-&gt;|"F11 도구 이용료 [확인 필요]"| TEAM
+
+    classDef step fill:#ffffff,stroke:#475569,stroke-width:1px,color:#0f172a
+    classDef ours fill:#ffffff,stroke:#0f172a,stroke-width:4px,color:#0f172a
+    classDef actor fill:#f1f5f9,stroke:#94a3b8,stroke-width:1px,color:#334155
+    class S1,S2,S3,S7 step
+    class S4,S5,S6 ours
+    class SUP,BO,US,OWN,WHO,TEAM actor
+
+    linkStyle 0,1,2,3,4,5 stroke:#94a3b8,stroke-width:2px
+    linkStyle 6,14 stroke:#d97706,stroke-width:2px
+    linkStyle 7,15,16 stroke:#16a34a,stroke-width:2px
+    linkStyle 8,9,10,11,12,13 stroke:#2563eb,stroke-width:2px</pre>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({ startOnLoad: true, flowchart: { useMaxWidth: true } });</script>
+</body>
+</html>

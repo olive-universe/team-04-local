@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>광안리 밤나들이 · 편의점 필수템 실시간 재고 & 동선 알리미</title>
+  <style>
+    :root {
+      --bg-dark: #0b0f19;
+      --card-bg: #151d30;
+      --card-border: #233152;
+      --primary-blue: #3b82f6;
+      --accent-neon: #38bdf8;
+      --status-green: #22c55e;
+      --status-yellow: #eab308;
+      --status-red: #ef4444;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      padding: 20px 16px 60px;
+      display: flex;
+      justify-content: center;
+    }
+    .container {
+      width: 100%;
+      max-width: 520px;
+    }
+    header {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .badge {
+      display: inline-block;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent-neon);
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+      margin-bottom: 6px;
+    }
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    /* AI 가이드 박스 */
+    .ai-guide-box {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      border: 1px solid #38bdf8;
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 20px rgba(56, 189, 248, 0.15);
+      position: relative;
+    }
+    .ai-guide-title {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--accent-neon);
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .ai-guide-desc {
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: #e2e8f0;
+    }
+    .highlight {
+      color: #facc15;
+      font-weight: 700;
+    }
+
+    /* 필터 탭 */
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .tab-btn {
+      background: #1e293b;
+      border: 1px solid var(--card-border);
+      color: var(--text-muted);
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .tab-btn.active {
+      background: var(--primary-blue);
+      border-color: var(--primary-blue);
+      color: #fff;
+      font-weight: 600;
+    }
+
+    /* 편의점 매장 카드 */
+    .store-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 16px;
+      margin-bottom: 14px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .store-card.recommend {
+      border: 1.5px solid var(--status-green);
+      background: linear-gradient(180deg, rgba(34, 197, 94, 0.08) 0%, var(--card-bg) 100%);
+    }
+    .store-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 10px;
+    }
+    .store-name {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .store-dist {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .status-tag {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+    .tag-green { background: rgba(34, 197, 94, 0.2); color: var(--status-green); }
+    .tag-yellow { background: rgba(234, 179, 8, 0.2); color: var(--status-yellow); }
+    .tag-red { background: rgba(239, 68, 68, 0.2); color: var(--status-red); }
+
+    /* 아이템 목록 */
+    .item-list {
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13.5px;
+    }
+    .item-name {
+      color: #cbd5e1;
+    }
+    .item-qty {
+      font-weight: 700;
+    }
+    .qty-ok { color: var(--status-green); }
+    .qty-warn { color: var(--status-yellow); }
+    .qty-zero { color: var(--status-red); text-decoration: line-through; }
+
+    /* 하단 버튼 */
+    .action-btn {
+      width: 100%;
+      margin-top: 12px;
+      padding: 10px;
+      background: #1e293b;
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .action-btn:hover {
+      background: #334155;
+    }
+    .recommend .action-btn {
+      background: var(--status-green);
+      color: #0b0f19;
+      border: none;
+    }
+    .recommend .action-btn:hover {
+      background: #16a34a;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 24px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="badge">🔥 축제 & 밤나들이 실시간 현황</div>
+      <h1>광안리 편의점 스마트 재고 알리미</h1>
+      <p class="subtitle">해변 대혼잡 전, 역세권에서 필수템을 미리 챙기세요!</p>
+    </header>
+
+    <!-- AI 안내 박스 -->
+    <div class="ai-guide-box">
+      <div class="ai-guide-title">
+        <span>🤖</span> AI 동선 가이드 브리핑
+      </div>
+      <div class="ai-guide-desc">
+        "지금 해변 앞 편의점은 <strong>대기 줄만 20분</strong>에 <span class="highlight">돗자리가 전량 품절</span>되었습니다!<br>
+        지하철에서 내리실 때 <strong>광안역 3번 출구점</strong>에서 돗자리와 핫팩을 미리 챙겨서 내려오세요."
+      </div>
+    </div>
+
+    <!-- 필터 탭 -->
+    <div class="filter-tabs">
+      <button class="tab-btn active" onclick="filterItems('all', this)">전체 보기</button>
+      <button class="tab-btn" onclick="filterItems('mat', this)">돗자리</button>
+      <button class="tab-btn" onclick="filterItems('heat', this)">핫팩</button>
+      <button class="tab-btn" onclick="filterItems('battery', this)">보조배터리</button>
+    </div>
+
+    <!-- 매장 1: 광안역 추천 매장 -->
+    <div class="store-card recommend">
+      <div class="store-header">
+        <div>
+          <div class="store-name">📍 GS25 광안역 3번출구점 <span style="font-size:12px; color:#22c55e;">[AI 강력추천]</span></div>
+          <div class="store-dist">지하철 광안역 3번 출구 바로 앞 · 해변까지 도보 10분</div>
+        </div>
+        <div class="status-tag tag-green">🟢 재고 넉넉</div>
+      </div>
+      <div class="item-list">
+        <div class="item-row item-mat">
+          <span class="item-name">🪑 방수 돗자리 (2~3인용)</span>
+          <span class="item-qty qty-ok">48개 남음 (여유)</span>
+        </div>
+        <div class="item-row item-heat">
+          <span class="item-name">🔥 대용량 보온 핫팩</span>
+          <span class="item-qty qty-ok">120개 남음 (여유)</span>
+        </div>
+        <div class="item-row item-battery">
+          <span class="item-name">🔋 보조배터리 대여 가능</span>
+          <span class="item-qty qty-ok">6대 이용 가능</span>
+        </div>
+      </div>
+      <button class="action-btn" onclick="alert('광안역 3번 출구점 길안내를 시작합니다.')">지하철 하차 후 여기서 미리 구매하기</button>
+    </div>
+
+    <!-- 매장 2: 해변 앞 매장 (혼잡/품절) -->
+    <div class="store-card">
+      <div class="store-header">
+        <div>
+          <div class="store-name">📍 GS25 광안비치점</div>
+          <div class="store-dist">광안리 백사장 정중앙 앞 · 대기 예상 25분</div>
+        </div>
+        <div class="status-tag tag-red">🔴 대혼잡 / 품절</div>
+      </div>
+      <div class="item-list">
+        <div class="item-row item-mat">
+          <span class="item-name">🪑 방수 돗자리 (2~3인용)</span>
+          <span class="item-qty qty-zero">0개 (완전 품절)</span>
+        </div>
+        <div class="item-row item-heat">
+          <span class="item-name">🔥 대용량 보온 핫팩</span>
+          <span class="item-qty qty-warn">2개 남음 (품절 임박)</span>
+        </div>
+        <div class="item-row item-battery">
+          <span class="item-name">🔋 보조배터리 대여 가능</span>
+          <span class="item-qty qty-zero">대여 마감 (0대)</span>
+        </div>
+      </div>
+      <button class="action-btn" onclick="alert('현재 대기 인원이 30명 이상입니다. 광안역점을 이용하세요!')">⚠️ 현재 대기 25분 소요 (비추천)</button>
+    </div>
+
+    <!-- 매장 3: 민락수변점 -->
+    <div class="store-card">
+      <div class="store-header">
+        <div>
+          <div class="store-name">📍 CU 광안수변공원점</div>
+          <div class="store-dist">민락회타운 방면 · 해변 동쪽 끝 도보 5분</div>
+        </div>
+        <div class="status-tag tag-yellow">🟡 보통</div>
+      </div>
+      <div class="item-list">
+        <div class="item-row item-mat">
+          <span class="item-name">🪑 방수 돗자리 (2~3인용)</span>
+          <span class="item-qty qty-warn">6개 남음 (빠른 소진 중)</span>
+        </div>
+        <div class="item-row item-heat">
+          <span class="item-name">🔥 대용량 보온 핫팩</span>
+          <span class="item-qty qty-ok">35개 남음</span>
+        </div>
+        <div class="item-row item-battery">
+          <span class="item-name">🔋 보조배터리 대여 가능</span>
+          <span class="item-qty qty-warn">1대 남음</span>
+        </div>
+      </div>
+      <button class="action-btn" onclick="alert('민락수변점 길안내를 시작합니다.')">위치 및 잔여 재고 확인</button>
+    </div>
+
+    <footer>
+      * 광안리 불꽃축제 & 주말 야경 인파 대비 시뮬레이션 데이터입니다.<br>
+      © 2026 올리브 유니버스 · 처음 불꽃 기획팀
+    </footer>
+  </div>
+
+  <script>
+    function filterItems(type, btn) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const matRows = document.querySelectorAll('.item-mat');
+      const heatRows = document.querySelectorAll('.item-heat');
+      const battRows = document.querySelectorAll('.item-battery');
+
+      if (type === 'all') {
+        matRows.forEach(r => r.style.display = 'flex');
+        heatRows.forEach(r => r.style.display = 'flex');
+        battRows.forEach(r => r.style.display = 'flex');
+      } else if (type === 'mat') {
+        matRows.forEach(r => r.style.display = 'flex');
+        heatRows.forEach(r => r.style.display = 'none');
+        battRows.forEach(r => r.style.display = 'none');
+      } else if (type === 'heat') {
+        matRows.forEach(r => r.style.display = 'none');
+        heatRows.forEach(r => r.style.display = 'flex');
+        battRows.forEach(r => r.style.display = 'none');
+      } else if (type === 'battery') {
+        matRows.forEach(r => r.style.display = 'none');
+        heatRows.forEach(r => r.style.display = 'none');
+        battRows.forEach(r => r.style.display = 'flex');
+      }
+    }
+  </script>
+</body>
+</html>
