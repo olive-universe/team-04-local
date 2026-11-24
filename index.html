@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-rYmGaz4TU0i4nTb7KgpjJcGYsWH4Z9jKB9CfgEnPnbY='; style-src 'unsafe-inline'; img-src 'self' data: blob: file:; font-src 'self'; manifest-src 'self' file:; worker-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>마린딜러 MarineDealer · 시연용 프로토타입</title>
+<link rel="icon" href="./assets/logo-64.png">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="apple-touch-icon" href="./assets/icon-192.png">
+<meta name="theme-color" content="#1b2a57">
+<meta name="description" content="검수 끝난 요트·보트만, 돈은 배를 받을 때까지 안전하게. 부산 요트·보트 역경매·안전거래 플랫폼 마린딜러 (시연용 프로토타입)">
+<meta property="og:title" content="마린딜러 · 내 배를 만나는 가장 쉬운 방법">
+<meta property="og:description" content="검수 끝난 요트·보트만, 돈은 배를 받을 때까지 안전하게.">
+<meta property="og:image" content="./assets/brand-campaign.png">
+<style>
+/* ===== 디자인 토큰 (색 12단계: radix-ui/colors 방식 · 간격 4px 단위: daangn/seed-design 방식) ===== */
+:root{
+  --sea-1:#f4f8fa;--sea-2:#eaf1f6;--sea-3:#d7eef4;--sea-4:#bcd9e6;--sea-6:#86b4cc;--sea-8:#3e5f94;
+  --sea-9:#1b2a57;--sea-10:#142147;--sea-11:#1b2a57;--sea-12:#121d3f;
+  --g-1:#fbfcfb;--g-2:#f2f4f4;--g-3:#e9eded;--g-4:#dfe4e6;--g-6:#c7cfd3;--g-9:#66717d;--g-11:#56616d;--g-12:#1a2433;--bg:#f5f7f6;--sky:#d7eef4;
+  --coral:#2bb59f;--coral-l:#eaf7f3;--mint:#6fe0c8;--sun:#f2b33d;--navy:#1b2a57;
+  --ok:#137257;--ok-l:#e5f5ef;--warn:#8a5a08;--warn-l:#fdf3df;--bad:#b5352c;--bad-l:#fcebe9;
+  --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:20px;--s6:24px;--s8:32px;--s10:40px;
+  --r-sm:8px;--r:14px;--r-lg:20px;
+  --shadow-1:0 1px 2px rgba(16,32,48,.06),0 1px 1px rgba(16,32,48,.04);
+  --shadow-2:0 8px 24px rgba(12,42,67,.10);
+  --font:"Pretendard","Pretendard Variable","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR","Hiragino Sans","Microsoft YaHei",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--g-12);font-family:var(--font);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+button{font:inherit;cursor:pointer;color:inherit}
+img{display:block}
+:focus-visible{outline:3px solid var(--coral);outline-offset:2px;border-radius:6px}
+.wrap{max-width:1200px;margin:0 auto;padding:0 var(--s5)}
+
+/* ===== 헤더 ===== */
+header.site{position:sticky;top:0;z-index:30;background:rgba(255,255,255,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--g-4)}
+.hrow{display:flex;align-items:center;gap:var(--s6);height:68px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--sea-12);flex:none;background:none;border:0;padding:0}
+.brand svg{width:38px;height:38px}
+.brand b{font-size:22px;font-weight:800;letter-spacing:-.6px;line-height:1}
+.brand small{display:block;font-size:10.5px;font-weight:700;letter-spacing:1.6px;color:var(--sea-9);margin-top:3px}
+nav.tabs{display:flex;gap:2px;overflow-x:auto;flex:1;scrollbar-width:none}
+nav.tabs button{background:none;border:0;padding:10px 12px;border-radius:10px;font-weight:700;color:var(--g-11);white-space:nowrap;font-size:14.5px}
+nav.tabs button:hover{background:var(--g-2);color:var(--g-12)}
+nav.tabs button[aria-selected="true"]{color:var(--sea-9);background:var(--sea-2)}
+nav.tabs .k{display:inline-grid;place-items:center;width:18px;height:18px;border-radius:5px;background:var(--g-3);font-size:11px;margin-right:6px;color:var(--g-11)}
+nav.tabs button[aria-selected="true"] .k{background:var(--sea-9);color:#fff}
+.hright{display:flex;align-items:center;gap:var(--s2);flex:none}
+.lang{display:flex;background:var(--g-2);border-radius:10px;padding:3px}
+.lang button{border:0;background:none;padding:5px 9px;border-radius:8px;font-size:12.5px;font-weight:700;color:var(--g-11)}
+.lang button[aria-pressed="true"]{background:#fff;color:var(--sea-10);box-shadow:var(--shadow-1)}
+.demo-badge{font-size:11.5px;font-weight:800;background:var(--sun);color:#3a2a00;padding:6px 10px;border-radius:99px;white-space:nowrap}
+.promise{background:var(--sea-11);color:#dfe7f2}
+.promise svg{color:var(--mint)}
+.promise .wrap{display:flex;justify-content:space-between;gap:var(--s4);overflow-x:auto;height:42px;align-items:center;scrollbar-width:none}
+.promise span{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:600;white-space:nowrap}
+.promise b{color:var(--mint);font-weight:700}
+.promise svg{width:16px;height:16px;flex:none}
+@media(max-width:980px){.hrow{flex-wrap:wrap;height:auto;padding:10px 0;gap:10px}nav.tabs{order:3;flex-basis:100%}.hright{margin-left:auto}}
+
+main{padding:var(--s6) 0 120px}
+section[hidden]{display:none}
+section[role=tabpanel]:focus{outline:none}
+h1{font-size:26px;margin:0 0 4px;letter-spacing:-.6px}
+h2{font-size:17px;margin:0 0 var(--s3);letter-spacing:-.3px}
+.lead{color:var(--g-11);margin:0 0 var(--s5)}
+.grid{display:grid;gap:var(--s4)}
+.grid>*{min-width:0}
+.g2{grid-template-columns:1.35fr 1fr}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:960px){.g2{grid-template-columns:1fr}.g3,.g4{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.g3,.g4{grid-template-columns:1fr}}
+.card{background:#fff;border:1px solid var(--g-4);border-radius:16px;padding:var(--s5)}
+.muted{color:var(--g-11);font-size:13px}
+.btn{border:1px solid var(--g-4);background:#fff;color:var(--g-12);padding:10px 16px;border-radius:999px;font-weight:700;transition:.15s}
+.btn:hover{border-color:var(--sea-8);background:var(--sea-1)}
+.btn.primary{background:var(--sea-9);border-color:var(--sea-9);color:#fff}
+.btn.primary:hover{background:var(--sea-10)}
+.btn.coral{background:var(--coral);border-color:var(--coral);color:var(--navy)}
+.btn.coral:hover{background:#25a08c;border-color:#25a08c}
+.btn.danger{background:var(--bad);border-color:var(--bad);color:#fff}
+.btn.warn{background:var(--warn-l);border-color:#f0cf93;color:var(--warn)}
+.btn:disabled{opacity:.42;cursor:not-allowed}
+.row{display:flex;gap:var(--s2);flex-wrap:wrap;align-items:center}
+.tag{display:inline-block;font-size:12px;font-weight:800;padding:2px 8px;border-radius:6px;white-space:nowrap}
+.t-ok{background:var(--ok-l);color:var(--ok)}.t-warn{background:var(--warn-l);color:var(--warn)}
+.t-bad{background:var(--bad-l);color:var(--bad)}.t-gray{background:var(--g-3);color:var(--g-9)}.t-sea{background:var(--sea-2);color:var(--sea-10)}
+.ph-img{object-fit:cover}
+.ico{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+
+/* ===== 0. 홈 ===== */
+.hero{position:relative;isolation:isolate;border-radius:28px;overflow:hidden;background:#fff;color:var(--navy);padding:56px 48px 48px;display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;border:1px solid var(--g-4)}
+.hero::before{content:"";position:absolute;z-index:-1;right:-30%;bottom:-92%;width:92%;height:160%;border-radius:50%;background:var(--sky)}
+.hero .hbrand{display:flex;align-items:center;gap:10px;font-size:15px;font-weight:800;color:var(--navy);margin-bottom:18px;letter-spacing:-.2px}
+.hero .hbrand i{width:4px;height:20px;border-radius:2px;background:var(--coral);display:block}
+.hero h1{font-size:clamp(34px,4.6vw,58px);line-height:1.1;letter-spacing:-.045em;font-weight:800;margin:0 0 16px;color:var(--navy)}
+.hero p{margin:0 0 24px;color:var(--g-11);font-size:16.5px;max-width:30em}
+.pill{display:inline-flex;align-items:center;gap:12px;border:0;background:var(--navy);color:#fff;border-radius:999px;padding:14px 22px 14px 26px;font-size:16px;font-weight:800;margin-bottom:28px}
+.pill:hover{background:var(--sea-10)}
+.pill svg{width:34px;height:12px;stroke:var(--mint);stroke-width:3;fill:none;stroke-linecap:round}
+.hero .shot{border-radius:20px;overflow:hidden;aspect-ratio:4/3;box-shadow:0 24px 48px rgba(27,42,87,.22);position:relative}
+.hero .shot img{width:100%;height:100%;object-position:50% 60%}
+.hero .shot .stamp{position:absolute;left:12px;bottom:12px;background:#fff;color:var(--sea-12);border-radius:10px;padding:8px 12px;font-size:13px;font-weight:800;display:flex;gap:8px;align-items:center;box-shadow:var(--shadow-2)}
+.hero .shot .stamp i{width:8px;height:8px;border-radius:50%;background:var(--ok);display:block}
+@media(max-width:860px){.hero{grid-template-columns:1fr;padding:32px 24px}.hero::before{right:-60%;bottom:-40%;width:180%;height:70%}}
+.search{display:grid;grid-template-columns:repeat(3,1fr) auto;gap:6px;background:#fff;border-radius:18px;padding:6px;border:1px solid var(--g-4);box-shadow:0 6px 18px rgba(27,42,87,.08)}
+.search select{border:0;background:var(--g-2);border-radius:12px;padding:12px;font:inherit;font-weight:600;color:var(--g-12);min-width:0}
+@media(max-width:560px){.search{grid-template-columns:1fr 1fr}}
+.cats{display:grid;grid-template-columns:repeat(6,1fr);gap:var(--s2);margin:var(--s6) 0}
+@media(max-width:760px){.cats{grid-template-columns:repeat(3,1fr)}}
+.cats button{border:1px solid var(--g-4);background:#fff;border-radius:var(--r);padding:14px 6px;display:grid;justify-items:center;gap:8px;font-weight:700;font-size:13.5px;transition:.15s}
+.cats button .ci{width:46px;height:46px;border-radius:14px;background:var(--sea-2);display:grid;place-items:center;color:var(--sea-9)}
+.cats button .ci svg{width:26px;height:26px}
+.cats button:hover{border-color:var(--sea-6)}
+.cats button[aria-pressed="true"]{border-color:var(--sea-9);background:var(--sea-1)}
+.cats button[aria-pressed="true"] .ci{background:var(--sea-9);color:#fff}
+.sec-title{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin:var(--s8) 0 var(--s3)}
+.sec-title h2{margin:0;font-size:21px}
+.lcard{border:1px solid var(--g-4);border-radius:var(--r);overflow:hidden;background:#fff;text-align:left;padding:0;display:flex;flex-direction:column;transition:.2s;position:relative}
+.lcard:hover{border-color:var(--navy)}
+.lcard .im{position:relative;aspect-ratio:4/3;background:var(--sea-12);overflow:hidden}
+.lcard .im img{width:100%;height:100%;transition:transform .4s}
+.lcard:hover .im img{transform:scale(1.04)}
+.lcard .badges{position:absolute;left:10px;top:10px;display:flex;gap:5px;flex-wrap:wrap}
+.lcard .badges span{background:rgba(255,255,255,.95);color:var(--sea-11);font-size:11.5px;font-weight:800;padding:3px 8px;border-radius:6px;display:flex;align-items:center;gap:4px}
+.lcard .badges span.ok{background:var(--ok);color:#fff}
+.lcard .bd{padding:14px 16px 16px;display:grid;gap:4px}
+.lcard .nm{font-weight:800;font-size:16px;letter-spacing:-.3px}
+.lcard .meta{font-size:13px;color:var(--g-11)}
+.lcard .pr{font-size:20px;font-weight:800;color:var(--sea-10);letter-spacing:-.4px;margin-top:4px}
+.lcard .risk{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--g-11)}
+.lcard .risk i{width:8px;height:8px;border-radius:50%;background:var(--ok)}
+.lcard.blocked .im img{filter:grayscale(1) blur(1.5px) brightness(.8)}
+.lcard .blk{position:absolute;inset:0;display:none;place-items:center;text-align:center;color:#fff;padding:12px}
+.lcard.blocked .blk{display:grid}
+.lcard .blk div{background:rgba(209,52,43,.94);border-radius:12px;padding:10px 14px;font-weight:800;font-size:14px}
+.lcard .blk small{display:block;font-weight:600;font-size:12px;opacity:.9}
+.sell{display:grid;grid-template-columns:auto 1fr 1.4fr;gap:var(--s6);align-items:center;background:var(--coral-l);border:1px solid #cdebe2;border-radius:28px;padding:var(--s8);margin-top:var(--s8)}
+.sell h2{font-size:24px;margin:0 0 6px}
+.sell ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s3)}
+.sell li{background:#fff;border-radius:var(--r);padding:var(--s4);font-size:14px}
+.sell li b{display:block;color:var(--coral);font-size:13px;margin-bottom:4px}
+@media(max-width:860px){.sell .sp{display:none}.sell{grid-template-columns:1fr;padding:var(--s6)}.sell ol{grid-template-columns:1fr}}
+
+/* ===== 1. 매물 상세 · 갤러리 (스와이프: swiper 방식) ===== */
+.gal{padding:0;overflow:hidden}
+.gal-main{position:relative;aspect-ratio:16/10;background:#0b2a40;overflow:hidden;touch-action:pan-y}
+.gal-main .bgblur{position:absolute;inset:-30px;width:calc(100% + 60px);height:calc(100% + 60px);object-fit:cover;filter:blur(24px) brightness(.7)}
+.gal-main .fg{position:absolute;inset:0;width:100%;height:100%;transition:opacity .25s ease}
+.gal-main .fg.fade{opacity:0}
+.gal-tag{position:absolute;left:14px;top:14px;display:flex;gap:6px}
+.gal-tag span{background:rgba(12,42,67,.85);color:#fff;font-size:12px;font-weight:800;padding:5px 10px;border-radius:7px}
+.gal-tag .g-ok{background:var(--ok)}.gal-tag .g-warn{background:var(--warn)}
+.gal-count{position:absolute;right:14px;top:14px;background:rgba(0,0,0,.5);color:#fff;font-size:12px;padding:4px 9px;border-radius:99px}
+.gal-cap{position:absolute;left:0;right:0;bottom:0;padding:40px 18px 14px;background:linear-gradient(transparent,rgba(4,18,30,.82));color:#fff}
+.gal-cap b{font-size:17px;display:block}
+.gal-cap span{font-size:13px;opacity:.88}
+.gal-arrow{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;border:0;background:rgba(255,255,255,.92);font-size:22px;font-weight:800;display:grid;place-items:center;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.gal-arrow.l{left:12px}.gal-arrow.r{right:12px}
+.thumbs{display:flex;gap:8px;padding:12px 14px;background:var(--sea-12);overflow-x:auto;scroll-snap-type:x mandatory}
+.thumbs button{flex:0 0 calc((100% - 40px)/6);min-width:72px;scroll-snap-align:start;padding:0;border:2px solid transparent;border-radius:8px;overflow:hidden;aspect-ratio:4/3;background:#123;position:relative;opacity:.6;transition:.2s}
+.thumbs button[aria-current="true"]{border-color:var(--mint);opacity:1}
+.thumbs img{width:100%;height:100%}
+.thumbs i{position:absolute;left:4px;bottom:4px;font-style:normal;font-size:10px;font-weight:800;background:rgba(0,0,0,.6);color:#fff;padding:1px 5px;border-radius:4px}
+.gal-body{padding:16px 18px 18px}
+.spec{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 14px}
+@media(max-width:560px){.spec{grid-template-columns:repeat(2,1fr)}}
+.spec div{background:var(--g-2);border-radius:10px;padding:10px}
+.spec b{display:block;font-size:15px}
+.spec span{font-size:12px;color:var(--g-11)}
+.price{font-size:30px;font-weight:800;letter-spacing:-.6px;color:var(--sea-10)}
+.gauge{width:132px;height:132px;border-radius:50%;display:grid;place-items:center;flex:none}
+.gauge i{width:100px;height:100px;border-radius:50%;background:#fff;display:grid;place-items:center;font-style:normal;text-align:center}
+.gauge b{font-size:30px;display:block;line-height:1}
+.chk{list-style:none;margin:0;padding:0}
+.chk li{display:flex;gap:10px;padding:9px 0;border-bottom:1px solid var(--g-3);align-items:flex-start}
+.chk li:last-child{border-bottom:0}
+.ic{flex:none;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800;color:#fff}
+.ic.ok{background:var(--ok)}.ic.warn{background:var(--warn)}.ic.bad{background:var(--bad)}.ic.na{background:var(--g-9)}
+.cat{display:grid;grid-template-columns:110px 1fr 54px;gap:10px;align-items:center;margin:8px 0;font-size:14px}
+.bar{height:8px;background:var(--g-3);border-radius:9px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:9px}
+.bids{margin-top:12px}
+.bid{display:flex;justify-content:space-between;padding:9px 11px;border-radius:9px;background:var(--g-2);margin-top:6px;font-size:14px;animation:in .35s ease}
+.bid.best{background:var(--ok-l);font-weight:800}
+@keyframes in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.ai-sum{background:var(--sea-2);border-radius:10px;padding:12px 14px;font-size:14px}
+.ai-sum b{color:var(--sea-11)}
+.itile{padding:0;overflow:hidden;text-align:left;border:1px solid var(--g-4);background:#fff;border-radius:var(--r);transition:.2s;display:flex;flex-direction:column}
+.itile:hover{border-color:var(--navy)}
+.itile .im{position:relative;aspect-ratio:16/10;overflow:hidden;background:#0b2a40}
+.itile .im img{width:100%;height:100%}
+.itile .im .area{position:absolute;left:10px;top:10px;background:rgba(12,42,67,.88);color:#fff;font-weight:800;font-size:13px;padding:4px 10px;border-radius:7px}
+.itile .im .sc{position:absolute;right:10px;top:10px;background:#fff;font-weight:800;font-size:13px;padding:3px 9px;border-radius:7px}
+.itile .bd{padding:12px 14px 14px}
+.grades{display:flex;gap:4px;margin-bottom:8px;flex-wrap:wrap}
+.grades span{font-size:11.5px;font-weight:800;padding:2px 7px;border-radius:5px}
+.gA{background:var(--ok-l);color:var(--ok)}.gB{background:#fff6d6;color:#8a6a00}.gC{background:var(--warn-l);color:var(--warn)}.gN{background:var(--g-3);color:var(--g-9)}
+.itile .pt{font-size:13.5px;display:flex;gap:6px;align-items:flex-start}
+
+/* ===== 2. 에스크로 ===== */
+.deal{display:flex;gap:14px;align-items:center;padding:12px;margin-bottom:16px;flex-wrap:wrap}
+.deal img{width:96px;height:72px;border-radius:10px;object-fit:cover;flex:none}
+.party{font-size:13px}.party b{display:block;font-size:14px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:0 0 18px;counter-reset:s}
+@media(max-width:760px){.steps{grid-template-columns:1fr 1fr}}
+.step{border:2px solid var(--g-4);border-radius:var(--r);padding:14px;background:#fff;transition:.25s}
+.step .no{font-size:12px;font-weight:800;color:var(--g-9)}
+.step h3{margin:4px 0 6px;font-size:15px}
+.step p{margin:0;font-size:13px;color:var(--g-11)}
+.step .st{margin-top:10px}
+.step.done{border-color:var(--ok);background:var(--ok-l)}.step.done .no{color:var(--ok)}
+.step.now{border-color:var(--sea-9);box-shadow:0 0 0 4px var(--sea-3)}.step.now .no{color:var(--sea-9)}
+.step.hold{border-color:var(--bad);background:var(--bad-l)}.step.hold .no{color:var(--bad)}
+.money{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+@media(max-width:560px){.money{grid-template-columns:1fr}}
+.money div{background:var(--g-2);border-radius:10px;padding:12px}
+.money b{font-size:19px;display:block}
+.log{list-style:none;margin:0;padding:0;max-height:300px;overflow:auto;font-size:13px}
+.log li{padding:7px 0;border-bottom:1px dashed var(--g-4)}
+.log time{color:var(--g-9);margin-right:8px;font-variant-numeric:tabular-nums}
+.alertbox{border-radius:12px;padding:14px;margin-top:14px}
+.alertbox.bad{background:var(--bad-l);border:1px solid #f3c3bf}
+.alertbox.ok{background:var(--ok-l);border:1px solid #b9e0c9}
+.alertbox h3{margin:0 0 6px;font-size:15px}
+.hold-ev{display:flex;gap:12px;align-items:center;margin:8px 0}
+.hold-ev img{width:120px;height:80px;border-radius:8px;object-fit:cover;flex:none;border:2px solid var(--bad)}
+
+/* ===== 3. 사기 탐지 ===== */
+.txlist{display:grid;gap:10px}
+.tx{text-align:left;border:1px solid var(--g-4);background:#fff;border-radius:12px;padding:10px;display:grid;grid-template-columns:96px 1fr auto;gap:12px;align-items:center;transition:.2s}
+.tx[aria-pressed="true"]{border-color:var(--sea-9);box-shadow:0 0 0 3px var(--sea-3)}
+.tx .th{position:relative;width:96px;height:72px;border-radius:9px;overflow:hidden;background:#0b2a40}
+.tx .th img{width:100%;height:100%}
+.tx .th .rib{position:absolute;left:0;right:0;bottom:0;background:rgba(209,52,43,.94);color:#fff;font-size:10.5px;font-weight:800;text-align:center;padding:2px 0}
+.tx .th .lock{position:absolute;inset:0;display:none;place-items:center;background:rgba(15,31,51,.55);color:#fff;font-size:22px}
+.tx.is-frozen .th img{filter:grayscale(1)}
+.tx.is-frozen .th .lock{display:grid}
+.tx .sc{font-size:24px;font-weight:800;text-align:right;line-height:1}
+.tx .sc small{display:block;font-size:11px;color:var(--g-9);font-weight:600}
+.sig{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--g-3);font-size:14px}
+.frozen-banner{display:none;background:var(--bad);color:#fff;border-radius:10px;padding:10px 14px;font-weight:800;margin-bottom:12px}
+.frozen .frozen-banner{display:block}
+.ev{margin:4px 0 14px}
+.ev-pair{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center}
+.ev figure{margin:0}
+.ev figure .im{position:relative;aspect-ratio:4/3;border-radius:10px;overflow:hidden;background:#0b2a40}
+.ev figure img{width:100%;height:100%}
+.ev figure .box{position:absolute;border:3px dashed #ffd166;border-radius:6px}
+.ev figcaption{font-size:12px;color:var(--g-11);margin-top:5px}
+.ev .vs{text-align:center;font-weight:800;color:var(--bad);font-size:13px}
+.ev .vs b{font-size:26px;display:block}
+.ev-one{display:grid;grid-template-columns:150px 1fr;gap:14px;align-items:center}
+@media(max-width:560px){.ev-one{grid-template-columns:1fr}}
+.pbar{margin:6px 0}
+.pbar .l{display:flex;justify-content:space-between;font-size:13px}
+.pbar .t{height:12px;background:var(--g-3);border-radius:6px;overflow:hidden;margin-top:3px}
+.pbar .t i{display:block;height:100%;border-radius:6px}
+.hin{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;font-size:12.5px}
+.hin span{background:var(--g-2);border-radius:6px;padding:4px 8px;font-family:ui-monospace,Consolas,monospace}
+.hin span.x{background:var(--bad-l);color:var(--bad)}
+pre.packet{background:var(--sea-12);color:#d9e6f2;border-radius:12px;padding:16px;font-size:12.5px;line-height:1.6;white-space:pre-wrap;word-break:break-all;max-height:420px;overflow:auto;margin:0;font-family:ui-monospace,"D2Coding",Consolas,monospace}
+.cl{list-style:none;margin:0;padding:0;columns:2;column-gap:20px;font-size:13.5px}
+@media(max-width:560px){.cl{columns:1}}
+.cl li{break-inside:avoid;padding:4px 0}
+.cl label{display:flex;gap:8px;align-items:flex-start;cursor:pointer}
+
+/* ===== 4. 내비게이터 ===== */
+.chat{display:flex;flex-direction:column;gap:12px;min-height:340px}
+.q-list{display:grid;gap:8px}
+.q{text-align:left;border:1px solid var(--g-4);background:#fff;border-radius:12px;padding:12px 14px;font-weight:700}
+.q:hover,.q[aria-pressed="true"]{border-color:var(--sea-8);background:var(--sea-1)}
+.msg{max-width:88%;padding:12px 14px;border-radius:14px;animation:in .3s ease}
+.msg.me{align-self:flex-end;background:var(--sea-9);color:#fff;border-bottom-right-radius:4px}
+.bot{display:flex;gap:10px;align-items:flex-start;align-self:flex-start;max-width:94%;animation:in .3s ease}
+.bot .av{width:40px;height:40px;border-radius:50%;overflow:hidden;flex:none;background:var(--sea-2);border:2px solid #fff;box-shadow:var(--shadow-1)}
+.bot .av img{width:100%;height:100%}
+.bot .msg{max-width:none;background:var(--g-2);border-bottom-left-radius:4px}
+.bot .who{font-size:12px;font-weight:800;color:var(--sea-10);margin-bottom:2px}
+.msg ol{margin:6px 0 0;padding-left:20px}
+.msg li{margin:3px 0}
+.msg .note{display:block;margin-top:8px;font-size:12px;color:var(--warn)}
+.navctx{display:flex;gap:12px;align-items:center;background:var(--sea-2);border-radius:12px;padding:10px;margin-bottom:12px}
+.navctx img{width:72px;height:54px;border-radius:8px;object-fit:cover}
+
+/* ===== 캐릭터 안내 + 둘러보기 (driver.js 방식 스포트라이트) ===== */
+.guide{position:fixed;right:20px;bottom:20px;z-index:60;display:flex;align-items:flex-end;gap:10px;max-width:min(420px,calc(100vw - 40px))}
+.guide .bubble{background:#fff;border:1px solid var(--g-4);border-radius:18px 18px 4px 18px;padding:14px 16px;box-shadow:0 12px 32px rgba(12,42,67,.18);font-size:14.5px;line-height:1.6;animation:in .3s ease}
+.guide .bubble .who{font-size:12px;font-weight:800;color:var(--sea-10);margin-bottom:3px;display:flex;justify-content:space-between;gap:8px}
+.guide .bubble .who span{color:var(--g-9);font-weight:600}
+.guide .bubble .acts{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.guide .bubble .acts button{border:0;border-radius:8px;padding:7px 11px;font-size:13px;font-weight:800;background:var(--g-2)}
+.guide .bubble .acts .go{background:var(--sea-9);color:#fff}
+.guide.min .bubble{display:none}
+.guide .avatar{width:84px;height:84px;border-radius:50%;flex:none;border:0;padding:0;background:var(--sea-2);box-shadow:0 8px 20px rgba(12,42,67,.25);overflow:hidden;animation:bob 3.2s ease-in-out infinite;position:relative}
+.guide .avatar img{width:100%;height:100%}
+.guide .avatar::after{content:"";position:absolute;right:6px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--coral);border:2px solid #fff;display:none}
+.guide.min .avatar::after{display:block}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@media(max-width:560px){.guide .avatar{width:64px;height:64px}.guide .bubble{font-size:13.5px}}
+.sprite{width:100%;height:100%;background:#fff url(./assets/character-sheet.jpg) no-repeat;background-size:400% 300%}
+.nosheet .sprite{background:#fff var(--mascot) center/cover no-repeat!important}
+.guide .avatar{background:#fff;border:3px solid #fff;outline:2px solid var(--sea-4)}
+.guide .avatar .sprite{transform:scale(1.18) translateY(6%)}
+.bot .av{background:#fff}.bot .av .sprite{transform:scale(1.2) translateY(6%)}
+.sell .sp{width:120px;height:107px;border-radius:20px;overflow:hidden;background:#fff}
+.hero .shot-wrap{position:relative}
+.hero .mini{position:absolute;right:-10px;top:-26px;width:124px;height:110px;border-radius:24px;overflow:hidden;box-shadow:0 10px 24px rgba(0,0,0,.25);border:3px solid #fff}
+.hero .mini .sprite,.sell .sp .sprite{transform:scale(1.1)}
+.spot{position:fixed;z-index:50;border-radius:14px;box-shadow:0 0 0 9999px rgba(8,24,40,.58),0 0 0 3px var(--mint);pointer-events:none;transition:all .35s ease;display:none}
+.spot.on{display:block}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--g-12);color:#fff;padding:10px 16px;border-radius:10px;opacity:0;transition:.25s;pointer-events:none;font-size:14px;z-index:70}
+.toast.on{opacity:1;transform:translateX(-50%)}
+footer{border-top:1px solid var(--g-4);background:var(--g-2);color:var(--g-9);font-size:12px;padding:var(--s5) 0 110px}
+.disc{display:flex;gap:8px;align-items:flex-start;margin:0 0 10px;padding:12px 14px;background:#fff;border:1px solid var(--g-4);border-radius:10px;color:var(--g-12);font-size:13.5px;font-weight:700}
+.disc .ico,.disc-inline .ico{width:18px;height:18px;flex:none;color:var(--warn);margin-top:1px}
+.disc-inline{display:flex;gap:8px;align-items:flex-start;margin:14px 0 0;padding:10px 12px;background:var(--warn-l);border-radius:10px;font-size:13px;color:#6b4a00}
+.brand .logo-img{width:44px;height:44px;border-radius:24%;object-fit:cover;transform:scale(1.01);box-shadow:0 3px 10px rgba(12,42,67,.28)}
+.brand .logo-img + svg{display:none}
+.info3{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.info3 h3{font-size:13px;color:var(--g-11);margin:0 0 8px;font-weight:800}
+.info3 dl{display:grid;grid-template-columns:auto 1fr;gap:7px 12px;margin:0;font-size:13.5px}
+.info3 dt{color:var(--g-11)}.info3 dd{margin:0;font-weight:700;text-align:right}
+.okc{color:var(--ok)}
+.mkt{margin-top:16px;padding-top:14px;border-top:1px solid var(--g-3)}
+.mbar{position:relative;height:10px;border-radius:6px;background:linear-gradient(90deg,var(--sea-3),var(--sea-6));margin:38px 0 6px}
+.mbar i{position:absolute;top:-6px;width:4px;height:22px;background:var(--sea-12);border-radius:2px;transform:translateX(-50%)}
+.mbar i span{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);white-space:nowrap;background:var(--sea-12);color:#fff;font-size:12px;font-weight:800;padding:3px 8px;border-radius:6px;font-style:normal}
+@media(max-width:560px){.info3{grid-template-columns:1fr}}
+.esc-acts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px}
+.esc-acts #nextBtn{grid-column:1/-1;padding:13px}
+.btn.ghost{padding:6px 10px;font-size:13px;border-color:transparent;color:var(--g-11);background:var(--g-2)}
+.log li.empty{color:var(--g-9);border:0;padding:28px 0;text-align:center}
+.people{display:grid;grid-template-columns:1.6fr 1fr;gap:16px;margin-top:32px}
+@media(max-width:960px){.people{grid-template-columns:1fr}}
+.team{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:760px){.team{grid-template-columns:1fr 1fr}}
+.member{text-align:center;padding:18px 12px;border:1px solid var(--g-4);border-radius:16px;background:#fff}
+.member .face{width:72px;height:64px;margin:0 auto 10px;border-radius:50%;overflow:hidden;background:#fff;border:2px solid var(--sea-3)}
+.member .face .sprite{transform:scale(1.15) translateY(4%)}
+.member b{display:block;font-size:17px;color:var(--navy)}
+.member .role{display:inline-block;margin-top:4px;font-size:12px;font-weight:800;color:var(--navy);background:var(--sea-2);border-radius:999px;padding:2px 9px}
+.member p{margin:4px 0 6px;font-size:12.5px;color:var(--g-11)}
+.member em{font-style:normal;font-size:11.5px;color:var(--g-9)}
+.center{background:var(--navy);color:#fff;border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:10px}
+.center h3{margin:0;font-size:18px}
+.center p{margin:0;color:#c9d4e6;font-size:13.5px}
+.center dl{display:grid;grid-template-columns:auto 1fr;gap:8px 14px;margin:6px 0 0;font-size:13.5px}
+.center dt{color:#9fb0cc}.center dd{margin:0;font-weight:700}
+.center .pend{color:var(--sun)}
+.foot{display:grid;grid-template-columns:1fr 1.6fr;gap:24px;margin:18px 0 14px;color:var(--g-11)}
+@media(max-width:760px){.foot{grid-template-columns:1fr}}
+.fbrand{display:flex;gap:12px;align-items:flex-start}
+.fbrand img{width:40px;height:40px;border-radius:24%}
+.fbrand b{display:block;color:var(--navy);font-size:16px}
+.biz{display:grid;grid-template-columns:repeat(2,auto 1fr);gap:6px 14px;margin:0;font-size:12.5px}
+@media(max-width:560px){.biz{grid-template-columns:auto 1fr}}
+.biz dt{color:var(--g-9)}.biz dd{margin:0;color:var(--g-12);font-weight:600}
+.biz dd.pend{color:var(--warn)}
+.flinks{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.flinks button{border:1px solid var(--g-4);background:#fff;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:700;color:var(--g-12)}
+.flinks button:hover{border-color:var(--navy)}
+dialog.dlg{border:0;border-radius:20px;padding:0;max-width:min(720px,calc(100vw - 32px));width:100%;max-height:min(80vh,760px);box-shadow:0 30px 80px rgba(18,29,63,.35);color:var(--g-12)}
+dialog.dlg::backdrop{background:rgba(18,29,63,.55)}
+.dlg-in{padding:24px 26px;overflow:auto;max-height:min(80vh,760px)}
+.dlg-h{display:flex;justify-content:space-between;align-items:center;gap:12px;position:sticky;top:-24px;background:#fff;padding:4px 0 10px}
+.dlg-h h2{margin:0;font-size:20px}
+.draft{background:var(--warn-l);color:var(--warn);font-weight:800;font-size:13px;border-radius:10px;padding:8px 12px;margin:0 0 12px}
+.dlg-in h3{font-size:15px;margin:18px 0 4px;color:var(--navy)}
+.dlg-in p,.dlg-in li{font-size:14px;line-height:1.7;margin:0}
+.dlg-in ul{margin:0;padding-left:20px}
+.fgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px 14px}
+@media(max-width:560px){.fgrid{grid-template-columns:1fr}}
+.fgrid .full{grid-column:1/-1}
+.fgrid label,.disc4 label{display:grid;gap:5px;font-size:13px;font-weight:700;color:var(--g-11)}
+.fgrid input,.fgrid select,.disc4 select{font:inherit;font-weight:600;color:var(--g-12);border:1px solid var(--g-4);border-radius:10px;padding:10px 12px;background:#fff}
+.fgrid input:focus,.fgrid select:focus,.disc4 select:focus{border-color:var(--navy);outline:2px solid var(--sea-3)}
+.fgrid input[type=file]{padding:9px}
+.prev{display:flex;gap:6px;flex-wrap:wrap}
+.prev img{width:72px;height:54px;object-fit:cover;border-radius:8px;border:1px solid var(--g-4)}
+fieldset.disc4{border:1px solid var(--g-4);border-radius:14px;padding:12px 14px;margin:14px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:10px 14px}
+fieldset.disc4 legend{font-weight:800;font-size:14px;color:var(--navy);padding:0 6px}
+@media(max-width:560px){fieldset.disc4{grid-template-columns:1fr}}
+.agree{display:flex;gap:8px;align-items:flex-start;font-size:13.5px;margin:14px 0 4px}
+.ferr{color:var(--bad);font-weight:700;font-size:13.5px;min-height:20px;margin:6px 0 10px}
+.res-top{display:flex;gap:18px;align-items:center;margin-bottom:12px}
+.res-top .gauge b{font-size:28px}
+.res-sig{list-style:none;margin:0 0 14px;padding:0}
+.res-sig li{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-bottom:1px solid var(--g-3);font-size:14px}
+.lcard .badges span.rev{background:var(--sun);color:#3a2a00}
+@media(max-width:560px){header.site{position:static}.hrow{gap:8px}.brand b{font-size:19px}.brand .logo-img{width:38px;height:38px}.lang button{padding:4px 7px;font-size:11.5px}.demo-badge{font-size:10.5px;padding:4px 8px}.promise .wrap{height:36px}.promise span{font-size:12px}.hero h1{font-size:32px}.guide{right:10px;bottom:10px;max-width:calc(100vw - 20px)}.guide .bubble{font-size:13px;padding:10px 12px}.guide .bubble .acts button{padding:6px 9px;font-size:12.5px}}
+kbd{background:#fff;border:1px solid var(--g-4);border-radius:4px;padding:0 5px;font-size:11px}
+</style>
+</head>
+<body>
+<header class="site">
+  <div class="wrap hrow">
+    <button class="brand" data-tab="t0" aria-label="마린딜러 홈">
+      <img class="logo-img" src="./assets/logo-128.png" alt="" width="44" height="44"><svg viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3a8bc9"/><stop offset="1" stop-color="#0b5287"/></linearGradient></defs><rect width="40" height="40" rx="11" fill="url(#lg)"/><path d="M20 7v19" stroke="#fff" stroke-width="2"/><path d="M21.5 9l8 15h-8z" fill="#fff"/><path d="M18.5 12l-6 12h6z" fill="#bfe3f7"/><path d="M8 27h24l-3 4H11z" fill="#ff6a3d"/></svg>
+      <span><b>마린딜러</b><small>MARINEDEALER</small></span>
+    </button>
+    <nav class="tabs" role="tablist" aria-label="화면">
+      <button role="tab" id="tab-t0" aria-controls="t0" data-tab="t0"><span class="k">0</span><span data-i18n="nav.t0"></span></button>
+      <button role="tab" id="tab-t1" aria-controls="t1" data-tab="t1"><span class="k">1</span><span data-i18n="nav.t1"></span></button>
+      <button role="tab" id="tab-t2" aria-controls="t2" data-tab="t2"><span class="k">2</span><span data-i18n="nav.t2"></span></button>
+      <button role="tab" id="tab-t3" aria-controls="t3" data-tab="t3"><span class="k">3</span><span data-i18n="nav.t3"></span></button>
+      <button role="tab" id="tab-t4" aria-controls="t4" data-tab="t4"><span class="k">4</span><span data-i18n="nav.t4"></span></button>
+    </nav>
+    <div class="hright">
+      <div class="lang" role="group" aria-label="언어 / Language">
+        <button data-lang="ko">한국어</button><button data-lang="en">EN</button><button data-lang="ja">日本語</button><button data-lang="zh">中文</button>
+      </div>
+      <span class="demo-badge" data-i18n="badge"></span>
+    </div>
+  </div>
+  <div class="promise" id="promise"><div class="wrap">
+    <span><svg class="ico" viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span data-i18n-html="pr1"></span></span>
+    <span><svg class="ico" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg><span data-i18n-html="pr2"></span></span>
+    <span><svg class="ico" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span data-i18n-html="pr3"></span></span>
+    <span><svg class="ico" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M9 15h6M9 11h2"/></svg><span data-i18n-html="pr4"></span></span>
+  </div></div>
+</header>
+
+<main class="wrap">
+<!-- ============ 0. 홈 ============ -->
+<section id="t0" role="tabpanel" aria-labelledby="tab-t0" tabindex="-1">
+  <div class="hero">
+    <div>
+      <div class="hbrand"><i></i><span data-i18n="home.brand"></span></div>
+      <h1 data-i18n-html="home.title"></h1>
+      <p data-i18n="home.sub"></p>
+      <button class="pill" id="heroCta"><span data-i18n="home.cta"></span><svg viewBox="0 0 34 12" aria-hidden="true"><path d="M2 8c4-6 8-6 12 0s8 6 12 0 6-4 6-4"/></svg></button>
+      <div class="search" id="search">
+        <select id="fType" aria-label="type"></select>
+        <select id="fLen" aria-label="length"><option value="" data-i18n="f.len"></option><option value="s" data-i18n="f.s"></option><option value="m" data-i18n="f.m"></option><option value="l" data-i18n="f.l"></option></select>
+        <select id="fPort" aria-label="port"><option value="" data-i18n="f.port"></option><option value="suyeong" data-i18n="port.suyeong"></option><option value="haeundae" data-i18n="port.haeundae"></option><option value="gwangan" data-i18n="port.gwangan"></option><option value="gijang" data-i18n="port.gijang"></option><option value="dadaepo" data-i18n="port.dadaepo"></option></select>
+        <button class="btn primary" id="searchBtn" data-i18n="f.btn"></button>
+      </div>
+    </div>
+    <div class="shot-wrap"><div class="shot">
+      <img data-f="yacht-01-main.jpg" data-k="sail" data-pos="50% 62%" alt="세일요트 「바다결」 항해 사진" fetchpriority="high">
+      <div class="stamp"><i></i><span data-i18n="home.stamp"></span></div>
+    </div></div>
+  </div>
+
+  <div class="cats" id="cats"></div>
+
+  <div class="sec-title"><h2 data-i18n="home.list"></h2><span class="muted" data-i18n="home.listSub"></span></div>
+  <div class="grid g3" id="cards"></div>
+
+  <div class="sell" id="sellBox">
+    <div class="sp"><div class="sprite" data-pose="11"></div></div>
+    <div>
+      <h2 data-i18n="sell.title"></h2>
+      <p class="muted" data-i18n="sell.sub"></p>
+      <div class="row"><button class="btn coral" id="sellBtn" data-i18n="sell.btn"></button><button class="btn ghost" id="demoReset" data-i18n="demo.reset"></button></div>
+    </div>
+    <ol>
+      <li><b>STEP 1</b><span data-i18n="sell.s1"></span></li>
+      <li><b>STEP 2</b><span data-i18n="sell.s2"></span></li>
+      <li><b>STEP 3</b><span data-i18n="sell.s3"></span></li>
+    </ol>
+  </div>
+
+  <div class="people" id="people">
+    <div>
+      <div class="sec-title" style="margin-top:0"><h2 data-i18n="team.title"></h2><span class="muted" data-i18n="team.sub"></span></div>
+      <div class="team">
+        <div class="member"><div class="face"><div class="sprite" data-pose="5"></div></div><b>혜선</b><span class="role" data-i18n="r2"></span><p data-i18n="r2d"></p></div>
+        <div class="member"><div class="face"><div class="sprite" data-pose="8"></div></div><b>이지</b><span class="role" data-i18n="r3"></span><p data-i18n="r3d"></p></div>
+        <div class="member"><div class="face"><div class="sprite" data-pose="3"></div></div><b>유진</b><span class="role" data-i18n="r1"></span><p data-i18n="r1d"></p></div>
+        <div class="member"><div class="face"><div class="sprite" data-pose="9"></div></div><b>태환</b><span class="role" data-i18n="r4"></span> <span class="role" data-i18n="lead"></span><p data-i18n="r4d"></p></div>
+      </div>
+    </div>
+    <div class="center">
+      <h3 data-i18n="center.title"></h3>
+      <p data-i18n="center.sub"></p>
+      <dl>
+        <dt data-i18n="center.what"></dt><dd data-i18n="center.whatV"></dd>
+        <dt data-i18n="center.loc"></dt><dd class="pend" data-i18n="biz.pending"></dd>
+        <dt data-i18n="center.hours"></dt><dd class="pend" data-i18n="biz.pending"></dd>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 1. 매물 상세 ============ -->
+<section id="t1" role="tabpanel" aria-labelledby="tab-t1" tabindex="-1" hidden>
+  <h1><span data-i18n="cat.sail"></span> 「바다결」 · 2019 · 33ft</h1>
+  <p class="lead"><span data-i18n="port.suyeong"></span> · MD-2411-0087 · <span data-i18n="t1.inspDate"></span></p>
+
+  <div class="grid g2">
+    <div class="grid" style="align-content:start">
+      <div class="card gal">
+        <div class="gal-main" id="galMain">
+          <img class="bgblur" id="galBg" alt="" aria-hidden="true">
+          <img class="fg" id="galImg" alt="">
+          <div class="gal-tag" id="galTag"></div>
+          <div class="gal-count" id="galCount"></div>
+          <button class="gal-arrow l" id="galPrev" aria-label="prev">‹</button>
+          <button class="gal-arrow r" id="galNext" aria-label="next">›</button>
+          <div class="gal-cap" id="galCap"></div>
+        </div>
+        <div class="thumbs" id="thumbs"></div>
+        <div class="gal-body">
+          <div class="spec">
+            <div><b>10.1m</b><span data-i18n="spec.len"></span></div>
+            <div><b>Diesel 29hp</b><span data-i18n="spec.eng"></span></div>
+            <div><b>6</b><span data-i18n="spec.cap"></span></div>
+            <div><b data-i18n="port.suyeong"></b><span data-i18n="spec.port"></span></div>
+          </div>
+          <div class="row" style="justify-content:space-between">
+            <div><div class="muted" data-i18n="t1.price"></div><div class="price" id="t1Price"></div></div>
+            <div class="row">
+              <button class="btn" id="bidBtn" data-i18n="b.bid"></button>
+              <button class="btn primary" id="escrowStartBtn" data-i18n="b.escrow"></button>
+            </div>
+          </div>
+          <div class="bids" id="bids" aria-live="polite"></div>
+        </div>
+      </div>
+      <div class="card" id="infoCard"></div>
+    </div>
+    <div class="grid" style="align-content:start">
+      <div class="card" id="riskCard">
+        <h2 data-i18n="t1.risk"></h2>
+        <div class="row" style="gap:18px;flex-wrap:nowrap">
+          <div class="gauge" id="gauge"><i><span><b>24</b><span class="muted">/ 100</span></span></i></div>
+          <div><span class="tag t-ok" data-i18n="t1.riskLow"></span><p class="muted" style="margin:8px 0 0" data-i18n-html="t1.riskHelp"></p></div>
+        </div>
+        <div style="margin-top:14px" id="catsBar"></div>
+      </div>
+      <div class="card">
+        <h2 data-i18n="t1.sum"></h2>
+        <div class="ai-sum" data-i18n-html="t1.sumLine"></div>
+        <ul class="chk" style="margin-top:8px">
+          <li><span class="ic warn">C</span><div data-i18n-html="sm1"></div></li>
+          <li><span class="ic warn">C</span><div data-i18n-html="sm2"></div></li>
+          <li><span class="ic warn">C</span><div data-i18n-html="sm3"></div></li>
+          <li><span class="ic ok">A</span><div data-i18n-html="sm4"></div></li>
+        </ul>
+      </div>
+      <div class="card" id="noAcc">
+        <h2 data-i18n="t1.noacc"></h2>
+        <ul class="chk">
+          <li><span class="ic ok">✓</span><div data-i18n-html="na1"></div></li>
+          <li><span class="ic ok">✓</span><div data-i18n-html="na2"></div></li>
+          <li><span class="ic warn">!</span><div data-i18n-html="na3"></div></li>
+          <li><span class="ic ok">✓</span><div data-i18n-html="na4"></div></li>
+          <li><span class="ic na">?</span><div data-i18n-html="na5"></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="sec-title"><h2 data-i18n="t1.tiles"></h2><span class="muted" data-i18n="t1.tilesSub"></span></div>
+  <div class="grid g4" id="itiles"></div>
+</section>
+
+<!-- ============ 2. 에스크로 ============ -->
+<section id="t2" role="tabpanel" aria-labelledby="tab-t2" tabindex="-1" hidden>
+  <h1 data-i18n="t2.title"></h1>
+  <p class="lead" data-i18n="t2.lead"></p>
+  <div class="card deal">
+    <img data-f="yacht-01-main.jpg" data-k="sail" data-pos="50% 60%" alt="「바다결」">
+    <div style="flex:1;min-width:180px"><div class="muted" data-i18n="t2.target"></div><b><span data-i18n="cat.sail"></span> 「바다결」 33ft</b><div class="muted" id="t2Price"></div></div>
+    <div class="party"><span class="muted" data-i18n="t2.seller"></span><b>acc_12**45</b></div>
+    <div style="color:var(--g-9);font-size:20px">⇄</div>
+    <div class="party"><span class="muted" data-i18n="t2.buyer"></span><b>K** ✓</b></div>
+  </div>
+  <div class="steps" id="steps"></div>
+  <div class="grid g2">
+    <div class="card" id="moneyCard">
+      <div class="row" style="justify-content:space-between;margin-bottom:12px"><h2 style="margin:0" data-i18n="t2.where"></h2><button class="btn ghost" id="resetBtn">↺ <span data-i18n="b.reset"></span></button></div>
+      <div class="money">
+        <div><span class="muted" data-i18n="m.held"></span><b id="mHeld">0</b></div>
+        <div><span class="muted" data-i18n="m.paid"></span><b id="mPaid">0</b></div>
+        <div><span class="muted" data-i18n="m.ded"></span><b id="mDed">0</b></div>
+      </div>
+      <div class="esc-acts">
+        <button class="btn primary" id="nextBtn"></button>
+        <button class="btn warn" id="holdBtn" data-i18n="b.hold"></button>
+        <button class="btn warn" id="delayBtn" data-i18n="b.delay"></button>
+      </div>
+      <div id="holdBox"></div>
+      <p class="disc-inline"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg><span data-i18n="disc"></span></p>
+    </div>
+    <div class="card"><h2 data-i18n="t2.log"></h2><p class="muted" data-i18n="koOnly" style="margin:-6px 0 6px"></p><ul class="log" id="log"></ul></div>
+  </div>
+</section>
+
+<!-- ============ 3. 사기 탐지 ============ -->
+<section id="t3" role="tabpanel" aria-labelledby="tab-t3" tabindex="-1" hidden>
+  <h1 data-i18n="t3.title"></h1>
+  <p class="lead" data-i18n="t3.lead"></p>
+  <div class="grid g2">
+    <div class="grid" style="align-content:start">
+      <div class="card"><h2 data-i18n="t3.list"></h2><div class="txlist" id="txlist"></div></div>
+      <div class="card" id="txDetail"></div>
+    </div>
+    <div class="grid" style="align-content:start">
+      <div class="card" id="packetCard">
+        <div class="row" style="justify-content:space-between;margin-bottom:10px">
+          <h2 style="margin:0" data-i18n="t3.report"></h2>
+          <div class="row"><button class="btn" id="copyBtn" data-i18n="b.copy"></button><button class="btn primary" id="dlBtn" data-i18n="b.dl"></button></div>
+        </div>
+        <p class="muted" data-i18n="t3.koNote" style="margin:0 0 8px"></p>
+        <pre class="packet" id="packet"></pre>
+      </div>
+      <div class="card">
+        <h2 data-i18n="t3.cl"></h2>
+        <ul class="cl" id="cl"></ul>
+        <p class="muted" style="margin:10px 0 0" data-i18n="t3.channel"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 4. 내비게이터 ============ -->
+<section id="t4" role="tabpanel" aria-labelledby="tab-t4" tabindex="-1" hidden>
+  <h1 data-i18n="t4.title"></h1>
+  <p class="lead" data-i18n="t4.lead"></p>
+  <div class="grid g2">
+    <div class="card">
+      <div class="navctx">
+        <img data-f="yacht-01-main.jpg" data-k="sail" data-pos="50% 60%" alt="「바다결」">
+        <div><div class="muted" data-i18n="t4.ctx"></div><b>「바다결」 · <span id="navStep"></span></b></div>
+      </div>
+      <div class="chat" id="chat"></div>
+    </div>
+    <div class="card"><h2 data-i18n="t4.faq"></h2><div class="q-list" id="qlist"></div></div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap"><p class="disc"><svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg><span data-i18n="disc"></span></p><div class="foot">
+    <div class="fbrand"><img src="./assets/logo-128.png" alt="" width="40" height="40"><div><b>마린딜러</b><span class="muted" data-i18n="foot.tag"></span></div></div>
+    <dl class="biz" aria-label="사업자 정보">
+      <dt data-i18n="biz.name"></dt><dd>마린딜러 <span data-i18n="biz.workname"></span></dd>
+      <dt data-i18n="biz.team"></dt><dd>올리브 유니버스</dd>
+      <dt data-i18n="biz.ceo"></dt><dd class="pend" data-i18n="biz.tbd"></dd>
+      <dt data-i18n="biz.reg"></dt><dd class="pend" data-i18n="biz.pending"></dd>
+      <dt data-i18n="biz.mail"></dt><dd class="pend" data-i18n="biz.pending"></dd>
+      <dt data-i18n="biz.priv"></dt><dd class="pend" data-i18n="biz.tbd"></dd>
+      <dt data-i18n="biz.cs"></dt><dd class="pend" data-i18n="biz.pending"></dd>
+      <dt data-i18n="biz.addr"></dt><dd class="pend" data-i18n="biz.pending"></dd>
+      <dt data-i18n="biz.host"></dt><dd class="pend" data-i18n="biz.pending"></dd>
+    </dl>
+  </div>
+  <div class="flinks"><button data-dlg="terms" data-i18n="lg.terms"></button><button data-dlg="privacy" data-i18n="lg.privacy"></button><button id="contactBtn" data-i18n="lg.contact"></button></div>
+  <div data-i18n-html="footer"></div></div></footer>
+
+<dialog class="dlg" id="dlg" aria-labelledby="dlgTitle"><div class="dlg-in">
+  <div class="dlg-h"><h2 id="dlgTitle"></h2><button class="btn ghost" id="dlgClose" data-i18n="lg.close"></button></div>
+  <p class="draft" data-i18n="lg.draft"></p>
+  <p class="muted" data-i18n="lg.koOnly"></p>
+  <div id="dlgBody"></div>
+</div></dialog>
+
+<dialog class="dlg" id="sellDlg" aria-labelledby="sellTitle"><div class="dlg-in">
+  <div class="dlg-h"><h2 id="sellTitle" data-i18n="sf.title"></h2><button class="btn ghost" id="sellClose" data-i18n="lg.close"></button></div>
+  <form id="sellForm" novalidate>
+    <div class="fgrid">
+      <label><span data-i18n="sf.type"></span><select name="type" id="sfType"></select></label>
+      <label><span data-i18n="sf.nm"></span><input name="nm" maxlength="20" autocomplete="off" required></label>
+      <label><span data-i18n="sf.ft"></span><input name="ft" type="number" inputmode="numeric" min="8" max="150" required></label>
+      <label><span data-i18n="sf.yr"></span><input name="yr" type="number" inputmode="numeric" min="1970" max="2026" required></label>
+      <label><span data-i18n="sf.port"></span><select name="port" id="sfPort"></select></label>
+      <label><span data-i18n="sf.man"></span><input name="man" type="number" inputmode="numeric" min="100" max="9999999" required></label>
+      <label class="full"><span data-i18n="sf.photos"></span><input name="photos" id="sfPhotos" type="file" accept="image/jpeg,image/png,image/webp" multiple required></label>
+      <div class="full prev" id="sfPrev"></div>
+      <label><span data-i18n="sf.owner"></span><input name="owner" maxlength="30" autocomplete="off" required></label>
+      <label><span data-i18n="sf.idName"></span><input name="idName" maxlength="30" autocomplete="off" required></label>
+    </div>
+    <fieldset class="disc4"><legend data-i18n="sf.disc"></legend>
+      <label><span data-i18n="sf.d1"></span><select name="d1"></select></label>
+      <label><span data-i18n="sf.d2"></span><select name="d2"></select></label>
+      <label><span data-i18n="sf.d3"></span><select name="d3"></select></label>
+      <label><span data-i18n="sf.d4"></span><select name="d4"></select></label>
+    </fieldset>
+    <label class="agree"><input type="checkbox" name="agree"> <span data-i18n="sf.agree"></span></label>
+    <p class="ferr" id="ferr" role="alert"></p>
+    <button class="btn primary" type="submit" id="sfSubmit" data-i18n="sf.submit"></button>
+  </form>
+  <div id="sellResult" hidden></div>
+</div></dialog>
+
+<template id="tpl-terms">
+  <h3>제1조 (목적)</h3><p>이 약관은 마린딜러(가칭)가 제공하는 요트·선박 중개, 현장 검수, 안전거래(에스크로) 서비스의 이용 조건을 정합니다.</p>
+  <h3>제2조 (회사의 지위)</h3><p>회사는 거래를 중개하며 매매의 당사자가 아닙니다 [확인 필요: 적용 법령과 고지 문구]. 판매자와 구매자간의 직거래에 대하여 당사는 관여하지 않기 때문에 거래에 대해서는 책임을 지지 않습니다.</p>
+  <h3>제3조 (회원과 본인인증)</h3><p>판매·입찰·안전거래에는 본인인증이 필요합니다. 판매자의 선박 등록 명의는 본인인증 이름과 같아야 합니다.</p>
+  <h3>제4조 (매물 등록과 고지 확약)</h3><p>판매자는 침수·좌초·충돌·화재 이력 등 7개 항목을 사실대로 고지하고 전자서명합니다. 사실과 다른 고지는 계약 해제와 대금 차감의 사유가 됩니다.</p>
+  <h3>제5조 (현장 검수)</h3><p>검수 결과는 A~D 등급과 '확인 불가'로 표시합니다. 확인하지 못한 항목은 '정상'으로 표시하지 않습니다.</p>
+  <h3>제6조 (안전거래)</h3><p>대금은 계약금 → 잔금·서류 → 명의이전·인도 → 정산의 4단계로 보관하고 지급합니다. 비율·기간은 운영 기준서를 따릅니다 [설계 가정].</p>
+  <h3>제7조 (분쟁)</h3><p>인도 후 72시간 안에 증빙과 함께 이의를 내면 보관금 지급을 멈추고 제3자 재검수를 진행합니다 [설계 가정].</p>
+  <h3>제8조 (금지 행위)</h3><ul><li>플랫폼 밖 송금 유도</li><li>다른 사람 명의의 선박 등록</li><li>서류 위조·변조</li><li>다른 매물 사진의 무단 사용</li></ul>
+  <h3>제9조 (사기 의심 거래)</h3><p>회사는 의심 거래의 노출을 멈추고 거래를 동결할 수 있습니다. 신고는 피해자 본인이 공식 채널로 하며, 회사는 자료 정리를 돕습니다. 수사기관의 적법한 요청에는 법 절차에 따라 자료를 제공합니다.</p>
+  <h3>제10조 (수수료)</h3><p>[팀이 정함] 시연 화면의 2%는 설계 가정입니다.</p>
+</template>
+<template id="tpl-privacy">
+  <h3>1. 수집하는 정보</h3><p>이름, 휴대폰 번호, 본인인증 결과, 선박 등록 서류, 정산 계좌, 접속 기록 [확인 필요: 최소 수집 범위]</p>
+  <h3>2. 이용 목적</h3><p>본인 확인, 매물 등록과 검수, 안전거래 정산, 사기 예방, 문의 응대</p>
+  <h3>3. 보관 기간</h3><p>회원 탈퇴 시 지체 없이 파기합니다. 법령이 보관을 정한 거래 기록은 그 기간 동안 보관합니다 [확인 필요: 항목별 기간].</p>
+  <h3>4. 제3자 제공</h3><p>원칙적으로 제공하지 않습니다. 수사기관의 적법한 요청이 있을 때 법 절차에 따라 제공합니다 [확인 필요].</p>
+  <h3>5. 처리 위탁</h3><p>본인인증, 결제·에스크로, 클라우드 보관 [위탁 업체 미정]</p>
+  <h3>6. 이용자의 권리</h3><p>언제든지 자신의 정보를 열람·정정·삭제하거나 처리 정지를 요구할 수 있습니다.</p>
+  <h3>7. 안전 조치</h3><p>접근 권한 분리, 전송 구간 암호화(HTTPS), 접속 기록 보관 [출시 전 구현]</p>
+  <h3>8. 개인정보 보호책임자</h3><p>[팀이 정함]</p>
+</template>
+
+<div class="spot" id="spot" aria-hidden="true"></div>
+<div class="guide" id="guide">
+  <div class="bubble" id="bubble" aria-live="polite"></div>
+  <button class="avatar" id="avatar" aria-label="guide"><div class="sprite" id="guidePose" data-pose="1"></div></button>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+(function(){
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+/* 이용자·서버에서 온 값은 화면에 넣기 전에 반드시 esc()를 거친다 (출시 기준 보안 규칙) */
+const store={get:k=>{try{return localStorage.getItem(k);}catch(_){return null;}},set:(k,v)=>{try{localStorage.setItem(k,v);}catch(_){}},del:k=>{try{localStorage.removeItem(k);}catch(_){}}};
+const esc=v=>String(v==null?'':v).replace(/[&<>"'`]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','`':'&#96;'}[c]));
+const now=()=>new Date().toTimeString().slice(0,5);
+function toast(m){const el=$('#toast');el.textContent=m;el.classList.add('on');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('on'),1900);}
+
+/* ================= 다국어 사전 (i18next 방식: 키 · 대체 언어 · {{변수}}) ================= */
+const CHAR_NAME={ko:'마린 선장',en:'Captain Marin',ja:'マリン船長',zh:'马林船长'}; // [가칭] 캐릭터 이름 정해지면 여기만 바꿈
+const I18N={
+ko:{
+ 'nav.t0':'매물','nav.t1':'AI 검수','nav.t2':'안전거래','nav.t3':'사기 탐지','nav.t4':'거래 내비',
+ badge:'시연용 가상 데이터',
+ pr1:'현장 검수 <b>54개 항목</b>',pr2:'대금 <b>4단계 보관</b>',pr3:'사기 의심 <b>즉시 동결</b>',pr4:'해경 신고 <b>자료 지원</b>',
+ 'home.brand':'마린딜러 · 부산 요트·보트 거래','home.title':'내 배를 만나는<br>가장 쉬운 방법','home.cta':'새로운 항해의 시작','home.sub':'검수 끝난 배만 올라오고, 돈은 배를 받을 때까지 마린딜러가 맡아 둡니다.',
+ 'home.stamp':'현장 검수 완료 · 리스크 24점','home.list':'검수 완료 매물','home.listSub':'모든 매물·가격은 시연용 가상입니다',
+ 'f.type':'선종 전체','f.len':'길이 전체','f.port':'계류지 전체','f.btn':'매물 보기',
+ 'port.suyeong':'수영만','port.haeundae':'해운대','port.gijang':'기장','port.dadaepo':'다대포','port.gwangan':'광안리',
+ 'cat.all':'전체','cat.sail':'세일요트','cat.motor':'모터요트','cat.power':'파워보트','cat.fish':'낚시보트','cat.pwc':'수상레저기구',
+ 'card.insp':'검수 완료','card.risk':'리스크','card.blk':'AI가 노출을 멈춘 매물','card.blkSub':'명의 불일치 · 외부 송금 유도 의심',
+ 'sell.title':'내 배, 역경매로 팔기','sell.sub':'사진과 서류만 올리세요. 검수원이 찾아가고, 인증 딜러들이 값을 겨룹니다.','sell.btn':'판매 시작하기 (시연)',
+ 'sell.s1':'사진·서류 등록, 본인인증, 고지 확약 서명','sell.s2':'검수원 현장 방문 · 54개 항목 리포트','sell.s3':'인증 딜러 입찰 → 최고가 선택 → 안전거래',
+ 't1.inspDate':'현장 검수 2026-11-20 (가상)','spec.len':'길이 (33ft)','spec.eng':'엔진 · 1,240시간','spec.cap':'정원','spec.port':'계류 위치',
+ 't1.price':'판매 희망가 (가상)','b.bid':'역경매 입찰 시작','b.escrow':'안전거래 시작',
+ 't1.noacc':'\'무사고\' 대신 이렇게 보여 드려요',
+ na1:'<b>공적·행정 이력</b> 등록 명의 = 본인인증 이름 · 저당·압류 없음 · 검사 유효',na2:'<b>선체번호(HIN) 대조</b> 서류 번호와 선미 각인 일치',
+ na3:'<b>현장 검수</b> 54개 항목 · A 41 · B 9 · C 3 · D 0 · 확인 불가 1',na4:'<b>판매자 고지 확약</b> 침수·좌초·화재 "없음" 서명 · 2022년 러더 베어링 교체 "있음"',na5:'<b>확인 못 한 것</b> 마스트 꼭대기 장비 → "정상"으로 쓰지 않음',
+ 't1.risk':'AI 리스크 점수','t1.riskLow':'낮음 · 정상 거래 가능','t1.riskHelp':'0~39 정상 · 40~69 사람 검토 · 70 이상 노출 중단<br>점수는 판단을 돕는 참고값입니다.','t1.catsLabel':'항목별 상태 점수 (높을수록 좋음)',
+ 't1.sum':'AI 검수 리포트 요약','t1.sumLine':'<b>한 줄 요약</b> 구조·서류 문제는 없고, 소모품 3건은 구매 전 가격 협의 대상입니다.',
+ sm1:'<b>방식 아연 70% 소모</b> · 교체 권장 (견적 18만 원)',sm2:'<b>임펠러 마모</b> · 냉각 성능 저하 전 교체 (견적 12만 원)',sm3:'<b>메인세일 자외선 열화</b> · 2시즌 안 교체 예상',sm4:'<b>시운전</b> 냉간 시동 정상 · 최고 rpm 도달 · 전후진 전환 정상',
+ 't1.tiles':'현장 검수 사진 · 영역별','t1.tilesSub':'타일을 누르면 위 사진이 바뀝니다',
+ 'a.hull':'선체','a.eng':'추진·기관','a.elec':'전장·항해','a.cabin':'선내','a.doc':'서류·이력','a.seller':'판매자 신뢰','a.full':'전경','n.na':'확인불가',
+ 'p0':'항해 중 전경|시운전 당일 · 세일 2장 정상 전개','p1':'돛·리깅 근접 (H-09)|메인세일 자외선 열화 · 2시즌 안 교체 예상','p2':'선체 외판·수면선 (H-01)|균열·충돌 흔적 없음','p3':'엔진룸 (E-04)|임펠러 마모 · 냉간 시동은 정상','p4':'조타석·플로터 (L-05)|GPS·AIS 정상 · 마스트 꼭대기는 확인 불가','p5':'선실 (L-10)|침수 흔적·곰팡이 없음',
+ 'it0':'방식 아연 70% 소모 · 메인세일 열화','it1':'임펠러 마모 · 견적 12만 원','it2':'마스트 꼭대기 장비 확인 불가','it3':'침수 흔적·가스 누설 없음','insp':'검수',
+ 't2.title':'마일스톤 에스크로 진행 현황','t2.lead':'돈은 마린딜러가 보관하고, 조건이 채워질 때만 다음 단계로 넘어갑니다. (비율·기간은 설계 가정)',
+ 't2.target':'거래 대상','t2.seller':'판매자','t2.buyer':'매수자 (본인인증)','t2.where':'돈은 지금 어디에?','m.held':'보관 중','m.paid':'판매자 지급','m.ded':'차감·환불',
+ 'b.hold':'시운전 하자 발견 (보류)','b.delay':'명의이전 지연 +5일','b.reset':'처음부터','b.start':'1단계 시작 (계약금 예치)','b.nextTo':'다음 단계로 ({{s}})','b.done':'정산 완료',
+ 't2.log':'진행 기록','koOnly':'',
+ 's1t':'계약금 예치','s1d':'전자서명 + 매매대금 10% 예치 (3영업일 안)','s2t':'잔금 · 서류 검증','s2d':'잔금 90% 예치 + 등록·검사·권리 서류 검증','s3t':'명의이전 · 인도','s3d':'14일 안 명의이전 + 인도 서명 + 72시간 시운전','s4t':'정산','s4d':'수수료·차감액 빼고 판매자에게 지급',
+ 'tag.wait':'대기','tag.now':'진행 중','tag.done':'완료','tag.hold':'분쟁 보류','tag.refund':'해제·환불','st.none':'시작 전','st.hold':' (보류 중)','st.refund':'해제·환불',
+ 'h.title':'분쟁 보류 · 보관금 {{m}} 지급 정지','h.ev':'<b>매수인 제출 증빙:</b> 엔진룸 사진 · 과열 경보 영상<br><b>제3자 재검수:</b> 열교환기 막힘 · 수리 가능 · 견적 2,400,000원 (가상)','h.pick':'약관 제7조 4항에 따라 셋 중 하나를 고릅니다.','h.fix':'가. 판매자 수리 후 재시운전','h.deduct':'나. 수리비 차감 후 정산','h.refund':'다. 계약 해제 · 전액 환불',
+ 'done.title':'거래 완료','done.body':'판매자에게 {{m}} 지급. 차감 내역서가 양측에 발송됐어요. (수수료 2%는 설계 가정)','ref.title':'계약 해제 · {{m}} 전액 환불',
+ 'toast.bid':'최고 입찰 1억 8,650만 원 · 에스크로로 바로 진행할 수 있어요','toast.bidWait':'인증 매입자에게 입찰 요청을 보냈어요','toast.done':'정산 완료','toast.delay':'지연 차감이 정산 때 반영됩니다','toast.refund':'전액 환불 처리','toast.fix':'보류 해제 · 재시운전 통과','toast.deduct':'2,400,000원 차감','toast.freeze':'거래 동결 · 매수인에게 "외부 송금 금지" 경고 발송','toast.unfreeze':'동결 해제','toast.gen':'신고 패킷 생성 완료 · 피해자 확인서는 본인 작성 필요','toast.copy':'클립보드에 복사했어요','toast.dl':'다운로드 시작','toast.needGen':'먼저 패킷을 생성하세요','toast.sell':'시연용 버튼이에요 · 실제 등록은 되지 않아요','bid3':'입찰 3건 도착',
+ 't3.title':'사기 탐지 · 해경 신고 패킷 생성기','t3.lead':'의심 신호를 점수로 보고, 거래를 멈추고, 신고에 쓸 자료를 한 번에 묶습니다. 플랫폼은 수사기관이 아니므로 "의심 거래"로만 표시합니다.',
+ 't3.list':'모니터링 중인 거래','t3.report':'해경 제출용 요약 리포트 (미리보기)','b.copy':'복사','b.dl':'다운로드 (.txt)','t3.koNote':'','t3.cl':'증빙 체크리스트','t3.channel':'공식 신고 채널: 해양경찰 신고 창구 · 사이버 사기 신고 경로 안내 (번호·경로는 발표 전 공식 사이트 확인)','t3.empty':'왼쪽에서 거래를 고르고 "신고 패킷 생성"을 누르세요.',
+ 't3.ev':'탐지 근거','b.freeze':'거래 동결','b.unfreeze':'동결 해제','b.gen':'신고 패킷 생성','t3.proc':'운영 절차: 플래그 → 노출 중단 → 동결 → 소유 재확인(24시간) → 판단(72시간) → 패킷 생성','t3.okProc':'정상 거래는 패킷을 만들지 않습니다.','t3.frozen':'🔒 거래 동결 중 · 보관금 지급 정지 · 증거 보전 완료',
+ 'rk.high':'고위험','rk.ok':'정상','rk.label':'위험 점수','rib':'노출 중단','frz':'거래 동결',
+ 'ev.myPhoto':'판매자가 올린 대표 사진','ev.cmp':'비슷한 매물 시세와 비교 (가상)','ev.avg':'비슷한 40ft 파워보트 평균','ev.this':'「청해호」 판매가','ev.ours':'마린딜러에 올라온 사진','ev.web':'해외 중고 사이트 매물 사진 (가상)','ev.match':'일치','ev.ok':'사진·서류·각인 일치','ev.okSub':'현장 검수원이 직접 찍은 사진만 대표 사진으로 씁니다.','ev.okCap':'현장 검수 사진과 일치',
+ 't4.title':'AI 거래 내비게이터','t4.lead':'처음 요트를 사고파는 사람도 "지금 뭘 해야 하는지" 알 수 있게, 캐릭터가 지금 단계에 맞춰 안내합니다.','t4.ctx':'지금 안내 중인 거래','t4.faq':'자주 묻는 질문',
+ 'g.tour':'둘러보기 ▶','g.close':'접기','g.next':'다음','g.end':'끝','g.hint':'눌러서 설명 듣기',
+ disc:'판매자와 구매자간의 직거래에 대하여 당사는 관여하지 않기 때문에 거래에 대해서는 책임을 지지 않습니다.',
+ footer:'마린딜러(가칭) 발표 시연용 목업 · 모든 매물·금액·사람·거래는 가상입니다 · 사진은 시연용 예시 이미지 · 법령·기관 절차는 확인 필요 항목 포함 · 외국어는 번역 검수 전 · 키보드 <kbd>0</kbd>~<kbd>4</kbd> 화면, <kbd>←</kbd><kbd>→</kbd> 사진, <kbd>T</kbd> 둘러보기'
+},
+en:{
+ 'nav.t0':'Browse','nav.t1':'AI Inspection','nav.t2':'Escrow','nav.t3':'Fraud','nav.t4':'Navigator',
+ badge:'Demo data only',
+ pr1:'<b>54-point</b> on-site inspection',pr2:'Payment held in <b>4 stages</b>',pr3:'Suspicious deals <b>frozen instantly</b>',pr4:'<b>Report kit</b> for the Coast Guard',
+ 'home.brand':'MarineDealer · Busan yachts & boats','home.title':'The easiest way<br>to meet your boat','home.cta':'Start a new voyage','home.sub':'Only inspected boats are listed, and MarineDealer holds your money until the boat is handed over.',
+ 'home.stamp':'Inspected on site · Risk 24','home.list':'Inspected listings','home.listSub':'All listings and prices are fictional demo data',
+ 'f.type':'All types','f.len':'Any length','f.port':'Any marina','f.btn':'Search',
+ 'port.suyeong':'Suyeong Bay','port.haeundae':'Haeundae','port.gijang':'Gijang','port.dadaepo':'Dadaepo','port.gwangan':'Gwangalli',
+ 'cat.all':'All','cat.sail':'Sailing yacht','cat.motor':'Motor yacht','cat.power':'Powerboat','cat.fish':'Fishing boat','cat.pwc':'Personal watercraft',
+ 'card.insp':'Inspected','card.risk':'Risk','card.blk':'Hidden by AI','card.blkSub':'Owner mismatch · off-platform payment request',
+ 'sell.title':'Sell your boat by reverse auction','sell.sub':'Upload photos and papers. An inspector visits, and verified dealers compete on price.','sell.btn':'Start selling (demo)',
+ 'sell.s1':'Photos & papers, ID check, signed disclosure','sell.s2':'On-site inspection · 54-point report','sell.s3':'Dealers bid → pick the best → safe escrow',
+ 't1.inspDate':'Inspected 2026-11-20 (demo)','spec.len':'Length (33ft)','spec.eng':'Engine · 1,240 h','spec.cap':'Capacity','spec.port':'Berth',
+ 't1.price':'Asking price (demo)','b.bid':'Start reverse auction','b.escrow':'Start safe escrow',
+ 't1.noacc':'Instead of "accident-free", we show this',
+ na1:'<b>Public records</b> registered owner = verified ID · no liens · inspection valid',na2:'<b>Hull ID (HIN)</b> papers match the transom engraving',
+ na3:'<b>On-site inspection</b> 54 items · A 41 · B 9 · C 3 · D 0 · unchecked 1',na4:'<b>Seller disclosure</b> signed "none" for flooding, grounding, fire · rudder bearing replaced in 2022',na5:'<b>Not checked</b> masthead equipment → not marked as "OK"',
+ 't1.risk':'AI risk score','t1.riskLow':'Low · OK to trade','t1.riskHelp':'0–39 normal · 40–69 human review · 70+ hidden<br>The score supports, not replaces, judgment.','t1.catsLabel':'Condition by area (higher is better)',
+ 't1.sum':'AI inspection summary','t1.sumLine':'<b>In one line</b> No structural or paperwork issues; 3 wear items to negotiate before purchase.',
+ sm1:'<b>Sacrificial zinc 70% worn</b> · replace (est. ₩180k)',sm2:'<b>Impeller wear</b> · replace before cooling drops (est. ₩120k)',sm3:'<b>Mainsail UV wear</b> · replace within 2 seasons',sm4:'<b>Sea trial</b> cold start OK · max rpm reached · shifting OK',
+ 't1.tiles':'Inspection photos by area','t1.tilesSub':'Tap a tile to change the photo above',
+ 'a.hull':'Hull','a.eng':'Engine','a.elec':'Electrics & Nav','a.cabin':'Cabin','a.doc':'Papers','a.seller':'Seller trust','a.full':'Overview','n.na':'Unchecked',
+ 'p0':'Under sail|Sea-trial day · both sails set normally','p1':'Sails & rigging (H-09)|Mainsail UV wear · replace within 2 seasons','p2':'Hull & waterline (H-01)|No cracks or collision marks','p3':'Engine room (E-04)|Impeller wear · cold start OK','p4':'Helm & plotter (L-05)|GPS·AIS OK · masthead unchecked','p5':'Cabin (L-10)|No water marks or mold',
+ 'it0':'Zinc 70% worn · mainsail UV wear','it1':'Impeller wear · est. ₩120k','it2':'Masthead equipment unchecked','it3':'No flooding or gas leaks','insp':'Grade',
+ 't2.title':'Milestone escrow progress','t2.lead':'MarineDealer holds the money and releases it only when each condition is met. (Rates and periods are design assumptions.)',
+ 't2.target':'Vessel','t2.seller':'Seller','t2.buyer':'Buyer (verified)','t2.where':'Where is the money now?','m.held':'Held','m.paid':'Paid to seller','m.ded':'Deducted / refunded',
+ 'b.hold':'Defect in sea trial (hold)','b.delay':'Title transfer late +5 days','b.reset':'Reset','b.start':'Start stage 1 (deposit)','b.nextTo':'Next: {{s}}','b.done':'Settled',
+ 't2.log':'Activity log','koOnly':'Log entries are kept in Korean (original record).',
+ 's1t':'Deposit','s1d':'E-sign + 10% deposit (within 3 business days)','s2t':'Balance · papers','s2d':'90% balance + registration, inspection and lien check','s3t':'Title · delivery','s3d':'Title transfer within 14 days + handover + 72h sea trial','s4t':'Settlement','s4d':'Pay seller minus fees and deductions',
+ 'tag.wait':'Waiting','tag.now':'In progress','tag.done':'Done','tag.hold':'On hold','tag.refund':'Cancelled · refunded','st.none':'not started','st.hold':' (on hold)','st.refund':'cancelled · refunded',
+ 'h.title':'Dispute hold · {{m}} frozen','h.ev':'<b>Buyer evidence:</b> engine-room photo · overheating alarm video<br><b>Third-party re-inspection:</b> clogged heat exchanger · repairable · est. ₩2,400,000 (demo)','h.pick':'Choose one of three outcomes (clause 7-4).','h.fix':'A. Seller repairs, re-trial','h.deduct':'B. Deduct repair cost','h.refund':'C. Cancel · full refund',
+ 'done.title':'Deal complete','done.body':'{{m}} paid to seller. Deduction statement sent to both sides. (2% fee is an assumption.)','ref.title':'Cancelled · {{m}} fully refunded',
+ 'toast.bid':'Top bid ₩186.5M · you can move straight to escrow','toast.bidWait':'Bid request sent to verified dealers','toast.done':'Settled','toast.delay':'Late-transfer deduction will apply at settlement','toast.refund':'Full refund issued','toast.fix':'Hold released · re-trial passed','toast.deduct':'₩2,400,000 deducted','toast.freeze':'Deal frozen · buyer warned not to pay off-platform','toast.unfreeze':'Unfrozen','toast.gen':'Report kit created · victim statement must be written by the victim','toast.copy':'Copied','toast.dl':'Download started','toast.needGen':'Create the report kit first','toast.sell':'Demo button · nothing is listed','bid3':'3 bids received',
+ 't3.title':'Fraud detection · Coast Guard report kit','t3.lead':'See suspicious signals as a score, stop the deal, and bundle the evidence in one go. We are not investigators, so we only say "suspected".',
+ 't3.list':'Deals under watch','t3.report':'Summary for the Coast Guard (preview)','b.copy':'Copy','b.dl':'Download (.txt)','t3.koNote':'The report is generated in Korean for submission to Korean authorities.','t3.cl':'Evidence checklist','t3.channel':'Official channels: Coast Guard reporting desk · cyber-fraud reporting (confirm numbers on official sites)','t3.empty':'Pick a deal on the left and press "Create report kit".',
+ 't3.ev':'Evidence','b.freeze':'Freeze deal','b.unfreeze':'Unfreeze','b.gen':'Create report kit','t3.proc':'Process: flag → hide → freeze → ownership recheck (24h) → decision (72h) → report kit','t3.okProc':'No kit for normal deals.','t3.frozen':'🔒 Deal frozen · payout stopped · evidence preserved',
+ 'rk.high':'High risk','rk.ok':'Normal','rk.label':'risk score','rib':'Hidden','frz':'Frozen',
+ 'ev.myPhoto':'Seller\'s main photo','ev.cmp':'Compared with similar listings (demo)','ev.avg':'Avg. similar 40ft powerboat','ev.this':'"Cheonghae" asking price','ev.ours':'Photo on MarineDealer','ev.web':'Same photo on an overseas site (demo)','ev.match':'match','ev.ok':'Photos, papers, engraving match','ev.okSub':'Only photos taken by our inspector are used as the main photo.','ev.okCap':'Matches inspection photos',
+ 't4.title':'AI deal navigator','t4.lead':'Our guide tells first-time buyers and sellers exactly what to do at the current stage.','t4.ctx':'Deal being guided','t4.faq':'Frequently asked',
+ 'g.tour':'Take the tour ▶','g.close':'Hide','g.next':'Next','g.end':'Done','g.hint':'Tap for a guide',
+ disc:'We are not involved in direct transactions between sellers and buyers, and therefore accept no responsibility for such transactions.',
+ footer:'MarineDealer (working name) · demo mock-up · all listings, prices, people and deals are fictional · sample photos · legal steps still to be confirmed · translations not yet reviewed · Keys <kbd>0</kbd>–<kbd>4</kbd> screens, <kbd>←</kbd><kbd>→</kbd> photos, <kbd>T</kbd> tour'
+},
+ja:{
+ 'nav.t0':'物件','nav.t1':'AI検査','nav.t2':'安心取引','nav.t3':'詐欺検知','nav.t4':'取引ナビ',
+ badge:'デモ用の架空データ',
+ pr1:'現地検査 <b>54項目</b>',pr2:'代金を<b>4段階で保管</b>',pr3:'詐欺の疑いは<b>即時凍結</b>',pr4:'海洋警察への<b>通報資料を支援</b>',
+ 'home.brand':'マリンディーラー・釜山のヨット・ボート取引','home.title':'あなたの船に出会う、<br>いちばん簡単な方法','home.cta':'新しい航海のはじまり','home.sub':'検査済みの船だけを掲載し、引き渡しまで代金はマリンディーラーがお預かりします。',
+ 'home.stamp':'現地検査済み・リスク24点','home.list':'検査済み物件','home.listSub':'物件・価格はすべてデモ用の架空データです',
+ 'f.type':'全ての船種','f.len':'全ての長さ','f.port':'全ての係留地','f.btn':'検索',
+ 'port.suyeong':'水営湾','port.haeundae':'海雲台','port.gijang':'機張','port.dadaepo':'多大浦','port.gwangan':'広安里',
+ 'cat.all':'すべて','cat.sail':'セーリングヨット','cat.motor':'モーターヨット','cat.power':'パワーボート','cat.fish':'釣り船','cat.pwc':'水上バイク等',
+ 'card.insp':'検査済み','card.risk':'リスク','card.blk':'AIが非表示にした物件','card.blkSub':'名義不一致・外部送金誘導の疑い',
+ 'sell.title':'逆オークションで船を売る','sell.sub':'写真と書類を登録するだけ。検査員が訪問し、認証ディーラーが価格を競います。','sell.btn':'販売を始める(デモ)',
+ 'sell.s1':'写真・書類登録、本人確認、告知確約に署名','sell.s2':'検査員の現地訪問・54項目レポート','sell.s3':'ディーラー入札→最高額を選択→安心取引',
+ 't1.inspDate':'現地検査 2026-11-20(架空)','spec.len':'全長(33ft)','spec.eng':'エンジン・1,240時間','spec.cap':'定員','spec.port':'係留場所',
+ 't1.price':'希望価格(架空)','b.bid':'逆オークション開始','b.escrow':'安心取引を開始',
+ 't1.noacc':'「無事故」の代わりにこう示します',
+ na1:'<b>公的記録</b> 登録名義=本人確認名・抵当なし・検査有効',na2:'<b>船体番号(HIN)照合</b> 書類と刻印が一致',na3:'<b>現地検査</b> 54項目・A41・B9・C3・D0・未確認1',na4:'<b>売主の告知確約</b> 浸水・座礁・火災「なし」に署名・2022年ラダーベアリング交換「あり」',na5:'<b>未確認</b> マストトップ機器 →「正常」とは書きません',
+ 't1.risk':'AIリスクスコア','t1.riskLow':'低・通常取引可','t1.riskHelp':'0〜39 正常・40〜69 人が確認・70以上 非表示<br>スコアは判断を助ける参考値です。','t1.catsLabel':'項目別の状態(高いほど良好)',
+ 't1.sum':'AI検査レポート要約','t1.sumLine':'<b>一言で</b> 構造・書類の問題はなく、消耗品3件は購入前の価格交渉対象です。',
+ sm1:'<b>防食亜鉛70%消耗</b>・交換推奨(見積18万ウォン)',sm2:'<b>インペラー摩耗</b>・交換推奨(見積12万ウォン)',sm3:'<b>メインセイルの紫外線劣化</b>・2シーズン内に交換',sm4:'<b>試運転</b> 冷間始動正常・最高回転到達・前後進切替正常',
+ 't1.tiles':'エリア別の検査写真','t1.tilesSub':'タイルを押すと上の写真が変わります',
+ 'a.hull':'船体','a.eng':'推進・機関','a.elec':'電装・航海','a.cabin':'船内','a.doc':'書類・履歴','a.seller':'売主の信頼','a.full':'全景','n.na':'未確認',
+ 'p0':'帆走中の全景|試運転当日・セイル2枚正常','p1':'セイル・リギング(H-09)|メインセイルの紫外線劣化','p2':'船体・喫水線(H-01)|亀裂・衝突痕なし','p3':'エンジンルーム(E-04)|インペラー摩耗・冷間始動は正常','p4':'操舵席・プロッター(L-05)|GPS・AIS正常・マストトップ未確認','p5':'キャビン(L-10)|浸水痕・カビなし',
+ 'it0':'防食亜鉛70%消耗・セイル劣化','it1':'インペラー摩耗・見積12万ウォン','it2':'マストトップ機器は未確認','it3':'浸水痕・ガス漏れなし','insp':'検査',
+ 't2.title':'マイルストーン・エスクロー進行状況','t2.lead':'代金はマリンディーラーが預かり、条件を満たした時だけ次へ進みます。(比率・期間は設計上の仮定)',
+ 't2.target':'取引対象','t2.seller':'売主','t2.buyer':'買主(本人確認済み)','t2.where':'お金は今どこに?','m.held':'保管中','m.paid':'売主へ支払','m.ded':'差引・返金',
+ 'b.hold':'試運転で不具合(保留)','b.delay':'名義変更の遅延 +5日','b.reset':'最初から','b.start':'第1段階を開始(手付金)','b.nextTo':'次へ:{{s}}','b.done':'精算完了',
+ 't2.log':'進行記録','koOnly':'記録は韓国語の原文で残します。',
+ 's1t':'手付金の預託','s1d':'電子署名+売買代金10%(3営業日以内)','s2t':'残金・書類確認','s2d':'残金90%+登録・検査・権利書類の確認','s3t':'名義変更・引渡し','s3d':'14日以内の名義変更+引渡し署名+72時間の試運転','s4t':'精算','s4d':'手数料・差引額を除き売主へ支払',
+ 'tag.wait':'待機','tag.now':'進行中','tag.done':'完了','tag.hold':'紛争保留','tag.refund':'解除・返金','st.none':'開始前','st.hold':'(保留中)','st.refund':'解除・返金',
+ 'h.title':'紛争保留・保管金 {{m}} 支払停止','h.ev':'<b>買主の証拠:</b> エンジンルーム写真・過熱警報の動画<br><b>第三者の再検査:</b> 熱交換器の詰まり・修理可能・見積240万ウォン(架空)','h.pick':'約款第7条4項により3つから選びます。','h.fix':'A. 売主が修理し再試運転','h.deduct':'B. 修理費を差し引いて精算','h.refund':'C. 契約解除・全額返金',
+ 'done.title':'取引完了','done.body':'売主へ {{m}} を支払いました。(手数料2%は仮定)','ref.title':'契約解除・{{m}} 全額返金',
+ 'toast.bid':'最高入札 1億8,650万ウォン・そのままエスクローへ','toast.bidWait':'認証ディーラーに入札依頼を送りました','toast.done':'精算完了','toast.delay':'遅延分は精算時に差し引かれます','toast.refund':'全額返金しました','toast.fix':'保留解除・再試運転合格','toast.deduct':'240万ウォン差引','toast.freeze':'取引凍結・買主に外部送金禁止を警告','toast.unfreeze':'凍結解除','toast.gen':'通報資料を作成・被害者確認書はご本人が作成','toast.copy':'コピーしました','toast.dl':'ダウンロード開始','toast.needGen':'先に資料を作成してください','toast.sell':'デモ用ボタンです','bid3':'入札3件',
+ 't3.title':'詐欺検知・海洋警察向け通報資料','t3.lead':'疑わしい兆候をスコアで示し、取引を止め、通報資料をまとめます。捜査機関ではないため「疑い」とのみ表示します。',
+ 't3.list':'監視中の取引','t3.report':'海洋警察提出用の要約(プレビュー)','b.copy':'コピー','b.dl':'ダウンロード(.txt)','t3.koNote':'資料は韓国の機関に提出するため韓国語で作成されます。','t3.cl':'証拠チェックリスト','t3.channel':'公式窓口:海洋警察の通報窓口・サイバー詐欺通報(番号は公式サイトで確認)','t3.empty':'左で取引を選び「通報資料を作成」を押してください。',
+ 't3.ev':'検知の根拠','b.freeze':'取引を凍結','b.unfreeze':'凍結解除','b.gen':'通報資料を作成','t3.proc':'手順:検知→非表示→凍結→所有再確認(24時間)→判断(72時間)→資料作成','t3.okProc':'正常な取引では作成しません。','t3.frozen':'🔒 取引凍結中・支払停止・証拠保全済み',
+ 'rk.high':'高リスク','rk.ok':'正常','rk.label':'リスク','rib':'非表示','frz':'凍結',
+ 'ev.myPhoto':'売主が載せた写真','ev.cmp':'類似物件の相場と比較(架空)','ev.avg':'類似40ftパワーボート平均','ev.this':'「チョンヘ号」の価格','ev.ours':'マリンディーラー上の写真','ev.web':'海外中古サイトの同じ写真(架空)','ev.match':'一致','ev.ok':'写真・書類・刻印が一致','ev.okSub':'検査員が撮った写真だけを代表写真にします。','ev.okCap':'検査写真と一致',
+ 't4.title':'AI取引ナビ','t4.lead':'初めての方でも「今何をすべきか」分かるよう、キャラクターが段階に合わせて案内します。','t4.ctx':'案内中の取引','t4.faq':'よくある質問',
+ 'g.tour':'ガイドを見る ▶','g.close':'閉じる','g.next':'次へ','g.end':'終了','g.hint':'押すと説明します',
+ disc:'売主と買主の直接取引に当社は関与しないため、その取引について責任を負いません。',
+ footer:'マリンディーラー(仮称)・発表用デモ・物件・金額・人物・取引はすべて架空・写真はサンプル・翻訳は未検収・キー <kbd>0</kbd>〜<kbd>4</kbd> 画面、<kbd>←</kbd><kbd>→</kbd> 写真、<kbd>T</kbd> ガイド'
+},
+zh:{
+ 'nav.t0':'船只','nav.t1':'AI检验','nav.t2':'安全托管','nav.t3':'欺诈检测','nav.t4':'交易导航',
+ badge:'演示用虚拟数据',
+ pr1:'现场检验 <b>54项</b>',pr2:'货款<b>分4阶段托管</b>',pr3:'可疑交易<b>立即冻结</b>',pr4:'协助准备<b>海警举报材料</b>',
+ 'home.brand':'MarineDealer·釜山游艇交易','home.title':'遇见你的船,<br>最简单的方法','home.cta':'开启新的航程','home.sub':'只上架检验过的船,货款由MarineDealer托管至交船。',
+ 'home.stamp':'已现场检验·风险24分','home.list':'已检验船只','home.listSub':'所有船只和价格均为演示用虚拟数据',
+ 'f.type':'全部船型','f.len':'全部长度','f.port':'全部泊位','f.btn':'搜索',
+ 'port.suyeong':'水营湾','port.haeundae':'海云台','port.gijang':'机张','port.dadaepo':'多大浦','port.gwangan':'广安里',
+ 'cat.all':'全部','cat.sail':'帆船','cat.motor':'机动游艇','cat.power':'快艇','cat.fish':'钓鱼船','cat.pwc':'水上摩托等',
+ 'card.insp':'已检验','card.risk':'风险','card.blk':'已被AI下架','card.blkSub':'船主不符·疑似诱导站外转账',
+ 'sell.title':'用反向拍卖卖船','sell.sub':'只需上传照片和文件。检验员上门,认证经销商竞价。','sell.btn':'开始出售(演示)',
+ 'sell.s1':'上传照片和文件、实名认证、签署告知承诺','sell.s2':'检验员上门·54项报告','sell.s3':'经销商出价→选最高价→安全交易',
+ 't1.inspDate':'现场检验 2026-11-20(虚拟)','spec.len':'船长(33ft)','spec.eng':'发动机·1,240小时','spec.cap':'载客','spec.port':'泊位',
+ 't1.price':'期望价格(虚拟)','b.bid':'开始反向拍卖','b.escrow':'开始安全交易',
+ 't1.noacc':'我们不说"无事故",而是这样展示',
+ na1:'<b>公共记录</b> 登记船主=实名认证·无抵押·检验有效',na2:'<b>船体编号(HIN)核对</b> 文件与刻印一致',na3:'<b>现场检验</b> 54项·A41·B9·C3·D0·未检1',na4:'<b>卖家告知承诺</b> 进水·搁浅·火灾签署"无"·2022年更换舵轴承"有"',na5:'<b>未检查</b> 桅顶设备 → 不标为"正常"',
+ 't1.risk':'AI风险评分','t1.riskLow':'低·可正常交易','t1.riskHelp':'0–39 正常·40–69 人工复核·70以上 下架<br>评分仅作辅助判断。','t1.catsLabel':'各部分状态(越高越好)',
+ 't1.sum':'AI检验报告摘要','t1.sumLine':'<b>一句话</b> 结构和文件无问题,3项耗材可在购买前议价。',
+ sm1:'<b>防腐锌块消耗70%</b>·建议更换(估价18万韩元)',sm2:'<b>叶轮磨损</b>·建议更换(估价12万韩元)',sm3:'<b>主帆紫外线老化</b>·两季内需更换',sm4:'<b>试航</b> 冷启动正常·达到最高转速·前进后退切换正常',
+ 't1.tiles':'分区检验照片','t1.tilesSub':'点击方块可切换上方照片',
+ 'a.hull':'船体','a.eng':'推进·机舱','a.elec':'电气·导航','a.cabin':'船舱','a.doc':'文件·记录','a.seller':'卖家信誉','a.full':'全景','n.na':'未检',
+ 'p0':'航行全景|试航当天·两面帆正常','p1':'帆与索具(H-09)|主帆紫外线老化','p2':'船体·水线(H-01)|无裂缝或碰撞痕迹','p3':'机舱(E-04)|叶轮磨损·冷启动正常','p4':'驾驶位·海图仪(L-05)|GPS·AIS正常·桅顶未检','p5':'船舱(L-10)|无进水痕迹或霉斑',
+ 'it0':'锌块消耗70%·主帆老化','it1':'叶轮磨损·估价12万韩元','it2':'桅顶设备未检','it3':'无进水·无燃气泄漏','insp':'等级',
+ 't2.title':'分阶段托管进度','t2.lead':'货款由MarineDealer保管,满足条件才进入下一阶段。(比例和期限为设计假设)',
+ 't2.target':'交易船只','t2.seller':'卖家','t2.buyer':'买家(已认证)','t2.where':'钱现在在哪里?','m.held':'托管中','m.paid':'已付卖家','m.ded':'扣减·退款',
+ 'b.hold':'试航发现缺陷(暂停)','b.delay':'过户延迟 +5天','b.reset':'重新开始','b.start':'开始第1阶段(定金)','b.nextTo':'下一步:{{s}}','b.done':'已结算',
+ 't2.log':'进度记录','koOnly':'记录保留韩文原文。',
+ 's1t':'支付定金','s1d':'电子签名+10%定金(3个工作日内)','s2t':'尾款·文件核验','s2d':'90%尾款+登记·检验·权利文件核验','s3t':'过户·交付','s3d':'14天内过户+交付签字+72小时试航','s4t':'结算','s4d':'扣除手续费和扣款后付给卖家',
+ 'tag.wait':'等待','tag.now':'进行中','tag.done':'完成','tag.hold':'纠纷暂停','tag.refund':'解除·退款','st.none':'未开始','st.hold':'(暂停中)','st.refund':'解除·退款',
+ 'h.title':'纠纷暂停·托管金 {{m}} 停止支付','h.ev':'<b>买家证据:</b> 机舱照片·过热警报视频<br><b>第三方复检:</b> 热交换器堵塞·可修·估价240万韩元(虚拟)','h.pick':'按条款第7条第4项三选一。','h.fix':'A. 卖家维修后再试航','h.deduct':'B. 扣除维修费后结算','h.refund':'C. 解除合同·全额退款',
+ 'done.title':'交易完成','done.body':'已向卖家支付 {{m}}。(2%手续费为假设)','ref.title':'解除合同·{{m}} 全额退款',
+ 'toast.bid':'最高出价1.865亿韩元·可直接进入托管','toast.bidWait':'已向认证经销商发送出价请求','toast.done':'已结算','toast.delay':'延迟扣款将在结算时计入','toast.refund':'已全额退款','toast.fix':'解除暂停·复试通过','toast.deduct':'扣除240万韩元','toast.freeze':'交易已冻结·已提醒买家勿站外转账','toast.unfreeze':'已解冻','toast.gen':'举报材料已生成·受害人确认书需本人填写','toast.copy':'已复制','toast.dl':'开始下载','toast.needGen':'请先生成材料','toast.sell':'演示按钮','bid3':'收到3个出价',
+ 't3.title':'欺诈检测·海警举报材料生成','t3.lead':'用评分显示可疑信号、暂停交易并一次整理举报材料。平台不是调查机关,只标为"可疑"。',
+ 't3.list':'监控中的交易','t3.report':'海警提交用摘要(预览)','b.copy':'复制','b.dl':'下载(.txt)','t3.koNote':'材料用韩文生成,以便提交给韩国机关。','t3.cl':'证据清单','t3.channel':'官方渠道:海警举报窗口·网络诈骗举报(号码请在官网确认)','t3.empty':'请在左侧选择交易并点击"生成举报材料"。',
+ 't3.ev':'检测依据','b.freeze':'冻结交易','b.unfreeze':'解除冻结','b.gen':'生成举报材料','t3.proc':'流程:标记→下架→冻结→复核所有权(24小时)→判断(72小时)→生成材料','t3.okProc':'正常交易不生成材料。','t3.frozen':'🔒 交易冻结中·停止付款·证据已保全',
+ 'rk.high':'高风险','rk.ok':'正常','rk.label':'风险分','rib':'已下架','frz':'已冻结',
+ 'ev.myPhoto':'卖家上传的主图','ev.cmp':'与同类船只行情比较(虚拟)','ev.avg':'同类40ft快艇均价','ev.this':'「青海号」售价','ev.ours':'MarineDealer上的照片','ev.web':'海外二手网站上的同一照片(虚拟)','ev.match':'一致','ev.ok':'照片·文件·刻印一致','ev.okSub':'只用检验员亲自拍摄的照片作主图。','ev.okCap':'与检验照片一致',
+ 't4.title':'AI交易导航','t4.lead':'即使第一次买卖,角色也会按当前阶段告诉您该做什么。','t4.ctx':'当前引导的交易','t4.faq':'常见问题',
+ 'g.tour':'开始导览 ▶','g.close':'收起','g.next':'下一步','g.end':'结束','g.hint':'点击听说明',
+ disc:'本公司不参与卖家与买家之间的直接交易,因此对该等交易不承担责任。',
+ footer:'MarineDealer(暂定名)·演示样机·所有船只、金额、人物、交易均为虚拟·照片为示例·翻译未经审校·按键 <kbd>0</kbd>–<kbd>4</kbd> 切换,<kbd>←</kbd><kbd>→</kbd> 照片,<kbd>T</kbd> 导览'
+}};
+const SIG_T={
+ 'T-2411-031':[{en:'Priced 38% below similar listings',ja:'類似物件の相場より38%安い',zh:'比同类船只行情低38%'},{en:'Registered owner ≠ verified ID name',ja:'登録名義 ≠ 本人確認の氏名',zh:'登记船主 ≠ 实名认证姓名'},{en:'Asked to "pay the deposit via messenger first" (off-platform)',ja:'「メッセンジャーで手付金を先に」外部送金の誘導',zh:'"先通过聊天软件付定金"诱导站外转账'},{en:'Refused on-site inspection twice',ja:'現地検査の日程を2回拒否',zh:'两次拒绝现场检验'}],
+ 'T-2411-027':[{en:'9 photos match an overseas used-boat listing (reverse search)',ja:'写真9枚が海外中古サイトの物件と一致(逆検索)',zh:'9张照片与海外二手网站船只相同(反向搜索)'},{en:'HIN on papers ≠ engraving in photo',ja:'書類のHINと写真の刻印が不一致',zh:'文件HIN与照片刻印不符'},{en:'Registration copy: odd font and stamp position',ja:'登録証コピーのフォント・印影位置に異常',zh:'登记证复印件字体与印章位置异常'}],
+ 'T-2411-019':[{en:'Owner, HIN and inspection papers match',ja:'名義・HIN・検査書類が一致',zh:'船主·HIN·检验文件一致'},{en:'On-site inspection done',ja:'現地検査完了',zh:'现场检验完成'},{en:'Within market range',ja:'相場の範囲内',zh:'在行情范围内'}]
+};
+function sigT(x,i){ return esc(sigRaw(x,i)); }
+function sigRaw(x,i){ if(LANG==='ko') return x.sig[i][0]; if(x.sigEn) return x.sigEn[i]; const o=(SIG_T[x.id]||[])[i]||{}; return o[LANG]||o.en||x.sig[i][0]; }
+Object.assign(I18N.ko,{'info.title':'검수 · 판매자 · 시세','info.insp':'검수 정보','info.inspector':'검수원 (가상)','info.when':'검수 일시','info.how':'검수 방식','info.howV':'육상 인양 + 시운전 40분','info.media':'기록','info.mediaV':'사진 128장 · 영상 6개','info.seller':'판매자','info.id':'본인인증','info.owner':'등록 명의 일치','info.since':'가입 · 거래','info.sinceV':'2년 · 거래 1건','info.sign':'고지 확약 서명','ok':'확인','info.market':'시세 범위','info.marketSub':'비슷한 매물 12건 · 2017–2021 · 30–36ft','info.this':'이 매물','info.note':'모든 값은 시연용 가상입니다.','f.s':'~ 25ft','f.m':'25 ~ 35ft','f.l':'35ft ~','log.empty':'아직 기록이 없어요. "1단계 시작"을 눌러 보세요.','why.late':'명의이전 30일 초과 지연','why.defect':'중대 결함 · 매수인 계약 해제 선택','why.tail':'판매자 계정에 기록이 남습니다.','d1':'광안 마린 (인증 딜러)','d2':'수영만 요트상사 (인증 딜러)','d3':'개인 K** (본인인증)'});
+Object.assign(I18N.en,{'info.title':'Inspection · Seller · Market','info.insp':'Inspection','info.inspector':'Inspector (demo)','info.when':'Date & time','info.how':'Method','info.howV':'Hauled out + 40-min sea trial','info.media':'Records','info.mediaV':'128 photos · 6 videos','info.seller':'Seller','info.id':'ID verified','info.owner':'Registered owner match','info.since':'Member · deals','info.sinceV':'2 years · 1 deal','info.sign':'Disclosure signed','ok':'OK','info.market':'Market range','info.marketSub':'12 similar listings · 2017–2021 · 30–36ft','info.this':'This boat','info.note':'All values are fictional demo data.','f.s':'~ 25ft','f.m':'25 ~ 35ft','f.l':'35ft ~','log.empty':'No activity yet. Press "Start stage 1".','why.late':'Title transfer more than 30 days late','why.defect':'Major defect · buyer cancelled','why.tail':'The seller account keeps a record.','d1':'Gwangan Marine (verified dealer)','d2':'Suyeong Bay Yachts (verified dealer)','d3':'Private buyer K** (ID verified)'});
+Object.assign(I18N.ja,{'info.title':'検査・売主・相場','info.insp':'検査情報','info.inspector':'検査員(架空)','info.when':'検査日時','info.how':'検査方法','info.howV':'陸揚げ+試運転40分','info.media':'記録','info.mediaV':'写真128枚・動画6本','info.seller':'売主','info.id':'本人確認','info.owner':'登録名義の一致','info.since':'登録・取引','info.sinceV':'2年・取引1件','info.sign':'告知確約の署名','ok':'確認済み','info.market':'相場の範囲','info.marketSub':'類似物件12件・2017–2021・30–36ft','info.this':'この物件','info.note':'すべてデモ用の架空の値です。','log.empty':'まだ記録はありません。「第1段階を開始」を押してください。','why.late':'名義変更が30日以上遅延','why.defect':'重大な欠陥・買主が契約解除','why.tail':'売主アカウントに記録が残ります。','d1':'広安マリン(認証ディーラー)','d2':'水営湾ヨット商会(認証ディーラー)','d3':'個人 K**(本人確認済み)'});
+Object.assign(I18N.zh,{'info.title':'检验·卖家·行情','info.insp':'检验信息','info.inspector':'检验员(虚拟)','info.when':'检验时间','info.how':'检验方式','info.howV':'上岸检查+试航40分钟','info.media':'记录','info.mediaV':'照片128张·视频6段','info.seller':'卖家','info.id':'实名认证','info.owner':'登记船主一致','info.since':'注册·交易','info.sinceV':'2年·交易1笔','info.sign':'告知承诺签署','ok':'已确认','info.market':'行情范围','info.marketSub':'同类船只12条·2017–2021·30–36ft','info.this':'本船','info.note':'所有数值均为演示用虚拟数据。','log.empty':'暂无记录。请点击"开始第1阶段"。','why.late':'过户延迟超过30天','why.defect':'重大缺陷·买家解除合同','why.tail':'卖家账户将留下记录。','d1':'广安码头(认证经销商)','d2':'水营湾游艇商会(认证经销商)','d3':'个人 K**(已实名)'});
+Object.assign(I18N.ko,{'team.title':'마린딜러를 만드는 사람들','team.sub':'올리브 유니버스 · 역할은 제안이며 팀이 확정합니다','biz.team':'만든 팀','r1':'기획','lead':'팀장','r1d':'서비스 설계, 발표','r2':'검수 총괄','r2d':'54개 항목 체크리스트, 검수원 교육','r3':'안전거래 · 법무','r3d':'에스크로 단계, 약관, 분쟁 기준','r4':'AI · 개발','r4d':'리스크 점수, 사기 탐지, 내비게이터','tbd':'이름: 팀이 정함','center.title':'마린딜러 검수 센터','center.sub':'배를 직접 보고, 검수원에게 결과를 설명 듣는 곳','center.what':'하는 일','center.whatV':'현장 검수 · 시운전 동행 · 서류 확인','center.loc':'위치','center.hours':'운영 시간','biz.name':'상호','biz.workname':'(가칭)','biz.ceo':'대표','biz.reg':'사업자등록번호','biz.mail':'통신판매업 신고','biz.priv':'개인정보 보호책임자','biz.cs':'고객센터','biz.addr':'주소','biz.host':'호스팅','biz.pending':'출시 전 등록','biz.tbd':'팀이 정함','foot.tag':'내 배를 만나는 가장 쉬운 방법','lg.terms':'이용약관 (초안)','lg.privacy':'개인정보처리방침 (초안)','lg.contact':'문의하기','lg.close':'닫기','lg.draft':'초안 · 법률 검토 전 · 시연용 [확인 필요]','lg.koOnly':'','toast.contact':'고객센터는 출시 전에 엽니다. 지금은 마린 선장이 안내해 드려요.','g.contact':'문의'});
+Object.assign(I18N.en,{'team.title':'The people behind MarineDealer','team.sub':'Team Olive Universe · roles are a proposal for the team to confirm','biz.team':'Team','r1':'Planning','lead':'Team lead','r1d':'Service design, pitch','r2':'Head of inspection','r2d':'54-point checklist, inspector training','r3':'Escrow · Legal','r3d':'Escrow stages, terms, dispute rules','r4':'AI · Engineering','r4d':'Risk score, fraud detection, navigator','tbd':'Name: to be decided','center.title':'MarineDealer inspection center','center.sub':'See the boat in person and hear the results from an inspector','center.what':'What we do','center.whatV':'On-site inspection · sea-trial escort · paper check','center.loc':'Location','center.hours':'Hours','biz.name':'Company','biz.workname':'(working name)','biz.ceo':'CEO','biz.reg':'Business reg. no.','biz.mail':'E-commerce reg.','biz.priv':'Privacy officer','biz.cs':'Customer center','biz.addr':'Address','biz.host':'Hosting','biz.pending':'Registered before launch','biz.tbd':'To be decided','foot.tag':'The easiest way to meet your boat','lg.terms':'Terms (draft)','lg.privacy':'Privacy policy (draft)','lg.contact':'Contact','lg.close':'Close','lg.draft':'Draft · not yet legally reviewed · demo','lg.koOnly':'The draft is available in Korean only.','toast.contact':'Our customer center opens before launch. For now, Captain Marin will guide you.','g.contact':'Contact'});
+Object.assign(I18N.ja,{'team.title':'マリンディーラーをつくる人たち','team.sub':'オリーブ・ユニバース・役割は提案でチームが確定します','biz.team':'制作チーム','r1':'企画','lead':'チームリーダー','r1d':'サービス設計、発表','r2':'検査統括','r2d':'54項目チェックリスト、検査員教育','r3':'安心取引・法務','r3d':'エスクロー段階、約款、紛争基準','r4':'AI・開発','r4d':'リスクスコア、詐欺検知、ナビ','tbd':'名前:チームが決定','center.title':'マリンディーラー検査センター','center.sub':'船を直接見て、検査員から結果の説明を受ける場所','center.what':'業務','center.whatV':'現地検査・試運転同行・書類確認','center.loc':'所在地','center.hours':'営業時間','biz.name':'商号','biz.workname':'(仮称)','biz.ceo':'代表','biz.reg':'事業者登録番号','biz.mail':'通信販売業届出','biz.priv':'個人情報保護責任者','biz.cs':'カスタマーセンター','biz.addr':'住所','biz.host':'ホスティング','biz.pending':'リリース前に登録','biz.tbd':'チームが決定','foot.tag':'あなたの船に出会う、いちばん簡単な方法','lg.terms':'利用規約(草案)','lg.privacy':'個人情報処理方針(草案)','lg.contact':'お問い合わせ','lg.close':'閉じる','lg.draft':'草案・法務確認前・デモ用','lg.koOnly':'草案は韓国語のみです。','toast.contact':'カスタマーセンターはリリース前に開設します。今はマリン船長がご案内します。','g.contact':'問い合わせ'});
+Object.assign(I18N.zh,{'team.title':'打造MarineDealer的人','team.sub':'橄榄宇宙团队·分工为提议,由团队确定','biz.team':'制作团队','r1':'策划','lead':'组长','r1d':'服务设计、路演','r2':'检验负责人','r2d':'54项检查清单、检验员培训','r3':'安全交易·法务','r3d':'托管阶段、条款、纠纷标准','r4':'AI·开发','r4d':'风险评分、欺诈检测、导航','tbd':'姓名:待团队确定','center.title':'MarineDealer检验中心','center.sub':'亲眼看船,听检验员讲解结果的地方','center.what':'业务','center.whatV':'现场检验·陪同试航·文件核验','center.loc':'地址','center.hours':'营业时间','biz.name':'商号','biz.workname':'(暂定名)','biz.ceo':'代表','biz.reg':'营业执照号','biz.mail':'通信销售业申报','biz.priv':'个人信息保护负责人','biz.cs':'客服中心','biz.addr':'地址','biz.host':'托管','biz.pending':'上线前登记','biz.tbd':'待团队确定','foot.tag':'遇见你的船,最简单的方法','lg.terms':'使用条款(草案)','lg.privacy':'隐私政策(草案)','lg.contact':'联系我们','lg.close':'关闭','lg.draft':'草案·未经法律审核·演示用','lg.koOnly':'草案仅有韩文版。','toast.contact':'客服中心将在上线前开通。现在由马林船长为您引导。','g.contact':'咨询'});
+let LANG='ko';
+function t(k,vars){ let s=(I18N[LANG]&&I18N[LANG][k]); if(s==null) s=I18N.en[k]; if(s==null) s=I18N.ko[k]; if(s==null) s=k;
+  if(vars) s=s.replace(/{{(\w+)}}/g,(_,v)=>vars[v]); return s; }
+function fmtWon(n){ if(LANG==='ko') return n.toLocaleString('ko-KR')+'원'; if(LANG==='ja') return n.toLocaleString('ja-JP')+'ウォン'; if(LANG==='zh') return n.toLocaleString('zh-CN')+'韩元'; return '₩'+n.toLocaleString('en-US'); }
+function fmtMan(man){ // 만원 단위
+  if(LANG==='en') return '₩'+(man/100).toLocaleString('en-US',{maximumFractionDigits:2})+'M';
+  if(LANG==='zh') return (man/10000).toLocaleString('zh-CN',{maximumFractionDigits:4})+'亿韩元';
+  const e=Math.floor(man/10000), r=man%10000;
+  if(LANG==='ja') return (e?e+'億':'')+(r?r.toLocaleString('ja-JP')+'万':'')+'ウォン';
+  return (e?e+'억 ':'')+(r?r.toLocaleString('ko-KR')+'만':'')+' 원';
+}
+
+/* ================= 캐릭터 대사 (한국어: 부산 사투리 존댓말) ================= */
+const LINES={
+ ko:{t0:'어서 오이소! 마린딜러 안내 맡은 {{n}}이라예. 여기는 검수 끝난 배만 올라옵니더. 빨간 딱지 붙은 거는 AI가 멈춰 둔 매물이라예.',
+     t1:'이 배 한번 보이소. "무사고" 한마디 대신에, 서류·현장 검수·판매자 약속, 세 겹으로 확인해 드립니더.',
+     t2:'돈은 마린딜러가 딱 맡아 둡니더. 조건 다 채워지기 전에는 판매자한테 한 푼도 안 넘어갑니더.',
+     t3:'수상한 거래는 바로 멈추고예, 해경에 낼 자료까지 한 번에 묶어 드립니더. 신고는 본인이 하시면 됩니더.',
+     t4:'모르는 거 있으면 편하게 물어보이소. 지금 단계에 맞춰가 알려 드릴게예.'},
+ en:{t0:'Welcome! I\'m {{n}}, your MarineDealer guide. Only inspected boats are listed here. Red labels mean our AI has paused that listing.',
+     t1:'Take a look at this boat. Instead of just saying "accident-free", we check three layers: records, on-site inspection and the seller\'s signed disclosure.',
+     t2:'MarineDealer holds the money. Not a single won goes to the seller until every condition is met.',
+     t3:'Suspicious deals are stopped right away, and we bundle the evidence for the Coast Guard. You file the report yourself.',
+     t4:'Ask me anything. I\'ll answer based on the stage you\'re in right now.'},
+ ja:{t0:'いらっしゃいませ!案内役の{{n}}です。ここには検査済みの船だけが並びます。赤いラベルはAIが止めた物件です。',
+     t1:'この船をご覧ください。「無事故」の一言ではなく、記録・現地検査・売主の確約の三重で確認します。',
+     t2:'代金はマリンディーラーがお預かりします。条件がそろうまで売主には一円も渡りません。',
+     t3:'怪しい取引はすぐに止め、海洋警察に出す資料までまとめます。通報はご本人が行います。',
+     t4:'分からないことは気軽に聞いてください。今の段階に合わせてお答えします。'},
+ zh:{t0:'欢迎光临!我是MarineDealer向导{{n}}。这里只上架检验过的船。红色标签表示AI已暂停该船只。',
+     t1:'请看这条船。我们不只说"无事故",而是用记录、现场检验、卖家承诺三重确认。',
+     t2:'货款由MarineDealer保管。条件全部满足前,一分钱也不会付给卖家。',
+     t3:'可疑交易会立即暂停,并整理好提交给海警的材料。举报由您本人提交。',
+     t4:'有不懂的尽管问我,我会按您当前的阶段回答。'}
+};
+const TOUR={
+ t0:[['#search',{ko:'여기서 배 종류·길이·계류지로 찾으시면 됩니더.',en:'Search by type, length and marina here.'}],
+     ['#promise',{ko:'마린딜러 약속 네 가지라예. 검수, 대금 보관, 사기 동결, 신고 지원.',en:'Our four promises: inspection, held payment, fraud freeze, report support.'}],
+     ['#cards',{ko:'검수 끝난 매물만 올라옵니더. 빨간 딱지는 AI가 멈춘 매물이라예.',en:'Only inspected listings appear. Red ones were paused by AI.'}],
+     ['#sellBox',{ko:'배 파실 분은 사진만 올리이소. 인증 딜러들이 값을 불러 줍니더.',en:'Sellers just upload photos; verified dealers bid.'}]],
+ t1:[['#galMain',{ko:'사진은 검수원이 직접 찍은 깁니더. 사진마다 검수 등급이 붙어 있어예.',en:'Photos are taken by our inspector, each tagged with a grade.'}],
+     ['#infoCard',{ko:'누가 언제 검수했는지, 판매자 인증, 시세 범위까지 한눈에 보입니더.',en:'Who inspected and when, seller checks, and the market range at a glance.'}],
+     ['#riskCard',{ko:'리스크 점수라예. 70점 넘으면 노출이 바로 멈춥니더.',en:'The risk score. Over 70, the listing is hidden at once.'}],
+     ['#noAcc',{ko:'"무사고" 대신 세 겹으로 확인한 내용이라예.',en:'Three layers of checks instead of "accident-free".'}],
+     ['#itiles',{ko:'영역별로 눌러 보시면 위 사진이 바뀝니더.',en:'Tap an area to switch the photo.'}]],
+ t2:[['#steps',{ko:'네 단계로 나눠가 돈을 맡아 둡니더.',en:'The money is held across four stages.'}],
+     ['#moneyCard',{ko:'돈이 지금 어디 있는지 한눈에 보이지예.',en:'See where the money is at a glance.'}],
+     ['#holdBtn',{ko:'시운전서 하자 나오면 이거 누르이소. 돈이 바로 묶입니더.',en:'Found a defect in the sea trial? Press this and the money is frozen.'}]],
+ t3:[['#txlist',{ko:'AI가 수상한 거래를 점수로 골라냅니더.',en:'AI scores and picks out suspicious deals.'}],
+     ['#txDetail',{ko:'근거 사진하고 신호를 같이 보여 드립니더.',en:'Evidence photos and signals, side by side.'}],
+     ['#packetCard',{ko:'해경에 낼 자료를 한 번에 묶어 드립니더. 신고는 본인이 하시면 되고예.',en:'A ready-made report kit. You file it yourself.'}]],
+ t4:[['#qlist',{ko:'궁금한 거 눌러 보이소.',en:'Tap a question.'}],
+     ['#chat',{ko:'지금 거래 단계에 맞춰가 답해 드립니더.',en:'Answers follow your current deal stage.'}]]
+};
+
+/* ================= 사진 연결 + 대체 그림 ================= */
+const SKY='<linearGradient id="sk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bfe3f7"/><stop offset="1" stop-color="#7cbbe3"/></linearGradient><linearGradient id="se" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2a7fb3"/><stop offset="1" stop-color="#0b4a73"/></linearGradient>';
+const ART={
+ sail:`<rect width="800" height="300" fill="url(#sk)"/><circle cx="640" cy="90" r="38" fill="#fff6d8"/><rect y="300" width="800" height="200" fill="url(#se)"/><path d="M400 60V330" stroke="#e9eef3" stroke-width="5"/><path d="M406 70L530 320H406Z" fill="#fff"/><path d="M394 95L290 320H394Z" fill="#e6f0f7"/><path d="M240 330H570L535 385H280Z" fill="#fff"/><path d="M280 385H535L530 394H286Z" fill="#0b5c8a"/>`,
+ power:`<rect width="800" height="300" fill="#f7c59f"/><rect y="300" width="800" height="200" fill="#1d4e6e"/><path d="M220 320H610L570 385H250Z" fill="#dfe5ea"/><path d="M300 320L340 262H520L560 320Z" fill="#30404f"/><rect x="355" y="272" width="150" height="26" rx="4" fill="#7fa7c4"/><path d="M250 385H570L566 393H256Z" fill="#14222f"/>`,
+ fish:`<rect width="800" height="300" fill="url(#sk)"/><rect y="300" width="800" height="200" fill="url(#se)"/><path d="M200 330H600L570 390H230Z" fill="#fff"/><rect x="420" y="250" width="110" height="80" rx="6" fill="#e9eef3"/><rect x="432" y="262" width="86" height="28" rx="3" fill="#3a6f93"/><path d="M300 330V200M300 200L250 330" stroke="#33414f" stroke-width="4"/><path d="M230 390H570L566 398H236Z" fill="#ff6a3d"/>`,
+ pwc:`<rect width="800" height="300" fill="url(#sk)"/><rect y="300" width="800" height="200" fill="url(#se)"/><path d="M260 340C300 300 420 290 560 320L540 370H280Z" fill="#ff6a3d"/><path d="M360 310L420 300 440 330H370Z" fill="#14222f"/><path d="M200 380c80 20 300 20 420-10" stroke="#fff" stroke-width="6" fill="none" stroke-opacity=".6"/>`,
+ engine:`<rect width="800" height="500" fill="#1b232b"/><rect x="200" y="150" width="400" height="230" rx="18" fill="#3d4a57"/><rect x="240" y="110" width="320" height="70" rx="10" fill="#566676"/><g fill="#2b3440"><circle cx="300" cy="145" r="14"/><circle cx="360" cy="145" r="14"/><circle cx="420" cy="145" r="14"/><circle cx="480" cy="145" r="14"/></g><circle cx="190" cy="300" r="56" fill="none" stroke="#0f1418" stroke-width="16"/><path d="M600 220c90 0 90 130 160 130" stroke="#7a1f1a" stroke-width="18" fill="none"/><rect x="420" y="250" width="110" height="34" rx="6" fill="#ffd166"/>`,
+ nav:`<rect width="800" height="500" fill="#24313f"/><rect x="90" y="70" width="400" height="270" rx="16" fill="#0e1a26"/><rect x="108" y="88" width="364" height="234" rx="8" fill="#12476b"/><path d="M108 200c60-40 120 30 180-10s90-70 184-40V88H108Z" fill="#c9b98f"/><path d="M150 300l60-50 70 10 60-60 80-20" stroke="#ffd166" stroke-width="4" stroke-dasharray="10 8" fill="none"/><circle cx="620" cy="300" r="120" fill="none" stroke="#c0c8d0" stroke-width="14"/><circle cx="620" cy="300" r="24" fill="#c0c8d0"/><g stroke="#c0c8d0" stroke-width="10"><path d="M620 180v240M500 300h240M535 215l170 170M705 215L535 385"/></g>`,
+ cabin:`<rect width="800" height="500" fill="#8c5a34"/><g fill="#bfe3f7" stroke="#d7c9a8" stroke-width="10"><circle cx="200" cy="140" r="42"/><circle cx="400" cy="140" r="42"/><circle cx="600" cy="140" r="42"/></g><rect x="60" y="290" width="680" height="110" rx="24" fill="#e8e1d2"/><rect x="60" y="250" width="680" height="60" rx="20" fill="#f3eee3"/><rect x="290" y="330" width="220" height="24" rx="6" fill="#6e4325"/><rect y="420" width="800" height="80" fill="#5a3a22"/>`,
+ mascot:`<rect width="800" height="800" fill="#ddeefa"/><circle cx="400" cy="470" r="250" fill="#fff"/><path d="M190 330c40-130 380-130 420 0z" fill="#0c2a43"/><rect x="170" y="320" width="460" height="56" rx="28" fill="#fff" stroke="#0c2a43" stroke-width="10"/><path d="M400 210v60M375 240h50" stroke="#ff6a3d" stroke-width="14" stroke-linecap="round"/><circle cx="320" cy="470" r="26" fill="#16202c"/><circle cx="480" cy="470" r="26" fill="#16202c"/><circle cx="330" cy="460" r="8" fill="#fff"/><circle cx="490" cy="460" r="8" fill="#fff"/><path d="M360 560q40 40 80 0" stroke="#16202c" stroke-width="12" fill="none" stroke-linecap="round"/><path d="M385 505l15 25 15-25z" fill="#ff9e3d"/><circle cx="260" cy="540" r="26" fill="#ffc9c0"/><circle cx="540" cy="540" r="26" fill="#ffc9c0"/>`
+};
+function ph(kind,file){
+  if(kind==='mascot') return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">${ART.mascot}</svg>`);
+  const label='사진 자리 · assets/'+file;
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice"><defs>${SKY}</defs>${ART[kind]||ART.sail}<rect x="${400-(label.length*9+24)/2}" y="70" width="${label.length*9+24}" height="34" rx="9" fill="#0f1f33" fill-opacity=".7"/><text x="400" y="93" text-anchor="middle" fill="#fff" font-size="16" font-family="Malgun Gothic,sans-serif">${label}</text></svg>`;
+  return 'data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+}
+const imgState={};
+function applyCrop(img){
+  if(img.classList.contains('is-ph')){ img.style.objectFit='cover'; img.style.objectPosition='50% 50%'; img.style.transform=''; return; }
+  if(img.dataset.fit) img.style.objectFit=img.dataset.fit;
+  if(img.dataset.pos) img.style.objectPosition=img.dataset.pos;
+  img.style.transform=img.dataset.zoom?`scale(${img.dataset.zoom})`:'';
+}
+function bindImg(img){
+  const f=img.dataset.f,k=img.dataset.k; img.classList.add('ph-img');
+  if(img.dataset.src){ img.src=img.dataset.src; applyCrop(img); return; }
+  if(imgState[f]==='ph'){ img.src=ph(k,f); img.classList.add('is-ph'); applyCrop(img); return; }
+  img.onerror=()=>{ img.onerror=null; imgState[f]='ph'; img.src=ph(k,f); img.classList.add('is-ph'); applyCrop(img); };
+  img.src='./assets/'+f; applyCrop(img);
+}
+function bindAll(root){ (root||document).querySelectorAll('img[data-f]').forEach(i=>{ if(!i.dataset.b){ i.dataset.b=1; bindImg(i);} }); }
+const imgTag=(p,extra='')=>`<img ${p.src?`data-src="${esc(p.src)}"`:''} data-f="${esc(p.f)}" data-k="${esc(p.k)}" ${p.fit?`data-fit="${esc(p.fit)}"`:''} ${p.pos?`data-pos="${esc(p.pos)}"`:''} ${p.zoom?`data-zoom="${esc(p.zoom)}"`:''} alt="${esc(p.alt||'')}" loading="lazy" decoding="async" ${extra}>`;
+
+(function(){ const li=$('.brand .logo-img'); if(!li) return; const drop=()=>li.remove(); li.addEventListener('error',drop); if(li.complete&&li.naturalWidth===0) drop(); })();
+
+/* ================= 탭 ================= */
+let curTab='t0';
+function show(id,quiet){
+  curTab=id;
+  $$('nav.tabs [role=tab]').forEach(b=>{const on=b.dataset.tab===id; b.setAttribute('aria-selected',on); b.tabIndex=on?0:-1;});
+  $$('[role=tabpanel]').forEach(p=>p.hidden=p.id!==id);
+  if(!quiet) window.scrollTo({top:0,behavior:'smooth'});
+  endTour(); say();
+}
+$$('[data-tab]').forEach(b=>b.addEventListener('click',()=>show(b.dataset.tab)));
+$('nav.tabs').addEventListener('keydown',e=>{ const ts=$$('nav.tabs [role=tab]'); const i=ts.indexOf(document.activeElement); if(i<0) return; let n=null;
+  if(e.key==='ArrowRight') n=(i+1)%ts.length; else if(e.key==='ArrowLeft') n=(i-1+ts.length)%ts.length; else if(e.key==='Home') n=0; else if(e.key==='End') n=ts.length-1;
+  if(n!=null){ e.preventDefault(); e.stopPropagation(); show(ts[n].dataset.tab,true); ts[n].focus(); } });
+document.addEventListener('keydown',e=>{
+  if(e.target.matches('input,textarea,select')||e.altKey||e.ctrlKey||e.metaKey||$('#dlg').open) return;
+  if(['0','1','2','3','4'].includes(e.key)) show('t'+e.key);
+  if(e.key==='t'||e.key==='T') startTour();
+  if(e.key==='Escape') endTour();
+  if(curTab==='t1'&&e.key==='ArrowRight') go(gi+1);
+  if(curTab==='t1'&&e.key==='ArrowLeft') go(gi-1);
+});
+
+/* ================= 0. 홈 ================= */
+const TYPES=['all','sail','motor','power','fish','pwc'];
+const TYPE_ICON={
+ all:'<path d="M3 3h7v7H3zM14 3h7v7h-7zM3 14h7v7H3zM14 14h7v7h-7z"/>',
+ sail:'<path d="M12 2v16M13 4l7 13h-7zM11 7l-5 10h5M3 19h18l-2 3H5z"/>',
+ motor:'<path d="M3 16h18l-3 4H6zM6 16l2-5h8l3 5M10 11V8h4v3"/>',
+ power:'<path d="M2 15h17l3-3M5 15l3-4h7l2 4M4 19c2 1 4 1 6 0s4-1 6 0 4 1 6 0"/>',
+ fish:'<path d="M3 16h18l-3 4H6zM14 16V9h5v7M8 16V5l-4 11"/>',
+ pwc:'<path d="M4 15c3-4 9-5 16-2l-2 4H6zM10 11l3-1 2 3M3 20c3 1 6 1 9 0s6-1 9 0"/>'
+};
+let fType='all',fLen='',fPort='';
+const LIST=[
+ {nm:'바다결',type:'sail',ft:33,yr:2019,port:'suyeong',man:18500,risk:24,photo:{f:'yacht-01-main.jpg',k:'sail',pos:'50% 62%'},go:'t1'},
+ {nm:'해오름',type:'motor',ft:62,yr:2021,port:'haeundae',man:98000,risk:18,photo:{f:'listing-03.jpg',k:'power',pos:'45% 60%'}},
+ {nm:'청해호',type:'power',ft:40,yr:2021,port:'gwangan',man:9800,risk:92,blocked:true,photo:{f:'fraud-031.jpg',k:'power',pos:'50% 60%'},go:'t3'},
+ {nm:'물빛',type:'fish',ft:28,yr:2015,port:'gijang',man:4200,risk:38,photo:{f:'listing-02.jpg',k:'fish',pos:'45% 60%'}},
+ {nm:'갈매기',type:'sail',ft:45,yr:2019,port:'dadaepo',man:39000,risk:22,photo:{f:'listing-05.jpg',k:'sail',pos:'40% 50%'}},
+ {nm:'수영1호',type:'power',ft:35,yr:2022,port:'gwangan',man:32000,risk:15,photo:{f:'listing-06.jpg',k:'power',pos:'50% 50%'}}
+];
+function renderHome(){
+  $('#fType').innerHTML=TYPES.map(k=>`<option value="${k}" ${k===fType?'selected':''}>${k==='all'?t('f.type'):t('cat.'+k)}</option>`).join('');
+  $('#cats').innerHTML=TYPES.map(k=>`<button data-type="${k}" aria-pressed="${k===fType}"><span class="ci"><svg class="ico" viewBox="0 0 24 24">${TYPE_ICON[k]}</svg></span>${t('cat.'+k)}</button>`).join('');
+  const lenOk=l=>fLen==='s'?l.ft<25:fLen==='m'?(l.ft>=25&&l.ft<=35):fLen==='l'?l.ft>35:true;
+  const items=LIST.filter(l=>(fType==='all'||l.type===fType)&&lenOk(l)&&(!fPort||l.port===fPort));
+  $('#cards').innerHTML=items.map(l=>`<button class="lcard ${l.blocked?'blocked':''}" data-go="${l.go||''}" ${l.user?`data-user="1" data-tx="${esc(l.tx||'')}"`:''}>
+    <div class="im">${imgTag({...l.photo,alt:t('cat.'+l.type)+' '+l.nm})}<div class="badges">${l.blocked?'':l.review?`<span class="rev">⏳ ${t('card.review')}</span>`:`<span class="ok">✓ ${t('card.insp')}</span>`}<span>${t('cat.'+l.type)}</span></div>
+      <div class="blk"><div>⛔ ${t('card.blk')}<small>${l.user?esc(((l.sigs||[]).slice().sort((a,b)=>b.p-a.p)[0]||{})[LANG==='ko'?'ko':'en']||''):t('card.blkSub')}</small></div></div></div>
+    <div class="bd"><div class="nm">「${esc(l.nm)}」 · ${esc(l.ft)}ft</div>
+      <div class="meta">${l.yr} · ${t('port.'+l.port)}</div>
+      <div class="pr">${fmtMan(l.man)}</div>
+      <div class="risk"><i style="background:var(--${l.risk>=70?'bad':l.risk>=40?'warn':'ok'})"></i>${t('card.risk')} ${l.risk}</div></div></button>`).join('')
+    || `<p class="muted">${({ko:'이 선종은 지금 검수 끝난 매물이 없어요.',en:'No inspected listings of this type yet.',ja:'この船種の検査済み物件はまだありません。',zh:'该船型暂无已检验船只。'})[LANG]}</p>`;
+  bindAll($('#cards')); bindAll($('#t0'));
+}
+$('#cats').addEventListener('click',e=>{const b=e.target.closest('[data-type]'); if(!b) return; fType=b.dataset.type; renderHome();});
+$('#fType').addEventListener('change',e=>{fType=e.target.value; renderHome();});
+$('#fLen').addEventListener('change',e=>{fLen=e.target.value; renderHome();});
+$('#fPort').addEventListener('change',e=>{fPort=e.target.value; renderHome();});
+$('#searchBtn').addEventListener('click',()=>{ renderHome(); $('#cards').scrollIntoView({behavior:'smooth',block:'start'}); });
+$('#cards').addEventListener('click',e=>{const b=e.target.closest('.lcard'); if(!b) return; const g=b.dataset.go; if(g==='t3'){ cur=TX.find(x=>x.id===b.dataset.tx)||TX.find(x=>x.lvl==='bad')||TX[0]; renderTx(); } if(g) show(g); else toast(b.dataset.user?t('toast.review'):t('toast.detail'));});
+
+$('#heroCta').addEventListener('click',()=>$('#cards').scrollIntoView({behavior:'smooth',block:'start'}));
+
+/* ================= 1. 갤러리 ================= */
+const PH=[
+ {f:'yacht-01-main.jpg',k:'sail',fit:'contain',a:'a.full'},
+ {f:'yacht-01-main.jpg',k:'sail',fit:'cover',pos:'45% 12%',zoom:1.25,a:'a.hull',g:'C 1',gc:'warn'},
+ {f:'yacht-01-main.jpg',k:'sail',fit:'cover',pos:'50% 86%',zoom:1.45,a:'a.hull',g:'A',gc:'ok'},
+ {f:'yacht-04-engine.jpg',k:'engine',a:'a.eng',g:'C 1',gc:'warn'},
+ {f:'yacht-05-nav.jpg',k:'nav',a:'a.elec',g:'A',gc:'ok'},
+ {f:'yacht-06-cabin.jpg',k:'cabin',a:'a.cabin',g:'A',gc:'ok'}
+];
+let gi=0;
+function renderThumbs(){
+  $('#thumbs').innerHTML=PH.map((p,i)=>`<button data-i="${i}" aria-current="${i===gi}">${imgTag({...p,fit:'cover',zoom:'',pos:p.pos||'50% 55%',alt:t('p'+i).split('|')[0]})}<i>${t(p.a)}</i></button>`).join('');
+  bindAll($('#thumbs'));
+}
+$('#thumbs').addEventListener('click',e=>{const b=e.target.closest('button'); if(b) go(+b.dataset.i);});
+$('#galPrev').addEventListener('click',()=>go(gi-1));
+$('#galNext').addEventListener('click',()=>go(gi+1));
+(function swipe(){ let x0=null; const m=$('#galMain');
+  m.addEventListener('pointerdown',e=>{x0=e.clientX;});
+  m.addEventListener('pointerup',e=>{ if(x0==null) return; const dx=e.clientX-x0; x0=null; if(Math.abs(dx)>40) go(gi+(dx<0?1:-1)); });
+})();
+function go(i){
+  gi=(i+PH.length)%PH.length; const p=PH[gi]; const fg=$('#galImg'),bg=$('#galBg');
+  fg.classList.add('fade');
+  setTimeout(()=>{
+    [fg,bg].forEach(im=>{im.classList.remove('is-ph'); im.dataset.f=p.f; im.dataset.k=p.k;});
+    fg.dataset.fit=p.fit||'cover'; fg.dataset.pos=p.pos||'50% 50%'; fg.dataset.zoom=p.zoom||'';
+    bg.dataset.fit='cover'; bg.dataset.pos='50% 50%'; bg.dataset.zoom='';
+    bindImg(fg); bindImg(bg);
+    fg.onload=()=>{applyCrop(fg); fg.classList.remove('fade');};
+    setTimeout(()=>{applyCrop(fg); fg.classList.remove('fade');},350);
+  },120);
+  const [cap,sub]=t('p'+gi).split('|');
+  $('#galTag').innerHTML=`<span>${t(p.a)}</span>${p.g?`<span class="g-${p.gc}">${t('insp')} ${p.g}</span>`:''}`;
+  $('#galCount').textContent=`${gi+1} / ${PH.length}`;
+  $('#galCap').innerHTML=`<b>${cap}</b><span>${sub}</span>`;
+  $('#galImg').alt=cap+' — '+sub;
+  $$('#thumbs button').forEach((b,j)=>b.setAttribute('aria-current',j===gi));
+}
+const AREAS=[{a:'a.hull',photo:2,score:88,gr:{A:12,B:3,C:2},pt:'warn'},{a:'a.eng',photo:3,score:82,gr:{A:10,B:2,C:1},pt:'warn'},{a:'a.elec',photo:4,score:76,gr:{A:9,B:2,N:1},pt:'na'},{a:'a.cabin',photo:5,score:92,gr:{A:10,B:2},pt:'ok'}];
+function renderInfo(){
+  const lo=16200,hi=20400,me=18500,pct=Math.round((me-lo)/(hi-lo)*100);
+  $('#infoCard').innerHTML=`<h2>${t('info.title')}</h2><div class="info3">
+   <div><h3>${t('info.insp')}</h3><dl><dt>${t('info.inspector')}</dt><dd>INS-0412</dd><dt>${t('info.when')}</dt><dd>2026-11-20 10:00–13:30</dd><dt>${t('info.how')}</dt><dd>${t('info.howV')}</dd><dt>${t('info.media')}</dt><dd>${t('info.mediaV')}</dd></dl></div>
+   <div><h3>${t('info.seller')}</h3><dl><dt>${t('info.id')}</dt><dd class="okc">✓ ${t('ok')}</dd><dt>${t('info.owner')}</dt><dd class="okc">✓ ${t('ok')}</dd><dt>${t('info.since')}</dt><dd>${t('info.sinceV')}</dd><dt>${t('info.sign')}</dt><dd>2026-11-15</dd></dl></div></div>
+   <div class="mkt"><div class="row" style="justify-content:space-between"><b>${t('info.market')}</b><span class="muted">${t('info.marketSub')}</span></div>
+   <div class="mbar"><i style="left:${pct}%"><span>${t('info.this')} ${fmtMan(me)}</span></i></div>
+   <div class="row" style="justify-content:space-between"><span class="muted">${fmtMan(lo)}</span><span class="muted">${fmtMan(hi)}</span></div>
+   <p class="muted" style="margin:6px 0 0">${t('info.note')}</p></div>`;
+}
+function renderT1(){
+  renderInfo();
+  $('#t1Price').textContent=fmtMan(18500);
+  $('#itiles').innerHTML=AREAS.map((x,i)=>{const p=PH[x.photo];return `<button class="itile" data-p="${x.photo}">
+   <div class="im">${imgTag({...p,fit:'cover',zoom:'',pos:p.pos||'50% 55%',alt:t(x.a)})}<span class="area">${t(x.a)}</span><span class="sc">${x.score}</span></div>
+   <div class="bd"><div class="grades">${Object.entries(x.gr).map(([g,n])=>`<span class="g${g}">${g==='N'?t('n.na'):g} ${n}</span>`).join('')}</div>
+   <div class="pt"><span class="ic ${x.pt}" style="width:18px;height:18px;font-size:10px">${x.pt==='ok'?'✓':x.pt==='na'?'?':'!'}</span><span>${t('it'+i)}</span></div></div></button>`;}).join('');
+  bindAll($('#itiles'));
+  const cats=[['a.hull',88,'ok'],['a.eng',82,'ok'],['a.elec',76,'warn'],['a.cabin',92,'ok'],['a.doc',100,'ok'],['a.seller',90,'ok']];
+  $('#catsBar').innerHTML=`<div class="muted" style="margin-bottom:4px">${t('t1.catsLabel')}</div>`+cats.map(([n,v,c])=>`<div class="cat"><span>${t(n)}</span><div class="bar"><i style="width:${v}%;background:var(--${c})"></i></div><b style="text-align:right">${v}</b></div>`).join('');
+  renderThumbs(); go(gi);
+}
+$('#itiles').addEventListener('click',e=>{const b=e.target.closest('.itile'); if(!b) return; go(+b.dataset.p); window.scrollTo({top:0,behavior:'smooth'});});
+$('#gauge').style.background='conic-gradient(var(--ok) 86.4deg,var(--g-3) 0)';
+let bidding=false,bidsDone=false;
+$('#bidBtn').addEventListener('click',()=>{
+  if(bidding) return; bidding=true;
+  const box=$('#bids'); box.innerHTML=`<div class="muted">${t('toast.bidWait')}</div>`;
+  const list=[['d1',17800],['d2',18200],['d3',18650]]; let best=0;
+  list.forEach(([who,amt],i)=>setTimeout(()=>{
+    best=Math.max(best,amt);
+    box.insertAdjacentHTML('beforeend',`<div class="bid" data-a="${amt}" data-w="${who}"><span>${t(who)}</span><span>${fmtMan(amt)}</span></div>`);
+    $$('#bids .bid').forEach(b=>b.classList.toggle('best',+b.dataset.a===best));
+    if(i===list.length-1){ bidsDone=true; store.set('md-bids',1); say('입찰 세 건 들어왔습니더! 제일 높은 값으로 바로 안전거래 시작하실 수 있어예.','Three bids are in! You can start safe escrow with the best one.',3); toast(t('toast.bid')); $('#bidBtn').textContent=t('bid3'); }
+  },800*(i+1)));
+});
+$('#escrowStartBtn').addEventListener('click',()=>{ if(es.step===0) advance(); show('t2'); });
+
+/* ================= 2. 에스크로 ================= */
+const PRICE=185000000;
+const es={step:0,hold:false,held:0,paid:0,ded:0,delay:0,ended:false};
+const ST=n=>t('s'+n+'t');
+function logEmpty(){ const L=$('#log'); if(!L.children.length||L.querySelector('.empty')) L.innerHTML=`<li class="empty">${t('log.empty')}</li>`; }
+function log(m){ const e0=$('#log .empty'); if(e0) e0.remove(); $('#log').insertAdjacentHTML('afterbegin',`<li><time>${now()}</time>${m}</li>`); }
+const won=n=>n.toLocaleString('ko-KR')+'원';
+function render(){
+  $('#steps').innerHTML=[1,2,3,4].map(n=>{
+    let cls='',tag=`<span class="tag t-gray">${t('tag.wait')}</span>`;
+    if(es.ended==='refund'&&n<=Math.max(es.step,1)){cls='hold';tag=`<span class="tag t-bad">${t('tag.refund')}</span>`;}
+    else if(n<es.step||(n===es.step&&es.ended==='done')){cls='done';tag=`<span class="tag t-ok">${t('tag.done')}</span>`;}
+    else if(n===es.step){ if(es.hold){cls='hold';tag=`<span class="tag t-bad">${t('tag.hold')}</span>`;} else {cls='now';tag=`<span class="tag t-sea">${t('tag.now')}</span>`;} }
+    return `<div class="step ${cls}"><div class="no">STEP ${n}</div><h3>${ST(n)}</h3><p>${t('s'+n+'d')}</p><div class="st">${tag}</div></div>`;
+  }).join('');
+  $('#mHeld').textContent=fmtWon(es.held); $('#mPaid').textContent=fmtWon(es.paid); $('#mDed').textContent=fmtWon(es.ded);
+  $('#t2Price').textContent=fmtMan(18500);
+  $('#nextBtn').disabled=es.hold||!!es.ended;
+  $('#holdBtn').disabled=es.step!==3||es.hold||!!es.ended;
+  $('#delayBtn').disabled=es.step!==3||es.hold||!!es.ended;
+  $('#nextBtn').textContent=es.step===0?t('b.start'):es.step>=4?t('b.done'):t('b.nextTo',{s:ST(es.step+1)});
+  $('#navStep').textContent=navStepText();
+  saveES();
+}
+function saveES(){ store.set('md-es',JSON.stringify({es,log:$('#log').innerHTML,hold:$('#holdBox').innerHTML})); }
+function restoreState(){
+  try{ const v=JSON.parse(store.get('md-es')||'null'); if(v&&v.es){ Object.assign(es,v.es); $('#log').innerHTML=v.log||''; $('#holdBox').innerHTML=v.hold||''; bindAll($('#holdBox')); } }catch(_){}
+  if(store.get('md-bids')){ bidsDone=true; bidding=true; const best=18650; $('#bids').innerHTML=[['d1',17800],['d2',18200],['d3',18650]].map(([w,a])=>`<div class="bid ${a===best?'best':''}" data-a="${a}" data-w="${w}"><span>${t(w)}</span><span>${fmtMan(a)}</span></div>`).join(''); }
+}
+function navStepText(){ return es.ended==='done'?t('b.done'):es.ended==='refund'?t('st.refund'):es.step===0?t('st.none'):'STEP '+es.step+' · '+ST(es.step)+(es.hold?t('st.hold'):''); }
+function advance(){
+  if(es.hold||es.ended) return;
+  if(es.step===0){es.step=1;es.held=PRICE*0.1;log('<b>1단계</b> 계약서 양측 전자서명 · 계약금 18,500,000원 보관 시작');}
+  else if(es.step===1){es.step=2;es.held=PRICE;log('<b>2단계</b> 잔금 166,500,000원 예치 · 등록 명의·저당·검사 서류 검증 통과 · 리스크 24점(정상)');}
+  else if(es.step===2){es.step=3;log('<b>3단계</b> 명의이전 신청 접수 · 수영만에서 인도 서명 · 72시간 시운전 기간 시작');}
+  else if(es.step===3){
+    es.step=4; const fee=Math.round(PRICE*0.02); const late=es.delay>0?Math.round(PRICE*0.001*Math.min(es.delay,30)):0;
+    es.ded+=late; const pay=es.held-fee-late; es.paid+=pay; es.held=0; es.ended='done';
+    log(`<b>4단계</b> 72시간 이의 없음 → 정산: 수수료 2% ${won(fee)}${late?` · 지연 차감 ${won(late)} (매수인에게 반환)`:''} · 판매자 지급 ${won(pay)}`);
+    $('#holdBox').innerHTML=`<div class="alertbox ok"><h3>${t('done.title')}</h3>${t('done.body',{m:fmtWon(pay)})}</div>`;
+    toast(t('toast.done')); setTimeout(()=>say('정산 끝났습니더! 배도 돈도 제자리 잘 찾아갔어예. 축하드립니더.','All settled! The boat and the money reached the right hands. Congratulations!',11),0);
+  }
+  render();
+}
+$('#nextBtn').addEventListener('click',advance);
+$('#delayBtn').addEventListener('click',()=>{
+  es.delay+=5; log(`<b>지연</b> 명의이전 기한 ${es.delay}일 초과 → 하루 0.1% 지연 차감 누적 ${won(Math.round(PRICE*0.001*Math.min(es.delay,30)))} (최대 3%)`);
+  if(es.delay>=30){refund('why.late');return;}
+  toast(t('toast.delay')); render();
+});
+$('#holdBtn').addEventListener('click',()=>{
+  es.hold=true; log('<b>보류</b> 매수인 이의: 시운전 중 2,000rpm 이상에서 과열 경보 (영상 첨부) → 보관금 전액 지급 정지');
+  $('#holdBox').innerHTML=`<div class="alertbox bad"><h3>${t('h.title',{m:fmtWon(es.held)})}</h3>
+   <div class="hold-ev">${imgTag({f:'yacht-04-engine.jpg',k:'engine',alt:t('a.eng')})}<div>${t('h.ev')}</div></div>
+   <p class="muted" style="margin:0 0 10px">${t('h.pick')}</p>
+   <div class="row"><button class="btn" data-h="fix">${t('h.fix')}</button><button class="btn" data-h="deduct">${t('h.deduct')}</button><button class="btn danger" data-h="refund">${t('h.refund')}</button></div></div>`;
+  bindAll($('#holdBox')); render(); say('어이쿠, 하자가 나왔네예. 걱정 마이소, 돈은 지금 다 묶여 있습니더. 셋 중에 하나 고르시면 됩니더.','Oops, a defect. Don\'t worry — all the money is frozen. Pick one of the three options.',4);
+});
+$('#holdBox').addEventListener('click',e=>{
+  const h=e.target.dataset.h; if(!h) return;
+  if(h==='fix'){es.hold=false;log('<b>해소</b> 판매자 비용으로 수리 완료 · 재시운전 통과 → 3단계 재개');$('#holdBox').innerHTML='';toast(t('toast.fix'));}
+  if(h==='deduct'){es.hold=false;es.held-=2400000;es.ded+=2400000;log('<b>합의 차감</b> 수리 견적 2,400,000원 매수인에게 반환 → 3단계 재개');$('#holdBox').innerHTML='';toast(t('toast.deduct'));}
+  if(h==='refund'){refund('why.defect');return;}
+  render();
+});
+function refund(key){
+  const why=I18N.ko[key]; es.ded+=es.held; const r=es.held; es.held=0; es.hold=false; es.ended='refund';
+  log(`<b>환불</b> ${why} → 보관금 ${won(r)} 매수인에게 전액 환불${es.step>=3?' · 명의 원상복구 절차 안내':''}`);
+  $('#holdBox').innerHTML=`<div class="alertbox bad"><h3>${t('ref.title',{m:fmtWon(r)})}</h3>${t(key)}. ${t('why.tail')}</div>`;
+  toast(t('toast.refund')); render();
+}
+$('#resetBtn').addEventListener('click',()=>{Object.assign(es,{step:0,hold:false,held:0,paid:0,ded:0,delay:0,ended:false});$('#log').innerHTML='';$('#holdBox').innerHTML='';logEmpty();render();store.del('md-bids');});
+
+/* ================= 3. 사기 탐지 ================= */
+const TX=[
+ {id:'T-2411-031',nm:'청해호',type:'power',ft:40,yr:2021,man:9800,score:92,lvl:'bad',photo:{f:'fraud-031.jpg',k:'power',pos:'50% 60%'},
+  seller:'acc_77**21 (가입 3일)',buyer:'buyer_K** (본인인증)',
+  sig:[['비슷한 매물 시세보다 38% 낮음','+25'],['등록 명의 ≠ 본인인증 이름','+30'],['"카톡으로 계약금 먼저" 외부 송금 유도','+22'],['현장 검수 일정 2회 거부','+15']],
+  ev:'price',timeline:['11-21 14:02 매물 등록 (사진 12장)','11-21 19:40 매수인 문의','11-22 09:15 판매자 "외부 메신저로 연락" 메시지','11-22 09:31 개인 계좌로 계약금 500만 원 요구','11-22 09:31 AI 플래그 92점 · 노출 자동 중단']},
+ {id:'T-2411-027',nm:'하늘빛',type:'motor',ft:36,yr:2018,man:12000,score:81,lvl:'bad',photo:{f:'fraud-027.jpg',k:'power',pos:'50% 45%'},
+  seller:'acc_31**08 (가입 41일)',buyer:'입찰자 3명',
+  sig:[['사진 9장이 해외 중고 사이트 매물과 같음 (역검색)','+35'],['서류 HIN과 사진 속 각인 불일치','+30'],['등록증 사본 글꼴·도장 위치 이상','+16']],
+  ev:'match',timeline:['11-18 10:20 매물 등록','11-19 13:00 입찰 3건','11-20 08:44 사진 역검색 일치 감지','11-20 08:45 AI 플래그 81점 · 노출 자동 중단']},
+ {id:'T-2411-019',nm:'바다결',type:'sail',ft:33,yr:2019,man:18500,score:24,lvl:'ok',photo:{f:'yacht-01-main.jpg',k:'sail',pos:'50% 60%'},
+  seller:'acc_12**45 (가입 2년)',buyer:'인증 딜러',
+  sig:[['명의·HIN·검사 서류 일치','0'],['현장 검수 완료','0'],['시세 범위 안','0']],
+  ev:'ok',timeline:['11-15 매물 등록','11-20 현장 검수 완료','11-21 역경매 진행']}
+];
+const CL=['P-01 표지·요약','P-02 시간순 경과표','P-03 당사자 정보 (가림 처리)','P-04 매물 글·사진 원본','P-05 플랫폼 대화 기록','P-06 금융 흐름 (보관·동결)','P-07 서류 사본·위변조 표시','P-08 선박 식별 정보','P-09 AI 탐지 근거','P-10 접속 기록','P-11 파일 해시 (SHA-256)','P-12 피해자 확인서','P-13 공식 신고 안내문'];
+const frozen={}; let cur=TX[0]; let packetText='';
+const txName=x=>`${t('cat.'+x.type)} 「${esc(x.nm)}」 · ${esc(x.ft)}ft`;
+function evidence(x){
+  const p=x.photo;
+  if(x.ev==='user') return `<div class="ev ev-one"><figure><div class="im">${imgTag(p)}</div><figcaption>${t('ev.myPhoto')}</figcaption></figure><div><span class="tag t-bad">${t('rk.high')}</span><p class="muted">${t('res.bad')}</p></div></div>`;
+  if(x.ev==='price') return `<div class="ev ev-one"><figure><div class="im">${imgTag(p)}</div><figcaption>${t('ev.myPhoto')}</figcaption></figure>
+   <div><div class="muted" style="margin-bottom:4px">${t('ev.cmp')}</div>
+   <div class="pbar"><div class="l"><span>${t('ev.avg')}</span><b>${fmtMan(15800)}</b></div><div class="t"><i style="width:100%;background:var(--sea-9)"></i></div></div>
+   <div class="pbar"><div class="l"><span>${t('ev.this')}</span><b style="color:var(--bad)">${fmtMan(9800)} (−38%)</b></div><div class="t"><i style="width:62%;background:var(--bad)"></i></div></div></div></div>`;
+  if(x.ev==='match') return `<div class="ev"><div class="ev-pair">
+   <figure><div class="im">${imgTag(p)}<div class="box" style="left:50%;top:30%;width:34%;height:30%"></div></div><figcaption>${t('ev.ours')}</figcaption></figure>
+   <div class="vs"><b>${x.pct||97}%</b>${t('ev.match')}</div>
+   <figure><div class="im">${imgTag(x.dupOf?{f:x.dupOf.f,k:'power',alt:x.dupOf.label}:{...p,zoom:1.12})}<div class="box" style="left:50%;top:30%;width:34%;height:30%"></div></div><figcaption>${x.dupOf?t('ev.dup',{n:esc(x.dupOf.label)}):t('ev.web')}</figcaption></figure>
+   </div>${x.dupOf?'':'<div class="hin"><span>HIN …-19-7A</span><span class="x">…-16-4C</span><span class="x">≠</span></div>'}</div>`;
+  return `<div class="ev ev-one"><figure><div class="im">${imgTag(p)}</div><figcaption>${t('ev.okCap')}</figcaption></figure><div><span class="tag t-ok">${t('ev.ok')}</span><p class="muted">${t('ev.okSub')}</p></div></div>`;
+}
+function renderTx(){
+  $('#txlist').innerHTML=TX.map(x=>`<button class="tx ${frozen[x.id]?'is-frozen':''}" aria-pressed="${x===cur}" data-id="${x.id}">
+   <div class="th">${imgTag({...x.photo,alt:txName(x).replace(/<[^>]+>/g,'')})}${x.lvl==='bad'?`<span class="rib">${t('rib')}</span>`:''}<span class="lock">🔒</span></div>
+   <div><b>${txName(x)}</b><div class="muted">${x.id} · ${fmtMan(x.man)}</div>
+   <div style="margin-top:4px">${x.lvl==='bad'?`<span class="tag t-bad">${t('rk.high')}</span>`:`<span class="tag t-ok">${t('rk.ok')}</span>`} ${frozen[x.id]?`<span class="tag t-bad">${t('frz')}</span>`:''}</div></div>
+   <div class="sc" style="color:var(--${x.lvl})">${x.score}<small>${t('rk.label')}</small></div></button>`).join('');
+  const x=cur;
+  $('#txDetail').innerHTML=`<div class="frozen-banner">${t('t3.frozen')}</div><h2>${t('t3.ev')} · ${x.id}</h2>${evidence(x)}
+   ${x.sig.map(([s,p],i)=>`<div class="sig"><span>${sigT(x,i)}</span><b style="color:var(--${+p.replace('+','')>0?'bad':'ok'})">${p}</b></div>`).join('')}
+   <div class="row" style="margin-top:14px"><button class="btn danger" id="freezeBtn" ${x.lvl!=='bad'?'disabled':''}>${frozen[x.id]?t('b.unfreeze'):t('b.freeze')}</button><button class="btn primary" id="genBtn" ${x.lvl!=='bad'?'disabled':''}>${t('b.gen')}</button></div>
+   <p class="muted" style="margin:10px 0 0">${x.lvl==='bad'?t('t3.proc'):t('t3.okProc')}</p>`;
+  $('#txDetail').classList.toggle('frozen',!!frozen[x.id]);
+  if(!packetText) $('#packet').textContent=t('t3.empty');
+  bindAll($('#txlist')); bindAll($('#txDetail'));
+}
+$('#txlist').addEventListener('click',e=>{const b=e.target.closest('.tx'); if(!b) return; cur=TX.find(x=>x.id===b.dataset.id); renderTx();});
+$('#txDetail').addEventListener('click',e=>{
+  if(e.target.id==='freezeBtn'){frozen[cur.id]=!frozen[cur.id]; toast(frozen[cur.id]?t('toast.freeze'):t('toast.unfreeze')); renderTx();}
+  if(e.target.id==='genBtn'){ if(!frozen[cur.id]){frozen[cur.id]=true; renderTx();} genPacket(cur); say('증거 패킷 다 묶어 놨습니더. 복사하든 내려받든 하셔가, 공식 창구에 직접 접수하시면 됩니더.','The evidence kit is ready. Copy or download it, then file it yourself through the official channel.',8); }
+});
+async function sha(s){ try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');}
+  catch(_){let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return ('demo-'+(h>>>0).toString(16)).padEnd(64,'0');} }
+async function genPacket(x){
+  const ts=new Date().toLocaleString('ko-KR');
+  const files=['listing_post.html',x.photo.f,'photos_all.zip','chat_export.txt','documents.pdf','access_log.csv'];
+  const hashes=[]; for(const f of files) hashes.push(`  ${f.padEnd(20)} ${(await sha(x.id+f)).slice(0,32)}…`);
+  const kname=`${I18N.ko['cat.'+x.type]} 「${x.nm}」 ${x.ft}ft`;
+  packetText=`[의심 거래 증거 패킷 · 요약 리포트]
+※ 마린딜러 작성 참고자료 · 공식 수사 문서 아님 · 시연용 가상 데이터
+
+사건 번호   MD-CASE-${x.id.slice(2)}
+생성 일시   ${ts}
+대상 매물   ${kname} (${x.man.toLocaleString('ko-KR')}만 원)
+위험 점수   ${x.score} / 100 (AI 판단 보조값)
+현재 조치   매물 노출 중단 · 거래 동결 · 보관금 지급 정지
+
+■ 1. 요약
+판매자 계정 ${x.seller}가 등록한 매물에서 아래 의심 신호가 확인되어
+플랫폼이 거래를 동결하고 증거를 보전했습니다.
+
+■ 2. 탐지 신호
+${x.sig.map(([s,p])=>`  - ${s} (${p})`).join('\n')}
+
+■ 3. 시간순 경과
+${x.timeline.map(v=>'  - '+v).join('\n')}
+
+■ 4. 당사자 (필요 범위만 표시)
+  판매자: ${x.seller}
+  상대방: ${x.buyer}
+
+■ 5. 첨부 증빙 · 무결성 해시 (SHA-256 앞 32자리)
+${hashes.join('\n')}
+
+■ 6. 신고 안내
+  - 신고는 피해자 본인이 공식 채널로 접수합니다.
+  - 해양경찰 신고 창구 / 사이버 사기 신고 경로 [발표 전 공식 사이트 확인]
+  - 수사기관의 정식 요청 시 원본 파일을 법 절차에 따라 제공합니다.
+`;
+  $('#packet').textContent=packetText;
+  $$('#cl input').forEach((c,i)=>c.checked=i!==11);
+  toast(t('toast.gen'));
+}
+const CL_T={
+ en:['Cover & summary','Timeline','Parties (masked)','Original listing text & photos','Platform chat log','Money flow (held · frozen)','Document copies · forgery marks','Vessel identification','AI detection evidence','Access log','File hashes (SHA-256)','Victim statement','Official reporting guide'],
+ ja:['表紙・要約','時系列の経過表','当事者情報(マスキング)','物件の原文・写真','プラットフォーム内の会話記録','資金の流れ(保管・凍結)','書類コピー・偽造の印','船舶の識別情報','AI検知の根拠','アクセス記録','ファイルハッシュ(SHA-256)','被害者確認書','公式通報の案内'],
+ zh:['封面·摘要','时间线','当事人信息(已遮挡)','船只原帖·照片','平台聊天记录','资金流向(托管·冻结)','文件复印件·伪造标记','船舶识别信息','AI检测依据','访问记录','文件哈希(SHA-256)','受害人确认书','官方举报指南']};
+function renderCL(){
+  const was=$$('#cl input').map(c=>c.checked);
+  $('#cl').innerHTML=CL.map((c,i)=>{ const code=c.slice(0,4); const txt=LANG==='ko'?c.slice(5):(CL_T[LANG]||CL_T.en)[i]; return `<li><label><input type="checkbox" ${was[i]?'checked':''}> <span>${code} ${txt}</span></label></li>`; }).join('');
+}
+renderCL();
+$('#copyBtn').addEventListener('click',async()=>{
+  if(!packetText){toast(t('toast.needGen'));return;}
+  try{await navigator.clipboard.writeText(packetText);toast(t('toast.copy'));}
+  catch(_){const r=document.createRange();r.selectNodeContents($('#packet'));const s=getSelection();s.removeAllRanges();s.addRange(r);document.execCommand('copy');toast(t('toast.copy'));}
+});
+$('#dlBtn').addEventListener('click',()=>{
+  if(!packetText){toast(t('toast.needGen'));return;}
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['﻿'+packetText],{type:'text/plain;charset=utf-8'}));
+  a.download=`marinedealer_packet_${cur.id}.txt`;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast(t('toast.dl'));
+});
+
+/* ================= 4. 내비게이터 (캐릭터가 답함) ================= */
+const QA=[
+ {q:{ko:'부산에서 요트를 사고팔려면 어떤 순서예요?',en:'What are the steps to buy or sell a yacht in Busan?',ja:'釜山でヨットを売買する手順は?',zh:'在釜山买卖游艇的流程是?'},
+  a:{ko:'순서는 이렇습니더.<ol><li>판매자가 매물 올리고 본인인증, 고지 확약 서명</li><li>검수원이 가서 54개 항목 현장 검수</li><li>인증 딜러들이 역경매로 값 부르기</li><li>에스크로 4단계: 계약금 → 잔금·서류 → 명의이전·인도 → 정산</li></ol>지금 「바다결」은 <b>{step}</b>이라예.',
+     en:'Here are the steps.<ol><li>Seller lists, verifies ID and signs the disclosure</li><li>Inspector checks 54 items on site</li><li>Verified dealers bid in a reverse auction</li><li>4-stage escrow: deposit → balance & papers → title & delivery → settlement</li></ol>"Badagyeol" is now at <b>{step}</b>.'}},
+ {q:{ko:'에스크로 돈은 언제 판매자한테 가요?',en:'When does the seller get the escrow money?',ja:'代金はいつ売主に渡りますか?',zh:'托管的钱什么时候给卖家?'},
+  a:{ko:'배 받고 <b>72시간 시운전</b> 동안 이의가 없거나 "인수 확정"을 누르시면예, 2영업일 안에 수수료·차감액 빼고 넘어갑니더. 그 전에는 계약금도 판매자한테 안 갑니더.<span class="note">72시간·2영업일·수수료는 설계 가정</span>',
+     en:'After a <b>72-hour sea trial</b> with no objection (or when you press "accept"), it goes to the seller within 2 business days, minus fees. Until then, not even the deposit is released.<span class="note">Periods and fee are design assumptions</span>'}},
+ {q:{ko:'명의이전 서류는 뭐가 필요해요?',en:'Which papers do I need for the title transfer?',ja:'名義変更に必要な書類は?',zh:'过户需要哪些文件?'},
+  a:{ko:'이거 챙기시면 됩니더.<ol><li>매매계약서 (플랫폼 전자서명본)</li><li>선박 또는 수상레저기구 등록증</li><li>검사증서 (유효기간 확인)</li><li>양도·양수 서류하고 신분 확인 서류</li><li>저당 있으면 말소 서류</li></ol>빠진 거 있으면 제가 챙겨 드릴게예.<span class="note">선종·톤수마다 등록 기관과 서류가 다릅니다 · 확인 필요</span>',
+     en:'Please prepare:<ol><li>Sales contract (e-signed on the platform)</li><li>Vessel or watercraft registration</li><li>Inspection certificate (valid)</li><li>Transfer forms and ID</li><li>Lien release, if any</li></ol>I\'ll tell you if anything is missing.<span class="note">Agencies and papers differ by vessel type and tonnage · to be confirmed</span>'}},
+ {q:{ko:'시운전에서 하자가 나오면 우째 돼요?',en:'What if the sea trial finds a defect?',ja:'試運転で不具合が出たら?',zh:'试航发现缺陷怎么办?'},
+  a:{ko:'72시간 안에 영상하고 같이 이의 내시면 <b>보관금이 전부 바로 묶입니더</b>. 제3자 검수원이 5영업일 안에 다시 보고예,<ol><li>판매자가 고치고 다시 시운전</li><li>수리비만큼 빼고 정산</li><li>못 고치거나 수리비가 15% 넘으면 계약 해제, 전액 환불</li></ol>중에 하나로 정리합니더. 2번 화면에서 직접 눌러 보이소.',
+     en:'Object within 72 hours with a video and <b>all held money is frozen</b>. A third-party inspector rechecks within 5 business days, then:<ol><li>Seller repairs and you re-trial</li><li>Repair cost is deducted</li><li>If unrepairable or over 15%, cancel with a full refund</li></ol>Try it on screen 2.'}},
+ {q:{ko:'판매자가 명의이전을 미루면요?',en:'What if the seller delays the title transfer?',ja:'売主が名義変更を遅らせたら?',zh:'卖家拖延过户怎么办?'},
+  a:{ko:'기한(서류 검증 후 14일) 넘기면 <b>하루 0.1%</b>씩 빼서 매수인한테 돌려드립니더(최대 3%). 30일 더 넘기면 계약 해제하고 전액 환불받으실 수 있어예.<span class="note">비율·기간은 설계 가정</span>',
+     en:'After the deadline (14 days after paper check), <b>0.1% per day</b> is deducted and returned to you (max 3%). After 30 more days you can cancel for a full refund.<span class="note">Rates and periods are design assumptions</span>'}},
+ {q:{ko:'마리나 계류 자리도 같이 넘어가요?',en:'Does the marina berth come with the boat?',ja:'マリーナの係留権も引き継げますか?',zh:'码头泊位会一起转让吗?'},
+  a:{ko:'마리나마다 규정이 달라예. 판매자가 "승계 가능"이라 하면 마리나 확인서를 받아가 서류에 붙입니더. 확인서 없이 "포함"이라 쓰면 허위 고지가 될 수 있습니더.<span class="note">부산 각 마리나 규정 확인 필요</span>',
+     en:'It depends on each marina. If the seller says it transfers, we attach the marina\'s confirmation. Saying "included" without it can count as false disclosure.<span class="note">Each Busan marina\'s rules to be confirmed</span>'}},
+ {q:{ko:'"무사고" 표시는 와 없어요?',en:'Why no "accident-free" label?',ja:'なぜ「無事故」表示がないの?',zh:'为什么没有"无事故"标识?'},
+  a:{ko:'"무사고" 한마디로는 누가 우째 확인했는지 모르거든예. 그래서<ol><li>공적·행정 이력 (명의·저당·검사)</li><li>현장 검수 등급 (A~D, 확인 못 한 건 그대로)</li><li>판매자 고지 확약 (전자서명)</li></ol>세 겹으로 보여 드립니더.',
+     en:'One word can\'t tell you who checked what. So we show three layers:<ol><li>Public records (owner, liens, inspection)</li><li>On-site grades (A–D, unchecked shown as is)</li><li>Seller\'s signed disclosure</li></ol>'}},
+ {q:{ko:'사기 같으면 우째야 돼요?',en:'What should I do if it looks like fraud?',ja:'詐欺っぽいときは?',zh:'疑似诈骗该怎么办?'},
+  a:{ko:'<ol><li><b>플랫폼 밖으로 돈 보내지 마이소.</b> 보호가 끝납니더.</li><li>신고 버튼 누르시면 거래가 바로 멈추고 증거가 보전됩니더.</li><li>해경에 낼 증거 패킷(경과표·대화·사진·해시)은 제가 만들어 드립니더.</li><li>공식 신고 채널로 본인이 접수하시면 됩니더.</li></ol><span class="note">공식 신고 번호·경로는 확인 필요</span>',
+     en:'<ol><li><b>Never pay outside the platform.</b> Protection ends there.</li><li>Press report and the deal freezes with evidence preserved.</li><li>I\'ll prepare the evidence kit (timeline, chats, photos, hashes).</li><li>You file it through the official channel.</li></ol><span class="note">Official numbers to be confirmed</span>'}}
+];
+const tl=o=>o[LANG]||o.en||o.ko;
+function avatarImg(p){ return `<div class="sprite" data-pose="${p==null?0:p}"></div>`; }
+function botMsg(html,p){ return `<div class="bot"><div class="av">${avatarImg(p)}</div><div class="msg"><div class="who">${CHAR_NAME[LANG]}</div>${html}</div></div>`; }
+function renderNav(){
+  $('#qlist').innerHTML=QA.map((x,i)=>`<button class="q" data-i="${i}">${tl(x.q)}</button>`).join('');
+  $('#chat').innerHTML=botMsg(t2line('t4'),1);
+  paintPoses($('#chat'));
+}
+$('#qlist').addEventListener('click',e=>{
+  const b=e.target.closest('.q'); if(!b) return;
+  $$('.q').forEach(x=>x.setAttribute('aria-pressed',x===b));
+  const x=QA[b.dataset.i]; const chat=$('#chat');
+  chat.insertAdjacentHTML('beforeend',`<div class="msg me">${tl(x.q)}</div>`);
+  setTimeout(()=>{ let a=(x.a[LANG]||x.a.en); if(!x.a[LANG]&&LANG!=='en') a='<span class="note" style="margin:0 0 6px">'+({ja:'※ 詳しい回答は英語で表示します',zh:'※ 详细回答以英文显示'}[LANG]||'')+'</span>'+a;
+    chat.insertAdjacentHTML('beforeend',botMsg(a.replace('{step}',navStepText()),[9,0,5,4,0,7,8,5][b.dataset.i])); paintPoses(chat); chat.lastElementChild.scrollIntoView({behavior:'smooth',block:'nearest'}); },350);
+});
+
+/* ===== 캐릭터 포즈 (assets/character-sheet.png · 4칸×3줄)
+   0 기본 1 손인사 2 하트 3 신남 4 물음표 5 돋보기 6 배 들기 7 말풍선 8 체크배지 9 가리키기 10 잠 11 깃발 점프 ===== */
+const POSE_BY_TAB={t0:1,t1:5,t2:8,t3:5,t4:4};
+function posePos(n){ const c=n%4,r=Math.floor(n/4); return (c*100/3)+'% '+(r*50)+'%'; }
+function paintPoses(root){ (root||document).querySelectorAll('.sprite[data-pose]').forEach(el=>el.style.backgroundPosition=posePos(+el.dataset.pose)); }
+function setPose(n){ const el=$('#guidePose'); el.dataset.pose=n; el.style.backgroundPosition=posePos(n); }
+document.documentElement.style.setProperty('--mascot','url("'+ph('mascot')+'")');
+(function(){ const im=new Image(); im.onerror=()=>document.body.classList.add('nosheet'); im.src='./assets/character-sheet.jpg'; })();
+
+/* ================= 캐릭터 말풍선 + 둘러보기 ================= */
+function t2line(tab){ return (LINES[LANG]||LINES.en)[tab].replace('{{n}}',CHAR_NAME[LANG]); }
+let tour=null;
+function bubbleHTML(text,acts){
+  return `<div class="who">${CHAR_NAME[LANG]}<span>${LANG==='ko'?'부산 사투리 안내':'Guide'}</span></div><div>${text}</div><div class="acts">${acts}</div>`;
+}
+function say(koText,enText,pose){
+  if(tour) return;
+  setPose(pose!=null?pose:(POSE_BY_TAB[curTab]??0));
+  const text=koText? (LANG==='ko'?koText:(enText||koText)) : t2line(curTab);
+  $('#bubble').innerHTML=bubbleHTML(text,`<button class="go" data-g="tour">${t('g.tour')}</button><button data-g="contact">${t('g.contact')}</button><button data-g="min">${t('g.close')}</button>`);
+  $('#guide').classList.remove('min'); armCollapse();
+}
+function armCollapse(){ clearTimeout(armCollapse.t); armCollapse.t=setTimeout(()=>{ if(tour) return; if($('#guide').matches(':hover')) return armCollapse(); $('#guide').classList.add('min'); setPose(0); },matchMedia('(max-width:560px)').matches?5000:9000); }
+function startTour(){
+  const steps=TOUR[curTab]; if(!steps) return;
+  tour={i:0,steps}; $('#guide').classList.remove('min'); setPose(9); tourStep();
+}
+function tourStep(){
+  const {i,steps}=tour; const [sel,txt]=steps[i]; const el=$(sel);
+  if(el){ el.scrollIntoView({behavior:'smooth',block:'center'}); setTimeout(placeSpot,380); placeSpot(); }
+  const _go=()=>{ const b=$('#bubble .go'); if(b) b.focus({preventScroll:true}); }; setTimeout(_go,0);
+  $('#bubble').innerHTML=bubbleHTML(tl(txt),`<button class="go" data-g="next">${i<steps.length-1?t('g.next')+` (${i+1}/${steps.length})`:t('g.end')}</button><button data-g="end">${t('g.close')}</button>`);
+}
+function placeSpot(){
+  if(!tour) return; const el=$(tour.steps[tour.i][0]); if(!el) return; const r=el.getBoundingClientRect(); const s=$('#spot');
+  Object.assign(s.style,{left:(r.left-6)+'px',top:(r.top-6)+'px',width:(r.width+12)+'px',height:(r.height+12)+'px'}); s.classList.add('on');
+}
+function endTour(){ const was=!!tour; tour=null; $('#spot').classList.remove('on'); if(was){ const p=$('#'+curTab); if(p) p.focus({preventScroll:true}); } }
+window.addEventListener('scroll',placeSpot,{passive:true}); window.addEventListener('resize',placeSpot);
+$('#bubble').addEventListener('click',e=>{
+  const g=e.target.dataset.g; if(!g) return;
+  if(g==='tour') startTour();
+  if(g==='contact') contact();
+  if(g==='min'){ clearTimeout(armCollapse.t); $('#guide').classList.add('min'); setPose(0); }
+  if(g==='end'){ endTour(); say(); }
+  if(g==='next'){ if(tour.i<tour.steps.length-1){tour.i++; tourStep();} else { endTour(); say(); } }
+});
+$('#avatar').addEventListener('click',()=>{ const g=$('#guide'); if(g.classList.contains('min')){ g.classList.remove('min'); say(); } else startTour(); });
+
+/* ================= 언어 적용 ================= */
+function applyLang(l){
+  LANG=l; document.documentElement.lang=l;
+  $('#avatar').setAttribute('aria-label',CHAR_NAME[l]+(l==='ko'?' 안내 열기':' guide'));
+  $$('.lang button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.lang===l));
+  $$('[data-i18n]').forEach(el=>el.textContent=t(el.dataset.i18n));
+  $$('[data-i18n-html]').forEach(el=>el.innerHTML=t(el.dataset.i18nHtml));
+  $('#bidBtn').textContent=bidsDone?t('bid3'):t('b.bid');
+  $$('#bids .bid').forEach(b=>{b.firstElementChild.textContent=t(b.dataset.w); b.lastElementChild.textContent=fmtMan(+b.dataset.a);});
+  logEmpty();
+  renderHome(); renderT1(); render(); renderTx(); renderCL(); renderNav(); endTour(); say(); paintPoses();
+  try{localStorage.setItem('md-lang',l);}catch(_){}
+}
+$$('.lang button').forEach(b=>b.addEventListener('click',()=>applyLang(b.dataset.lang)));
+
+/* ================= 약관 · 개인정보 · 문의 ================= */
+function openDlg(kind){
+  const d=$('#dlg'); $('#dlgTitle').textContent=t(kind==='terms'?'lg.terms':'lg.privacy');
+  $('#dlgBody').replaceChildren($('#tpl-'+kind).content.cloneNode(true));
+  if(typeof d.showModal==='function') d.showModal(); else d.setAttribute('open','');
+  $('#dlgClose').focus();
+}
+$$('[data-dlg]').forEach(b=>b.addEventListener('click',()=>openDlg(b.dataset.dlg)));
+$('#dlgClose').addEventListener('click',()=>$('#dlg').close());
+$('#dlg').addEventListener('click',e=>{ if(e.target.id==='dlg') $('#dlg').close(); });
+function contact(){ say('고객센터는 출시 전에 엽니더. 그때까지는 제가 안내해 드릴게예. 궁금한 거 있으면 4번 화면에서 물어보이소.','Our customer center opens before launch. Until then I will guide you — ask me anything on screen 4.',4); toast(t('toast.contact')); }
+$('#contactBtn').addEventListener('click',contact);
+if('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+
+/* ================= 내 배 등록 (IndexedDB) · AI 사전 점검 (실제 계산) ================= */
+/* 기존 매물 사진 지문: tools/hash-assets.html 로 크롬에서 계산 (같은 dhash 방식) */
+const KNOWN_PHOTOS=[{"f":"yacht-01-main.jpg","label":"바다결","h":"295cd0c84c45690c"},{"f":"listing-03.jpg","label":"해오름","h":"000018141b0b4ac1"},{"f":"listing-02.jpg","label":"물빛","h":"437236a7351546f2"},{"f":"listing-05.jpg","label":"갈매기","h":"2868606575d45468"},{"f":"listing-06.jpg","label":"수영1호","h":"00244e333cb8a59c"},{"f":"fraud-031.jpg","label":"청해호","h":"004048b2a6c6c8c8"},{"f":"fraud-027.jpg","label":"하늘빛","h":"80808079ce1c60c0"}];
+const DB={
+  open(){ return new Promise((ok,no)=>{ if(!('indexedDB' in window)) return no(new Error('no idb')); const r=indexedDB.open('marinedealer',1); r.onupgradeneeded=()=>r.result.createObjectStore('listings',{keyPath:'id'}); r.onsuccess=()=>ok(r.result); r.onerror=()=>no(r.error); }); },
+  async tx(mode,fn){ const db=await DB.open(); return new Promise((ok,no)=>{ const t=db.transaction('listings',mode); const st=t.objectStore('listings'); const out=fn(st); t.oncomplete=()=>ok(out&&out.result!==undefined?out.result:out); t.onerror=()=>no(t.error); }); },
+  all(){ return DB.tx('readonly',st=>st.getAll()); },
+  put(rec){ return DB.tx('readwrite',st=>st.put(rec)); },
+  clear(){ return DB.tx('readwrite',st=>st.clear()); }
+};
+async function dhash(blob){
+  const url=URL.createObjectURL(blob); try{ const img=new Image(); img.src=url; await img.decode();
+    const c=document.createElement('canvas'); c.width=9; c.height=8; const x=c.getContext('2d',{willReadFrequently:true}); x.imageSmoothingEnabled=true; x.imageSmoothingQuality='high';
+    x.drawImage(img,0,0,9,8); const d=x.getImageData(0,0,9,8).data; let bits='';
+    for(let y=0;y<8;y++) for(let i=0;i<8;i++){ const a=(y*9+i)*4,b=a+4; const ga=d[a]*.299+d[a+1]*.587+d[a+2]*.114, gb=d[b]*.299+d[b+1]*.587+d[b+2]*.114; bits+=ga>gb?'1':'0'; }
+    return BigInt('0b'+bits).toString(16).padStart(16,'0');
+  } finally { URL.revokeObjectURL(url); }
+}
+function hamming(a,b){ let v=BigInt('0x'+a)^BigInt('0x'+b), n=0; while(v){ n+=Number(v&1n); v>>=1n; } return n; }
+const norm=v=>String(v||'').replace(/\s+/g,'').toLowerCase();
+/* 점수 규칙 (설계 가정 · launch-readiness.md 참고). 신호마다 가중치를 더하고 100에서 자른다. */
+function assess(r, userHashes){
+  const sig=[]; const add=(p,ko,en)=>sig.push({p,ko,en});
+  add(10,'가입 직후 첫 등록 (신규 계정)','First listing right after sign-up (new account)');
+  const pool0=LIST.filter(l=>!l.user&&!l.blocked); const pool=pool0.filter(l=>l.type===r.type).length?pool0.filter(l=>l.type===r.type):pool0;
+  const per=pool.map(l=>l.man/l.ft).sort((a,b)=>a-b); const med=per[Math.floor(per.length/2)]; const ratio=r.man/(med*r.ft);
+  if(ratio<0.7){ const pct=Math.round((1-ratio)*100); add(25,`비슷한 매물 시세보다 ${pct}% 낮음`,`Priced ${pct}% below similar listings`); }
+  if(norm(r.owner)!==norm(r.idName)) add(30,'선박 등록 명의 ≠ 본인인증 이름','Registered owner ≠ verified ID name');
+  const unk=['d1','d2','d3','d4'].filter(k=>r[k]==='unk').length; if(unk) add(5*unk,`고지 항목 '모름' ${unk}개`,`${unk} disclosure item(s) answered "unknown"`);
+  if(r.photoCount<3) add(5,'사진 3장 미만','Fewer than 3 photos');
+  let best=null; const known=[...KNOWN_PHOTOS,...userHashes];
+  for(const h of r.hashes) for(const k of known){ const d=hamming(h,k.h); if(!best||d<best.d) best={d,k}; }
+  if(best&&best.d<=10){ const pct=Math.round((64-best.d)/64*100); add(40,`다른 매물 사진과 ${pct}% 일치 (「${best.k.label}」)`,`Photo ${pct}% identical to another listing ("${best.k.label}")`); r.dup={pct,f:best.k.f,label:best.k.label}; }
+  r.signals=sig; r.risk=Math.min(100,sig.reduce((a,b)=>a+b.p,0)); return r;
+}
+let userHashes=[];
+function addUserListing(r,front){
+  const url=r.photos&&r.photos[0]?URL.createObjectURL(r.photos[0]):''; const k=r.type==='sail'?'sail':r.type==='fish'?'fish':'power';
+  const bad=r.risk>=70, txid='U-'+r.id.slice(-6);
+  const l={nm:r.nm,type:r.type,ft:r.ft,yr:r.yr,port:r.port,man:r.man,risk:r.risk,blocked:bad,review:!bad,user:true,sigs:r.signals,tx:bad?txid:'',photo:{f:'user-'+r.id,k,src:url,pos:'50% 50%'},go:bad?'t3':''};
+  front?LIST.unshift(l):LIST.push(l);
+  (r.hashes||[]).forEach(h=>userHashes.push({f:'user-'+r.id,label:r.nm,h}));
+  if(bad){ const ts=new Date(r.createdAt); const hm=ts.toTimeString().slice(0,5);
+    TX.unshift({id:txid,nm:r.nm,type:r.type,ft:r.ft,yr:r.yr,man:r.man,score:r.risk,lvl:'bad',photo:{...l.photo},seller:'내 계정 (시연 등록)',buyer:'-',
+      sig:r.signals.map(s=>[s.ko,'+'+s.p]),sigEn:r.signals.map(s=>s.en),ev:r.dup?'match':'user',pct:r.dup&&r.dup.pct,dupOf:r.dup?{f:r.dup.f,label:r.dup.label}:null,
+      timeline:[`${hm} 매물 등록 (사진 ${r.photoCount}장)`,`${hm} AI 사전 점검 ${r.risk}점 · 노출 자동 중단`]}); }
+}
+function fillSellForm(){
+  $('#sfType').innerHTML=TYPES.filter(k=>k!=='all').map(k=>`<option value="${k}">${t('cat.'+k)}</option>`).join('');
+  $('#sfPort').innerHTML=['suyeong','haeundae','gwangan','gijang','dadaepo'].map(k=>`<option value="${k}">${t('port.'+k)}</option>`).join('');
+  $$('#sellForm fieldset select').forEach(sel=>{ const v=sel.value||'no'; sel.innerHTML=['no','yes','unk'].map(o=>`<option value="${o}">${t('o.'+o)}</option>`).join(''); sel.value=v; });
+}
+function openSell(){ fillSellForm(); $('#sellForm').hidden=false; $('#sellResult').hidden=true; $('#ferr').textContent=''; const d=$('#sellDlg'); if(d.showModal) d.showModal(); else d.setAttribute('open',''); $('#sellForm [name=nm]').focus(); }
+$('#sellBtn').addEventListener('click',openSell);
+$('#sellClose').addEventListener('click',()=>$('#sellDlg').close());
+$('#sfPhotos').addEventListener('change',e=>{ $$('#sfPrev img').forEach(i=>URL.revokeObjectURL(i.src)); $('#sfPrev').innerHTML=''; [...e.target.files].slice(0,6).forEach(f=>{ const im=document.createElement('img'); im.alt=f.name; im.src=URL.createObjectURL(f); $('#sfPrev').appendChild(im); }); });
+$('#sellForm').addEventListener('submit',async e=>{
+  e.preventDefault(); const fm=e.target, v=Object.fromEntries(new FormData(fm)); const files=[...$('#sfPhotos').files]; const err=$('#ferr');
+  const nums={ft:+v.ft,yr:+v.yr,man:+v.man};
+  if(!String(v.nm||'').trim()||!String(v.owner||'').trim()||!String(v.idName||'').trim()) return err.textContent=t('err.req');
+  if(!(nums.ft>=8&&nums.ft<=150&&nums.yr>=1970&&nums.yr<=2026&&nums.man>=100&&nums.man<=9999999)) return err.textContent=t('err.num');
+  if(!files.length||files.length>6||files.some(f=>!/^image\/(jpeg|png|webp)$/.test(f.type)||f.size>10*1024*1024)) return err.textContent=t('err.photo');
+  if(!fm.agree.checked) return err.textContent=t('err.agree');
+  err.textContent=t('sf.busy'); $('#sfSubmit').disabled=true;
+  try{
+    const hashes=[]; for(const f of files) hashes.push(await dhash(f));
+    const r=assess({id:Date.now().toString(36)+Math.random().toString(36).slice(2,6),type:v.type,nm:String(v.nm).trim().slice(0,20),ft:nums.ft,yr:nums.yr,port:v.port,man:nums.man,owner:v.owner,idName:v.idName,d1:v.d1,d2:v.d2,d3:v.d3,d4:v.d4,photos:files,photoCount:files.length,hashes,createdAt:Date.now()},userHashes);
+    try{ await DB.put(r); }catch(_){}
+    addUserListing(r,true); renderHome(); renderTx(); showResult(r); fm.reset(); $('#sfPrev').innerHTML=''; toast(t('toast.saved'));
+  }catch(ex){ err.textContent=t('err.photo'); }
+  finally{ $('#sfSubmit').disabled=false; }
+});
+function showResult(r){
+  const lvl=r.risk>=70?'bad':r.risk>=40?'warn':'ok', msg=r.risk>=70?'res.bad':r.risk>=40?'res.mid':'res.ok';
+  $('#sellForm').hidden=true; const box=$('#sellResult'); box.hidden=false;
+  box.innerHTML=`<div class="res-top"><div class="gauge" style="background:conic-gradient(var(--${lvl}) ${r.risk*3.6}deg,var(--g-3) 0)"><i><span><b>${r.risk}</b><span class="muted">/ 100</span></span></i></div>
+   <div><h3 style="margin:0 0 6px">${t('res.title')}</h3><span class="tag t-${lvl}">${t(msg)}</span></div></div>
+   <ul class="res-sig">${r.signals.map(s=>`<li><span>${esc(LANG==='ko'?s.ko:s.en)}</span><b style="color:var(--${s.p>=25?'bad':'warn'})">+${s.p}</b></li>`).join('')}</ul>
+   <div class="row"><button class="btn primary" data-r="list">${t('res.view')}</button>${r.risk>=70?`<button class="btn danger" data-r="fraud">${t('res.fraud')}</button>`:''}<button class="btn" data-r="again">${t('res.again')}</button></div>`;
+  box.dataset.tx=r.risk>=70?'U-'+r.id.slice(-6):'';
+  if(r.risk>=70) say('어이쿠, 이 매물은 수상한 신호가 많아가 노출을 바로 멈췄습니더. 사기 탐지 화면에서 근거를 확인해 보이소.','This listing shows too many warning signs, so it was hidden right away. Check the evidence on the fraud screen.',5);
+  else say('등록 잘 됐습니더! 검수원이 현장 일정 잡아가 연락드릴게예.','Listed! An inspector will contact you to schedule the on-site check.',3);
+}
+$('#sellResult').addEventListener('click',e=>{ const a=e.target.dataset.r; if(!a) return; const box=$('#sellResult');
+  if(a==='again'){ $('#sellForm').hidden=false; box.hidden=true; return; }
+  $('#sellDlg').close();
+  if(a==='list'){ show('t0'); setTimeout(()=>$('#cards').scrollIntoView({behavior:'smooth',block:'start'}),50); }
+  if(a==='fraud'){ cur=TX.find(x=>x.id===box.dataset.tx)||cur; renderTx(); show('t3'); } });
+$('#demoReset').addEventListener('click',async()=>{ try{ await DB.clear(); }catch(_){} ['md-es','md-bids'].forEach(store.del); toast(t('toast.reset')); setTimeout(()=>location.reload(),600); });
+async function loadUserListings(){ try{ const rows=await DB.all(); rows.sort((a,b)=>a.createdAt-b.createdAt).forEach(r=>addUserListing(r,true)); if(rows.length){ renderHome(); renderTx(); } }catch(_){} }
+
+Object.assign(I18N.ko,{'sell.btn':'내 배 등록하기','demo.reset':'시연 데이터 초기화','sf.title':'내 배 등록하기','sf.type':'선종','sf.nm':'배 이름','sf.ft':'길이 (ft)','sf.yr':'연식','sf.port':'계류지','sf.man':'희망가 (만 원)','sf.photos':'사진 (1~6장 · JPG·PNG·WEBP · 장당 10MB 이하)','sf.owner':'선박 등록 명의','sf.idName':'본인인증 이름 (시연에서는 직접 입력)','sf.disc':'판매자 고지 확약','sf.d1':'침수·좌초·화재 이력','sf.d2':'구조부(선체·킬·마스트) 수리 이력','sf.d3':'저당·압류','sf.d4':'알고 있는 고장·누수','o.no':'없음','o.yes':'있음','o.unk':'모름','sf.agree':'사실과 다르게 고지하면 계약 해제·대금 차감이 될 수 있음을 확인합니다.','sf.submit':'등록하고 AI 사전 점검 받기','sf.busy':'사진 지문을 비교하는 중…','err.req':'배 이름, 등록 명의, 본인인증 이름을 채워 주세요.','err.num':'길이(8~150ft), 연식(1970~2026), 희망가(100만 원 이상)를 확인해 주세요.','err.photo':'사진을 1~6장 올려 주세요. JPG·PNG·WEBP, 장당 10MB 이하만 됩니다.','err.agree':'고지 확약에 동의해야 등록할 수 있어요.','res.title':'AI 사전 점검 결과','res.ok':'검수 대기 · 검수원이 현장 일정을 잡습니다','res.mid':'사람 검토 · 운영자가 확인한 뒤 공개됩니다','res.bad':'노출 중단 · 사기 의심 신호가 많아 공개하지 않습니다','res.view':'목록에서 보기','res.fraud':'사기 탐지 화면에서 보기','res.again':'하나 더 등록','card.review':'검수 대기','toast.saved':'등록했어요. 새로 고쳐도 남아 있어요.','toast.review':'검수원이 현장 검수 일정을 잡는 중이에요 (시연)','toast.detail':'상세 화면은 「바다결」로 시연합니다','toast.reset':'시연 데이터를 지웠어요','ev.dup':'이미 올라온 매물 「{{n}}」 사진'});
+Object.assign(I18N.en,{'sell.btn':'List my boat','demo.reset':'Reset demo data','sf.title':'List my boat','sf.type':'Type','sf.nm':'Boat name','sf.ft':'Length (ft)','sf.yr':'Year','sf.port':'Marina','sf.man':'Asking price (₩10k units)','sf.photos':'Photos (1–6 · JPG·PNG·WEBP · up to 10MB each)','sf.owner':'Registered owner','sf.idName':'Verified ID name (typed in for the demo)','sf.disc':'Seller disclosure','sf.d1':'Flooding, grounding or fire','sf.d2':'Structural repairs (hull, keel, mast)','sf.d3':'Liens or seizures','sf.d4':'Known faults or leaks','o.no':'None','o.yes':'Yes','o.unk':'Unknown','sf.agree':'I understand that false disclosure can cancel the deal or reduce the payment.','sf.submit':'List and run AI pre-check','sf.busy':'Comparing photo fingerprints…','err.req':'Fill in the boat name, registered owner and verified ID name.','err.num':'Check length (8–150ft), year (1970–2026) and price (at least ₩1M).','err.photo':'Upload 1–6 photos. JPG, PNG or WEBP, up to 10MB each.','err.agree':'You need to agree to the disclosure terms to list.','res.title':'AI pre-check result','res.ok':'Awaiting inspection · an inspector will schedule a visit','res.mid':'Human review · published after an operator checks it','res.bad':'Hidden · too many fraud signals to publish','res.view':'See it in the list','res.fraud':'Open the fraud screen','res.again':'List another','card.review':'Awaiting inspection','toast.saved':'Listed. It stays after a refresh.','toast.review':'An inspector is scheduling the on-site check (demo)','toast.detail':'The detail screen is demonstrated with "Badagyeol"','toast.reset':'Demo data cleared','ev.dup':'Photo of existing listing "{{n}}"'});
+
+/* ================= 시작 ================= */
+let saved='ko'; try{saved=localStorage.getItem('md-lang')||'ko';}catch(_){}
+const qLang=new URLSearchParams(location.search).get('lang'); if(qLang) saved=qLang;
+window.addEventListener('load',()=>{ if(location.hash) window.scrollTo(0,0); });
+restoreState();
+applyLang(I18N[saved]?saved:'ko');
+loadUserListings();
+bindAll(document);
+const h=location.hash.match(/^#(t[0-4])$/); show(h?h[1]:'t0',true); setTimeout(()=>window.scrollTo(0,0),0);
+})();
+</script>
+</body>
+</html>
