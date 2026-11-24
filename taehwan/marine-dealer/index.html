@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-H/JhrabrZdiv+IrLJDOqkg79G6dyXmFdp6WGdhlMoSU='; style-src 'unsafe-inline'; img-src 'self' data: blob: file:; font-src 'self'; manifest-src 'self' file:; worker-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-YgJrEUfWVrZOhyyVsaP9DUkM/jdtwyJJbWfXlw+psnA='; style-src 'unsafe-inline'; img-src 'self' data: blob: file:; font-src 'self'; manifest-src 'self' file:; worker-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>마린딜러 MarineDealer · 시연용 프로토타입</title>
 <link rel="icon" href="./assets/logo-64.png">
@@ -771,7 +771,7 @@ h1,h2,h3,.hero h1,.pd-model,.price,.pd-price .price,.lcard .pr,.lcard .nm,.sell 
 
 <template id="tpl-terms">
   <h3>제1조 (목적)</h3><p>이 약관은 마린딜러(가칭)가 제공하는 요트·선박 중개, 현장 검수, 안전거래(에스크로) 서비스의 이용 조건을 정합니다.</p>
-  <h3>제2조 (회사의 지위)</h3><p>회사는 거래를 중개하며 매매의 당사자가 아닙니다 [확인 필요: 적용 법령과 고지 문구]. 판매자와 구매자간의 직거래에 대하여 당사는 관여하지 않기 때문에 거래에 대해서는 책임을 지지 않습니다.</p>
+  <h3>제2조 (회사의 지위)</h3><p>회사는 거래를 중개하며 매매의 당사자가 아닙니다 [확인 필요: 적용 법령과 고지 문구]. 다만 안전거래(에스크로)로 진행한 거래는 단계별 조건이 확인될 때까지 회사가 대금 보관을 책임집니다. 안전거래 밖에서 한 직거래에는 관여하지 않으며, 그 책임은 거래 당사자에게 있습니다.</p>
   <h3>제3조 (회원과 본인인증)</h3><p>판매·입찰·안전거래에는 본인인증이 필요합니다. 판매자의 선박 등록 명의는 본인인증 이름과 같아야 합니다.</p>
   <h3>제4조 (매물 등록과 고지 확약)</h3><p>판매자는 침수·좌초·충돌·화재 이력 등 7개 항목을 사실대로 고지하고 전자서명합니다. 사실과 다른 고지는 계약 해제와 대금 차감의 사유가 됩니다.</p>
   <h3>제5조 (현장 검수)</h3><p>검수 결과는 A~D 등급과 '확인 불가'로 표시합니다. 확인하지 못한 항목은 '정상'으로 표시하지 않습니다.</p>
@@ -853,7 +853,7 @@ ko:{
  'ev.myPhoto':'판매자가 올린 대표 사진','ev.cmp':'비슷한 매물 시세와 비교 (가상)','ev.avg':'비슷한 42ft 파워보트 평균','ev.this':'Princess V40 판매가','ev.ours':'마린딜러에 올라온 사진','ev.web':'해외 중고 사이트 매물 사진 (가상)','ev.match':'일치','ev.ok':'사진·서류·각인 일치','ev.okSub':'현장 검수원이 직접 찍은 사진만 대표 사진으로 씁니다.','ev.okCap':'현장 검수 사진과 일치',
  't4.title':'AI 거래 내비게이터','t4.lead':'처음 요트를 사고파는 사람도 "지금 뭘 해야 하는지" 알 수 있게, 캐릭터가 지금 단계에 맞춰 안내합니다.','t4.ctx':'지금 안내 중인 거래','t4.faq':'자주 묻는 질문',
  'g.tour':'둘러보기','g.close':'접기','g.next':'다음','g.end':'끝','g.hint':'눌러서 설명 듣기',
- disc:'판매자와 구매자간의 직거래에 대하여 당사는 관여하지 않기 때문에 거래에 대해서는 책임을 지지 않습니다.',
+ disc:'안전거래로 진행한 거래는 단계별 조건이 확인될 때까지 마린딜러가 대금을 보관합니다. 안전거래 밖의 직거래에는 관여하지 않으며, 그 책임은 거래 당사자에게 있습니다. (설계 문구 · 법률 검토 전)',
  footer:'마린딜러(가칭) 발표 시연용 목업 · 모든 매물·금액·사람·거래는 가상입니다 · 사진은 시연용 예시 이미지 · 법령·기관 절차는 확인 필요 항목 포함 · 외국어는 번역 검수 전 · 키보드 <kbd>0</kbd>~<kbd>4</kbd> 화면, <kbd>←</kbd><kbd>→</kbd> 사진, <kbd>T</kbd> 둘러보기'
 },
 en:{
@@ -896,7 +896,7 @@ en:{
  'ev.myPhoto':'Seller\'s main photo','ev.cmp':'Compared with similar listings (demo)','ev.avg':'Avg. similar 42ft powerboat','ev.this':'Princess V40 asking price','ev.ours':'Photo on MarineDealer','ev.web':'Same photo on an overseas site (demo)','ev.match':'match','ev.ok':'Photos, papers, engraving match','ev.okSub':'Only photos taken by our inspector are used as the main photo.','ev.okCap':'Matches inspection photos',
  't4.title':'AI deal navigator','t4.lead':'Our guide tells first-time buyers and sellers exactly what to do at the current stage.','t4.ctx':'Deal being guided','t4.faq':'Frequently asked',
  'g.tour':'Take the tour','g.close':'Hide','g.next':'Next','g.end':'Done','g.hint':'Tap for a guide',
- disc:'We are not involved in direct transactions between sellers and buyers, and therefore accept no responsibility for such transactions.',
+ disc:'For deals made through Safe Deal, MarineDealer holds the payment until the conditions of each step are confirmed. We are not involved in direct deals made outside Safe Deal; responsibility for those lies with the parties. (Draft wording, pending legal review)',
  footer:'MarineDealer (working name) · demo mock-up · all listings, prices, people and deals are fictional · sample photos · legal steps still to be confirmed · translations not yet reviewed · Keys <kbd>0</kbd>–<kbd>4</kbd> screens, <kbd>←</kbd><kbd>→</kbd> photos, <kbd>T</kbd> tour'
 },
 ja:{
@@ -938,7 +938,7 @@ ja:{
  'ev.myPhoto':'売主が載せた写真','ev.cmp':'類似物件の相場と比較(架空)','ev.avg':'類似42ftパワーボート平均','ev.this':'Princess V40の価格','ev.ours':'マリンディーラー上の写真','ev.web':'海外中古サイトの同じ写真(架空)','ev.match':'一致','ev.ok':'写真・書類・刻印が一致','ev.okSub':'検査員が撮った写真だけを代表写真にします。','ev.okCap':'検査写真と一致',
  't4.title':'AI取引ナビ','t4.lead':'初めての方でも「今何をすべきか」分かるよう、キャラクターが段階に合わせて案内します。','t4.ctx':'案内中の取引','t4.faq':'よくある質問',
  'g.tour':'ガイドを見る','g.close':'閉じる','g.next':'次へ','g.end':'終了','g.hint':'押すと説明します',
- disc:'売主と買主の直接取引に当社は関与しないため、その取引について責任を負いません。',
+ disc:'安心取引で進めた取引は、各段階の条件が確認されるまでマリンディーラーが代金を預かります。安心取引以外の直接取引には関与せず、その責任は取引の当事者にあります。(設計文言・法務確認前)',
  footer:'マリンディーラー(仮称)・発表用デモ・物件・金額・人物・取引はすべて架空・写真はサンプル・翻訳は未検収・キー <kbd>0</kbd>〜<kbd>4</kbd> 画面、<kbd>←</kbd><kbd>→</kbd> 写真、<kbd>T</kbd> ガイド'
 },
 zh:{
@@ -980,7 +980,7 @@ zh:{
  'ev.myPhoto':'卖家上传的主图','ev.cmp':'与同类船只行情比较(虚拟)','ev.avg':'同类42ft快艇均价','ev.this':'Princess V40售价','ev.ours':'MarineDealer上的照片','ev.web':'海外二手网站上的同一照片(虚拟)','ev.match':'一致','ev.ok':'照片·文件·刻印一致','ev.okSub':'只用检验员亲自拍摄的照片作主图。','ev.okCap':'与检验照片一致',
  't4.title':'AI交易导航','t4.lead':'即使第一次买卖,角色也会按当前阶段告诉您该做什么。','t4.ctx':'当前引导的交易','t4.faq':'常见问题',
  'g.tour':'开始导览','g.close':'收起','g.next':'下一步','g.end':'结束','g.hint':'点击听说明',
- disc:'本公司不参与卖家与买家之间的直接交易,因此对该等交易不承担责任。',
+ disc:'通过安心交易进行的交易,在各阶段条件确认之前由MarineDealer保管货款。对安心交易以外的直接交易不予参与,其责任由交易当事人承担。(设计文案·待法律审核)',
  footer:'MarineDealer(暂定名)·演示样机·所有船只、金额、人物、交易均为虚拟·照片为示例·翻译未经审校·按键 <kbd>0</kbd>–<kbd>4</kbd> 切换,<kbd>←</kbd><kbd>→</kbd> 照片,<kbd>T</kbd> 导览'
 }};
 const SIG_T={
