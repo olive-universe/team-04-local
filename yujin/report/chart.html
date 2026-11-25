@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>요트 장소 후기 태그 · 수영만요트경기장과 광안리해양레포츠센터</title>
+<style>
+.viz-root {
+  color-scheme: light;
+  --page: #f9f9f7;
+  --surface-1: #fcfcfb;
+  --text-primary: #0b0b0b;
+  --text-secondary: #52514e;
+  --text-muted: #898781;
+  --grid: #e1e0d9;
+  --baseline: #c3c2b7;
+  --border: rgba(11,11,11,0.10);
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+}
+@media (prefers-color-scheme: dark) {
+  :root:where(:not([data-theme="light"])) .viz-root {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface-1: #1a1a19;
+    --text-primary: #f0efec;
+    --text-secondary: #c3c2b7;
+    --text-muted: #898781;
+    --grid: #2c2c2a;
+    --baseline: #383835;
+    --border: rgba(255,255,255,0.10);
+    --series-1: #3987e5;
+    --series-2: #d95926;
+  }
+}
+:root[data-theme="dark"] .viz-root {
+  color-scheme: dark;
+  --page: #0d0d0d;
+  --surface-1: #1a1a19;
+  --text-primary: #f0efec;
+  --text-secondary: #c3c2b7;
+  --text-muted: #898781;
+  --grid: #2c2c2a;
+  --baseline: #383835;
+  --border: rgba(255,255,255,0.10);
+  --series-1: #3987e5;
+  --series-2: #d95926;
+}
+html, body { margin: 0; }
+body.viz-root { background: var(--page); color: var(--text-primary);
+  font-family: system-ui, -apple-system, "Segoe UI", "Malgun Gothic", sans-serif; }
+.card { max-width: 860px; margin: 24px auto; background: var(--surface-1);
+  border: 1px solid var(--border); border-radius: 12px; padding: 24px 28px 20px; }
+h1 { font-size: 19px; line-height: 1.4; margin: 0 0 6px; font-weight: 600; }
+.sub { font-size: 13px; line-height: 1.55; color: var(--text-secondary); margin: 0 0 16px; }
+.legend { display: flex; gap: 18px; font-size: 13px; color: var(--text-secondary); margin: 0 0 8px; flex-wrap: wrap; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+svg { display: block; width: 100%; height: auto; overflow: visible; }
+svg text { font-family: inherit; }
+.bar { cursor: default; }
+.bar:focus { outline: none; }
+.bar:focus-visible rect.mark, .bar:hover rect.mark { opacity: .85; }
+.note { font-size: 12px; color: var(--text-muted); line-height: 1.6; margin: 12px 0 0; }
+.tip { position: fixed; pointer-events: none; background: var(--surface-1); color: var(--text-primary);
+  border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px; font-size: 12.5px;
+  box-shadow: 0 4px 14px rgba(0,0,0,.12); display: none; z-index: 10; min-width: 190px; }
+.tip .t { color: var(--text-secondary); margin-bottom: 4px; }
+.tip .row { display: flex; align-items: center; gap: 8px; line-height: 1.6; }
+.tip .row b { font-weight: 600; }
+.tip .key { width: 12px; height: 2px; display: inline-block; }
+details { margin-top: 14px; font-size: 13px; color: var(--text-secondary); }
+summary { cursor: pointer; }
+table { border-collapse: collapse; margin-top: 8px; width: 100%; font-size: 12.5px; color: var(--text-primary); }
+th, td { border-bottom: 1px solid var(--grid); padding: 5px 8px; text-align: right; }
+th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) { text-align: left; }
+th { color: var(--text-secondary); font-weight: 600; }
+</style>
+</head>
+<body class="viz-root">
+<div class="card">
+  <h1>수영만 후기는 경치·편의시설·주차를, 광안리 후기는 탑승 경험·직원 응대를 더 자주 말한다</h1>
+  <p class="sub">태그가 붙은 후기 비율 (막대 끝: 건수/분모) · 분모: 글이 있는 카카오맵 후기 — 수영만요트경기장 19건, 광안리해양레포츠센터 50건 · 등록일 2020-07-17 ~ 2026-09-01 · 2026-11-25 수집 · 한 후기에 태그 여러 개</p>
+  <div class="legend" aria-hidden="true">
+    <span><i style="background:var(--series-1)"></i>수영만요트경기장 (19건)</span>
+    <span><i style="background:var(--series-2)"></i>광안리해양레포츠센터 (50건)</span>
+  </div>
+  <svg id="chart" role="img" aria-label="태그별 후기 비율 가로 막대 차트. 표 보기에 모든 값이 있습니다."></svg>
+  <p class="note">‘기준표’ 표시는 판매 글 태그 기준표(review-codebook.md)의 태그이고, 나머지는 이 후기에서 새로 나온 태그 후보입니다. 수영만은 19건이라 한 건이 5%포인트쯤 움직입니다. 태그는 Claude 초안 · yujin 확인.</p>
+  <details>
+    <summary>표로 보기</summary>
+    <table id="tbl"><thead><tr><th>태그</th><th>종류</th><th>수영만 (19건)</th><th>광안리 (50건)</th><th>합 (69건)</th></tr></thead><tbody></tbody></table>
+  </details>
+</div>
+<div class="tip" id="tip" role="status"></div>
+<script>
+const N = { s: 19, g: 50 };
+const DATA = [
+  ["탑승 경험", "새 후보", 4, 23],
+  ["직원·안내", "새 후보", 1, 16],
+  ["용도·공간", "기준표", 3, 10],
+  ["예약·운영", "새 후보", 1, 11],
+  ["경치·분위기", "새 후보", 8, 3],
+  ["편의시설", "새 후보", 5, 5],
+  ["주차·접근", "새 후보", 4, 6],
+  ["안전·흔들림", "새 후보", 1, 5],
+  ["가격", "새 후보", 1, 2],
+  ["이용객·혼잡", "새 후보", 2, 1],
+  ["판매처·거래 방식", "기준표", 0, 1],
+  ["공공 공간 사용", "새 후보", 0, 1],
+];
+const SERIES = [
+  { key: "s", name: "수영만요트경기장", color: "var(--series-1)", idx: 2 },
+  { key: "g", name: "광안리해양레포츠센터", color: "var(--series-2)", idx: 3 },
+];
+const pct = (n, d) => Math.round(n / d * 100);
+const svg = document.getElementById("chart");
+const NS = "http://www.w3.org/2000/svg";
+const W = 800, L = 150, R = 70, T = 22, ROW = 40, BAR = 12, GAP = 2;
+const H = T + DATA.length * ROW + 8;
+const XMAX = 50;
+const x = v => L + (W - L - R) * v / XMAX;
+svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
+const el = (tag, attrs, parent = svg) => { const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
+// grid + ticks
+for (let v = 0; v <= XMAX; v += 10) {
+  el("line", { x1: x(v), x2: x(v), y1: T - 4, y2: H - 8, stroke: v === 0 ? "var(--baseline)" : "var(--grid)", "stroke-width": 1 });
+  const t = el("text", { x: x(v), y: T - 10, "text-anchor": "middle", "font-size": 11, fill: "var(--text-muted)" });
+  t.textContent = v + "%";
+}
+// rounded data-end, square at baseline
+const barPath = (x0, y, w, h) => {
+  const r = Math.min(4, w, h / 2);
+  if (w <= 0) return "";
+  return `M${x0},${y} H${x0 + w - r} Q${x0 + w},${y} ${x0 + w},${y + r} V${y + h - r} Q${x0 + w},${y + h} ${x0 + w - r},${y + h} H${x0} Z`;
+};
+const tip = document.getElementById("tip");
+function showTip(d, evt) {
+  tip.replaceChildren();
+  const t = document.createElement("div"); t.className = "t"; t.textContent = `${d[0]} · ${d[1]}`; tip.appendChild(t);
+  for (const s of SERIES) {
+    const row = document.createElement("div"); row.className = "row";
+    const k = document.createElement("span"); k.className = "key"; k.style.background = s.color; row.appendChild(k);
+    const b = document.createElement("b"); b.textContent = `${pct(d[s.idx], N[s.key])}%`; row.appendChild(b);
+    row.appendChild(document.createTextNode(` ${d[s.idx]}/${N[s.key]}건 · ${s.name}`));
+    tip.appendChild(row);
+  }
+  tip.style.display = "block";
+  const r = tip.getBoundingClientRect();
+  let px = evt.clientX + 14, py = evt.clientY + 14;
+  if (px + r.width > innerWidth - 8) px = evt.clientX - r.width - 14;
+  if (py + r.height > innerHeight - 8) py = evt.clientY - r.height - 14;
+  tip.style.left = px + "px"; tip.style.top = py + "px";
+}
+const hideTip = () => { tip.style.display = "none"; };
+DATA.forEach((d, i) => {
+  const y0 = T + i * ROW;
+  const g = el("g", { class: "bar", tabindex: 0, role: "img",
+    "aria-label": `${d[0]}: 수영만 ${d[2]}/19건 ${pct(d[2], 19)}%, 광안리 ${d[3]}/50건 ${pct(d[3], 50)}%` });
+  // hit target bigger than the mark: the whole row
+  el("rect", { x: 0, y: y0, width: W, height: ROW, fill: "transparent" }, g);
+  const lab = el("text", { x: L - 12, y: y0 + ROW / 2 - (d[1] === "기준표" ? 3 : -4), "text-anchor": "end", "font-size": 13, fill: "var(--text-primary)" }, g);
+  lab.textContent = d[0];
+  if (d[1] === "기준표") {
+    const k = el("text", { x: L - 12, y: y0 + ROW / 2 + 11, "text-anchor": "end", "font-size": 10.5, fill: "var(--text-muted)" }, g);
+    k.textContent = "기준표";
+  }
+  SERIES.forEach((s, j) => {
+    const v = pct(d[s.idx], N[s.key]);
+    const by = y0 + (ROW - (BAR * 2 + GAP)) / 2 + j * (BAR + GAP);
+    const w = x(d[s.idx] / N[s.key] * 100) - x(0);
+    if (w > 0) el("path", { class: "mark", d: barPath(x(0), by, w, BAR), fill: s.color }, g);
+    const vt = el("text", { x: x(0) + Math.max(w, 0) + 6, y: by + BAR - 2, "font-size": 11, fill: "var(--text-secondary)" }, g);
+    vt.textContent = `${v}% (${d[s.idx]}/${N[s.key]})`;
+  });
+  g.addEventListener("pointermove", e => showTip(d, e));
+  g.addEventListener("pointerleave", hideTip);
+  g.addEventListener("focus", () => { const b = g.getBoundingClientRect(); showTip(d, { clientX: b.left + L, clientY: b.bottom }); });
+  g.addEventListener("blur", hideTip);
+});
+// table view
+const tb = document.querySelector("#tbl tbody");
+for (const d of DATA) {
+  const tr = document.createElement("tr");
+  for (const v of [d[0], d[1], `${d[2]} (${pct(d[2], 19)}%)`, `${d[3]} (${pct(d[3], 50)}%)`, `${d[2] + d[3]}`]) {
+    const td = document.createElement("td"); td.textContent = v; tr.appendChild(td);
+  }
+  tb.appendChild(tr);
+}
+</script>
+</body>
+</html>
