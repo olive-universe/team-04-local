@@ -33,3 +33,11 @@
 - 노트에는 확인한 날짜(YYYY-MM-DD)를 적습니다.
 - data/ 숫자는 파일 값 그대로 쓰고 반올림하지 않는다.
 - 두 출처의 숫자가 다르면 둘 다 적고 어느 쪽인지 고르지 않는다.
+
+## 5. 폴더 규칙
+
+- 프롬프트에 폴더 없이 파일 이름만 있으면 맨 위(`yujin/`)에 저장한다.
+- `CLAUDE.md`, `keyword-map.md`, `SOURCE.md`, `my-assets.md`, `data-spec.md`, `source-map.md`는 맨 위에 둔다.
+- 리서치 노트는 `research/YYYY-MM-DD-영어-소문자.md`로 두고, 검증본은 끝에 `-검증`을 붙인다.
+- 보고서는 `report/`, 프롬프트는 `prompts/`, 공개 데이터는 `data/`, 비공개 원본은 `inputs/`, 강의 자료는 `examples/`(깃허브에 올리지 않음)에 둔다.
+- 안 쓰는 파일은 지우지 않고 `old/`로 옮기고, 옮기면 `refactor-log.md`에 한 줄 적는다.
