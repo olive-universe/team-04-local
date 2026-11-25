@@ -1,9 +1,9 @@
 # 리뷰 분석 리포트 · 수영만요트경기장 · 광안리해양레포츠센터 카카오맵 후기
 
-> **수집 기준:** 카카오맵 후기 탭을 최신 순으로 띄워 2026-11-25에 손으로 통째 복사했다. 수영만요트경기장(https://place.map.kakao.com/821880371) 후기 23건 중 글이 있는 19건, 광안리해양레포츠센터(https://place.map.kakao.com/1086385576) 후기 54건 중 글이 있는 50건, 모두 **69건**(등록일 2020-07-17 ~ 2026-09-01)을 분석했다. 별점은 복사한 글에 없어 yujin이 화면에서 옮겼다. (`inputs/team_reviews_source.md`, 비공개)
+> **수집 기준:** 카카오맵 후기 탭을 최신 순으로 띄워 2026-11-25에 손으로 통째 복사했다. 수영만요트경기장(https://place.map.kakao.com/821880371) 후기 23건 중 글이 있는 19건, 광안리해양레포츠센터(https://place.map.kakao.com/1086385576) 후기 54건 중 글이 있는 50건, 모두 **69건**(등록일 2020-07-17 ~ 2026-09-01)을 분석했다. 별점은 복사한 글에 없어 yujin이 화면에서 옮겼다. (`data/team_reviews_source.md`)
 
 - 작성: yujin (리포트 담당 김이지·전태환 대리) · 2026-11-25 · Claude 초안, yujin 확인
-- 읽은 파일: `inputs/team_reviews.csv`, `inputs/team_reviews_source.md`, `review-codebook.md`, `metrics.md`. 파일 값은 고치지 않았다.
+- 읽은 파일: `inputs/team_reviews.csv`(비공개), `data/team_reviews_source.md`, `review-codebook.md`, `metrics.md`. 파일 값은 고치지 않았다.
 - 만든 파일: `report/tagged.csv`(후기마다 태그·근거 문장, 원문이 있어 깃허브에 올리지 않음), `report/chart.html`(태그별 후기 비율 차트)
 - 세 가지 항목
   - 기획 목적: 마린딜러에 쓸, 수영만요트경기장·광안리해양레포츠센터 손님이 좋아하고 불편해한 것을 찾는다
