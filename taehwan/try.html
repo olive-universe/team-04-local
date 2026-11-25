@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mermaid 흐름 그림 연습</title>
+  <style>
+    body { font-family: sans-serif; max-width: 720px; margin: 40px auto; padding: 0 16px; }
+    pre { background: #f4f4f4; padding: 12px; border-radius: 6px; }
+  </style>
+</head>
+<body>
+  <h1>중고 요트가 새 주인에게 가는 길</h1>
+
+  <div class="mermaid">
+flowchart LR
+    A[선주] --> B[검수]
+    B --> C[새 주인]
+  </div>
+
+  <h2>이 그림을 만든 Mermaid 글</h2>
+  <pre>flowchart LR
+    A[선주] --&gt; B[검수]
+    B --&gt; C[새 주인]</pre>
+
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>밸류체인 지도 v0 · 마린딜러</title>
+  <style>
+    body { font-family: "Pretendard", "Malgun Gothic", sans-serif; max-width: 1200px; margin: 32px auto; padding: 0 16px; color: #0f172a; }
+    h1 { font-size: 22px; }
+    .legend span { display: inline-block; margin-right: 16px; font-size: 14px; }
+    .sw { display: inline-block; width: 28px; height: 4px; vertical-align: middle; margin-right: 6px; }
+    .map { border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; overflow-x: auto; }
+    .note { color: #475569; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <h1>밸류체인 지도 v0 · 마린딜러 (중고 요트 거래)</h1>
+  <p class="note">확인한 날짜 2026-11-25 · 근거 표는 steps.md · flows.md · map.md에 있습니다. 점선은 근거가 없거나 아직 실제로 만들지 않은 화살표입니다 (시제품에만 있음 · 제휴 전 · 설계 가정). 제휴 · 실제 거래 · 실제 이용자는 없습니다.</p>
+  <p class="legend">
+    <span><i class="sw" style="background:#94a3b8"></i>단계 순서</span>
+    <span><i class="sw" style="background:#2563eb"></i>데이터</span>
+    <span><i class="sw" style="background:#16a34a"></i>돈</span>
+    <span><i class="sw" style="background:#d97706"></i>물건</span>
+    <span>굵은 테두리 = 우리 팀이 닿는 단계 · 가장 굵은 테두리 = 핵심 (4 · 5 · 8)</span>
+  </p>
+  <div class="map"><pre class="mermaid">
+flowchart TB
+    S1["1 요트가 만들어지고 국내로 들어와요"]
+    S2["2 선주가 계류장에 두고 타요"]
+    S3["3 선주가 팔기로 하고 매물을 올려요"]
+    S4["4 사려는 사람이 진짜인지 확인해요 · 핵심"]
+    S5["5 배를 직접 보고 검수·시운전해요 · 핵심"]
+    S6["6 값을 정하고 계약해요"]
+    S7["7 돈을 맡기고 단계마다 넘겨요"]
+    S8["8 명의를 바꾸고 배를 넘겨받아요 · 핵심"]
+    S9["9 문제가 생기면 신고해요"]
+    S10["10 새 주인이 쓰고 맡기고 고쳐요"]
+    MAKER["해외 제조사 · 수입사"]
+    OWNER["선주 (판매자)"]
+    MARINA["마리나 · 계류장"]
+    SITE["중고 보트 사이트&lt;br/&gt;(거래 책임 안 짐)"]
+    GOV["시장 · 군수 · 구청장&lt;br/&gt;등록원부 (20톤 미만)"]
+    KCG["해양경찰청&lt;br/&gt;안전검사"]
+    POLICE["경찰청&lt;br/&gt;사이버범죄 신고"]
+    US["마린딜러 거래 가이드&lt;br/&gt;(시제품에만 있음)"]
+    INSP["검수원&lt;br/&gt;(아직 확보 안 함)"]
+    PAY["결제 · 에스크로 사업자 후보&lt;br/&gt;(제휴 없음)"]
+    DEALER["인증 딜러&lt;br/&gt;(선택 · 보조)"]
+
+    S1 --&gt; S2
+    S2 --&gt; S3
+    S3 --&gt; S4
+    S4 --&gt; S5
+    S5 --&gt; S6
+    S6 --&gt; S7
+    S7 --&gt; S8
+    S8 --&gt; S9
+    S9 --&gt; S10
+    MAKER --&gt;|"F1 요트"| S1
+    OWNER -.-&gt;|"F2 요트 계류 (수영만 중단) [확인 필요]"| MARINA
+    S3 --&gt;|"F3 매물 사진·가격"| SITE
+    SITE --&gt;|"F4 매물 정보 · '가격문의'"| S4
+    S4 --&gt;|"F5 전화 문의"| OWNER
+    S7 --&gt;|"F6 대금 직접 송금 (지금 길)"| OWNER
+    OWNER --&gt;|"F7 요트 인도"| S8
+    S8 --&gt;|"F8 변경등록 30일 안 [법령]"| GOV
+    KCG --&gt;|"F9 안전검사 결과 [법령]"| S5
+    GOV -.-&gt;|"F10 소유자·압류 조회 [확인 필요]"| US
+    S3 -.-&gt;|"F11 매물·고지 확약 [시제품]"| US
+    US -.-&gt;|"F12 거래 가이드 · 사기 점검 [시제품]"| S4
+    INSP -.-&gt;|"F13 검수 리포트 [검수원 미확보]"| S5
+    S7 -.-&gt;|"F14 계약금·잔금 [제휴 전]"| PAY
+    PAY -.-&gt;|"F15 조건 충족 뒤 정산 [설계]"| OWNER
+    OWNER -.-&gt;|"F16 거래 수수료 2% [설계 가정]"| US
+    US -.-&gt;|"F17 신고 자료 패킷 [시제품]"| S9
+    S9 --&gt;|"F18 피해자 본인 신고"| POLICE
+    DEALER -.-&gt;|"F19 입찰가 (보조) [시제품]"| S6
+
+    classDef step fill:#ffffff,stroke:#475569,stroke-width:1px,color:#0f172a
+    classDef ours fill:#ffffff,stroke:#0f172a,stroke-width:3px,color:#0f172a
+    classDef core fill:#fff7ed,stroke:#0f172a,stroke-width:5px,color:#0f172a
+    classDef actor fill:#f1f5f9,stroke:#94a3b8,stroke-width:1px,color:#334155
+    classDef usnode fill:#0b192c,stroke:#0b192c,stroke-width:2px,color:#ffffff
+    class S1,S2,S10 step
+    class S3,S6,S7,S9 ours
+    class S4,S5,S8 core
+    class MAKER,OWNER,MARINA,SITE,GOV,KCG,POLICE,INSP,PAY,DEALER actor
+    class US usnode
+
+    linkStyle 0,1,2,3,4,5,6,7,8 stroke:#94a3b8,stroke-width:2px
+    linkStyle 9,10,15 stroke:#d97706,stroke-width:2px
+    linkStyle 14,22,23,24 stroke:#16a34a,stroke-width:2px
+    linkStyle 11,12,13,16,17,18,19,20,21,25,26,27 stroke:#2563eb,stroke-width:2px
+</pre></div>
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+  <script>mermaid.initialize({ startOnLoad: true, flowchart: { useMaxWidth: true } });</script>
+</body>
+</html>
