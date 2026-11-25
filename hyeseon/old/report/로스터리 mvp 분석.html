@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>부산 커피 산업 가치 유출 분석 및 6주 MVP 전략 대시보드</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: #FAF8F5;
+      color: #2C2520;
+    }
+    .chart-container {
+      position: relative;
+      width: 100%;
+      max-width: 580px;
+      margin-left: auto;
+      margin-right: auto;
+      height: 290px;
+      max-height: 360px;
+    }
+    @media (min-width: 768px) {
+      .chart-container {
+        height: 320px;
+      }
+    }
+    .tab-active {
+      background-color: #3E2C23;
+      color: #FAF8F5;
+      border-color: #3E2C23;
+    }
+    .card-hover {
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 24px -8px rgba(44, 37, 32, 0.12);
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-amber-200 selection:text-stone-900">
+  <!-- Chosen Palette: Warm Espresso & Sand Minimal (#FAF8F5 warm alabaster background, #F2EDE4 soft sand cards, #3E2C23 deep roasted espresso primary text/headers, #A85A32 muted terracotta and #4A6B5D sage green subtle accents) -->
+  <!-- Application Structure Plan: Designed a 5-part thematic decision-support dashboard tailored for a 4-person university product team (1 dev, 6 weeks, near-zero budget). Rather than a passive linear text dump, the SPA moves from (1) Executive Thesis & Data Verification (separating verified facts from unverified secondary citations via interactive toggles and Chart.js visualizations), to (2) Structural Value-Leakage Flow & Causal Explorer (interactive 4-stage supply chain flow + 3 root causes), (3) Domestic & Global Benchmark Matrix (filterable by sector/status with explicit 'company claim' vs 'verified' tags), (4) 6-Week MVP Evaluator & Interactive Selector (comparing 4 candidates across feasibility, data sources, and metrics, highlighting the recommended Candidate 1), and (5) Actionable Week-1 Execution Tracker & Searchable Source Repository. This architecture turns research findings directly into product scoping decisions. -->
+  <!-- Visualization & Content Choices: 1) Regional Coffee Import Share & Processing Ratio -> Goal: Compare regional imbalance & highlight citation verification status -> Viz: Chart.js Horizontal Bar & Grouped Bar Charts (Canvas) -> Interaction: Dataset toggle between Reported Secondary Figures vs. Cross-Checked Public Indicators + custom tooltips -> Justification: Clearly exposes the gap between Busan's 92.1% port entry and 3.0% import value share while maintaining source transparency. 2) Supply Chain Value Leakage Diagram -> Goal: Organize & explain post-customs reverse logistics -> Viz: Pure HTML/CSS Tailwind 4-step interactive node flow -> Interaction: Clicking each stage reveals geographic concentration data and bottlenecks -> Justification: No SVG/Mermaid used; clean responsive layout. 3) Benchmarks & MVP Matrix -> Goal: Compare & Filter -> Viz: Interactive HTML/Tailwind cards & dynamic comparison matrix with JS filters -> Interaction: Filter by Domestic/Global, select MVP candidate to inspect API endpoints and blockers -> Justification: Enables rapid team alignment. 4) Week 1 Checklist -> Goal: Organize execution -> Viz: Interactive progress bar + persistent JS state checkboxes. -->
+  <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+  <header class="sticky top-0 z-30 bg-[#FAF8F5]/95 backdrop-blur border-b border-[#E5DEC9]">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3.5 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+      <div class="flex items-center gap-2.5">
+        <span class="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-[#3E2C23] text-[#FAF8F5] text-lg font-bold">☕</span>
+        <div>
+          <p class="text-xs font-semibold tracking-wider text-[#8C6D53] uppercase">Busan Coffee Value-Chain Research</p>
+          <h1 class="text-base sm:text-lg font-bold text-[#2C2520] leading-tight">부산 커피 산업 가치 유출 분석 및 6주 MVP 전략</h1>
+        </div>
+      </div>
+      <nav class="flex flex-wrap gap-1.5 text-xs sm:text-sm" aria-label="주요 섹션 이동">
+        <a href="#section-verify" class="px-3 py-1.5 rounded-full bg-[#F2EDE4] hover:bg-[#E5DEC9] text-[#3E2C23] font-medium transition">1. 수치 검증</a>
+        <a href="#section-causes" class="px-3 py-1.5 rounded-full bg-[#F2EDE4] hover:bg-[#E5DEC9] text-[#3E2C23] font-medium transition">2. 유출 원인</a>
+        <a href="#section-cases" class="px-3 py-1.5 rounded-full bg-[#F2EDE4] hover:bg-[#E5DEC9] text-[#3E2C23] font-medium transition">3. 국내외 사례</a>
+        <a href="#section-mvp" class="px-3 py-1.5 rounded-full bg-[#F2EDE4] hover:bg-[#E5DEC9] text-[#3E2C23] font-medium transition">4. MVP 비교·추천</a>
+        <a href="#section-week1" class="px-3 py-1.5 rounded-full bg-[#F2EDE4] hover:bg-[#E5DEC9] text-[#3E2C23] font-medium transition">5. 1주차 실행·출처</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-6xl mx-auto px-4 sm:px-6 py-8 space-y-14">
+
+    <section class="bg-[#F2EDE4] border border-[#E2D8C5] rounded-2xl p-6 sm:p-8 shadow-sm">
+      <div class="flex flex-wrap items-center gap-2 mb-3">
+        <span class="px-2.5 py-1 rounded-md text-xs font-semibold bg-[#3E2C23] text-[#FAF8F5]">한 줄 핵심 결론</span>
+        <span class="px-2.5 py-1 rounded-md text-xs font-medium bg-[#FAF8F5] text-[#6E5846] border border-[#DFD5C3]">대학생 4인 팀 · 개발 1명 · 6주 · 무예산 조건</span>
+      </div>
+      <h2 class="text-xl sm:text-2xl font-bold text-[#2C2520] leading-snug mb-3">
+        “부산항으로 들어온 생두의 80% 이상이 수도권으로 빠져나가는 역유통 구조 속에서, 6주 팀에게는 ‘부산 로컬 로스터리 원두 매칭 및 샘플 신청 웹’ MVP가 가장 현실적입니다.”
+      </h2>
+      <p class="text-sm sm:text-base text-[#4F4339] leading-relaxed mb-6">
+        국내 수입 커피의 90% 이상이 부산항을 통과하지만 수입사·대형 로스터·프랜차이즈 본사가 수도권에 집중되어 가공·유통 부가가치가 역외로 유출되고 있습니다. 법적·물류·정산 리스크가 큰 공동구매 플랫폼 대신, 공공데이터와 현장 취재로 검증된 정보를 결합해 부산 카페와 로컬 로스터리를 직접 잇는 매칭 MVP를 제안합니다.
+      </p>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+        <div class="bg-[#FAF8F5] border border-[#E5DEC9] rounded-xl p-4">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs font-medium text-[#7A6655]">부산항 커피 수입 비중</span>
+            <span class="text-[11px] px-2 py-0.5 rounded bg-amber-100 text-amber-900 font-medium">2차 인용 · 유사확인</span>
+          </div>
+          <p class="text-2xl font-bold text-[#3E2C23]">92.1% <span class="text-sm font-normal text-[#7A6655]">(금액 94.2%)</span></p>
+          <p class="text-xs text-[#6E5846] mt-1">부산시·언론 교차 확인 90~94%대 (한은 원문 PDF 대조 필요)</p>
+        </div>
+
+        <div class="bg-[#FAF8F5] border border-[#E5DEC9] rounded-xl p-4">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs font-medium text-[#7A6655]">2024 수입액 비중 격차</span>
+            <span class="text-[11px] px-2 py-0.5 rounded bg-stone-200 text-stone-800 font-medium">원문 미확인</span>
+          </div>
+          <p class="text-2xl font-bold text-[#A85A32]">서울 48.2% <span class="text-sm font-normal text-[#7A6655]">vs 부산 3.0%</span></p>
+          <p class="text-xs text-[#6E5846] mt-1">통관 항구가 아닌 수입 화주 소재지 기준 추정</p>
+        </div>
+
+        <div class="bg-[#FAF8F5] border border-[#E5DEC9] rounded-xl p-4">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs font-medium text-[#7A6655]">통관 후 수도권 이동률</span>
+            <span class="text-[11px] px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 font-medium">기사 확인</span>
+          </div>
+          <p class="text-2xl font-bold text-[#3E2C23]">80% 이상</p>
+          <p class="text-xs text-[#6E5846] mt-1">부산항 반입 후 수도권 로스팅 거쳐 부산 재유입</p>
+        </div>
+
+        <div class="bg-[#FAF8F5] border border-[#E5DEC9] rounded-xl p-4">
+          <div class="flex items-center justify-between mb-1">
+            <span class="text-xs font-medium text-[#7A6655]">추천 MVP 핵심 지표</span>
+            <span class="text-[11px] px-2 py-0.5 rounded bg-[#3E2C23] text-[#FAF8F5] font-medium">후보 1 추천</span>
+          </div>
+          <p class="text-2xl font-bold text-[#4A6B5D]">샘플·견적 전환</p>
+          <p class="text-xs text-[#6E5846] mt-1">물류·정산 부담 없이 6주 내 실거래 검증 가능</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-verify" class="scroll-mt-20 space-y-6">
+      <div class="border-l-4 border-[#3E2C23] pl-4">
+        <span class="text-xs font-bold tracking-wider text-[#A85A32] uppercase">01. Fact-Check & Data Audit</span>
+        <h2 class="text-xl sm:text-2xl font-bold text-[#2C2520] mt-0.5">문제 확인 및 원문·공공데이터 검증 결과</h2>
+        <p class="text-sm text-[#5C4E42] mt-2 leading-relaxed">
+          이 섹션은 배경으로 주어진 한국은행 부산본부 보고서(2025년 7월 10일 발표)의 핵심 수치를 원문 직접 확인 여부와 교차 출처 기준으로 분리하여 검증합니다. 아래 차트 전환 버튼과 검증표를 조작하여 어떤 수치가 2차 인용인지, 그리고 관세청 공공데이터(`15101641` 등)로 어떻게 재현할 수 있는지 확인하세요.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div class="bg-white border border-[#E5DEC9] rounded-2xl p-5 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+              <h3 class="text-base font-bold text-[#2C2520]">항구 반입 비중 vs 지역별 수입액·가공 비율</h3>
+              <div class="inline-flex rounded-lg bg-[#F2EDE4] p-1 text-xs">
+                <button id="btn-chart-regional" type="button" class="px-2.5 py-1 rounded-md font-semibold tab-active transition">지역별 수입액 비중</button>
+                <button id="btn-chart-port" type="button" class="px-2.5 py-1 rounded-md font-semibold text-[#5C4E42] transition">부산항 비중 교차출처</button>
+              </div>
+            </div>
+            <p id="chart-regional-desc" class="text-xs text-[#6E5846] mb-4">
+              기사 인용 기준 2024년 지역별 커피 수입액 비중입니다. 수도권(서울·경기·인천) 합계가 86.7%에 달하며, 관세청 고시상 ‘수출입화주 소재지’ 기준 집계로 해석됩니다. (원문 PDF 대조 필요)
+            </p>
+          </div>
+          <div class="chart-container">
+            <canvas id="regionalVerifyChart"></canvas>
+          </div>
+          <div class="mt-3 pt-3 border-t border-[#F0EAE0] flex items-center justify-between text-[11px] text-[#7A6655]">
+            <span>출처: 한은 부산본부(2025.07.10) 기사 인용 및 부산시·언론 교차자료</span>
+            <span class="font-semibold text-[#A85A32]">Canvas 동적 차트</span>
+          </div>
+        </div>
+
+        <div class="bg-white border border-[#E5DEC9] rounded-2xl p-5 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <h3 class="text-base font-bold text-[#2C2520]">도매업체 대비 가공업체 비율 & 역유통 구조</h3>
+              <span class="text-xs px-2 py-0.5 rounded bg-[#F2EDE4] text-[#5C4E42] font-medium">인프라 격차 지표</span>
+            </div>
+            <p class="text-xs text-[#6E5846] mb-4">
+              부산은 도매업체 대비 가공(로스팅)업체 비율이 전국 평균에 못 미치며(기사 인용 39.0% vs 53.2%), 부산항 기점 커피 물류창고 역시 10곳 중 2곳 수준으로 기반 시설이 취약합니다.
+            </p>
+          </div>
+          <div class="chart-container">
+            <canvas id="processingGapChart"></canvas>
+          </div>
+          <div class="mt-3 pt-3 border-t border-[#F0EAE0] flex items-center justify-between text-[11px] text-[#7A6655]">
+            <span>출처: 한은 보고서 기사 인용(2023 기준) · 부산일보(2026.04.15) · 이투데이</span>
+            <span class="font-semibold text-[#4A6B5D]">구조적 병목 시각화</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-white border border-[#E5DEC9] rounded-2xl overflow-hidden shadow-sm">
+        <div class="px-5 py-4 bg-[#F2EDE4]/70 border-b border-[#E5DEC9] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+          <h3 class="text-base font-bold text-[#2C2520]">항목별 원문 검증 및 관세청 공공데이터 재현성 표</h3>
+          <div class="flex flex-wrap gap-1.5 text-xs">
+            <button type="button" data-verify-filter="all" class="verify-filter-btn px-2.5 py-1 rounded-md font-semibold tab-active">전체 (6)</button>
+            <button type="button" data-verify-filter="partial" class="verify-filter-btn px-2.5 py-1 rounded-md font-semibold bg-[#FAF8F5] text-[#5C4E42] border border-[#DFD5C3]">일부·교차 확인 (3)</button>
+            <button type="button" data-verify-filter="unverified" class="verify-filter-btn px-2.5 py-1 rounded-md font-semibold bg-[#FAF8F5] text-[#5C4E42] border border-[#DFD5C3]">원문 미확인 (3)</button>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs sm:text-sm">
+            <thead>
+              <tr class="bg-[#FAF8F5] text-[#5C4E42] border-b border-[#E5DEC9]">
+                <th class="py-3 px-4 font-semibold w-1/5">검증 항목</th>
+                <th class="py-3 px-4 font-semibold w-1/4">제시 수치·내용</th>
+                <th class="py-3 px-4 font-semibold w-1/5">검증 상태</th>
+                <th class="py-3 px-4 font-semibold">확인 수준 및 교차 근거</th>
+              </tr>
+            </thead>
+            <tbody id="verify-table-body" class="divide-y divide-[#F0EAE0]"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-causes" class="scroll-mt-20 space-y-6">
+      <div class="border-l-4 border-[#A85A32] pl-4">
+        <span class="text-xs font-bold tracking-wider text-[#A85A32] uppercase">02. Root Causes of Value Leakage</span>
+        <h2 class="text-xl sm:text-2xl font-bold text-[#2C2520] mt-0.5">돈이 수도권으로 새는 3가지 구조적 원인</h2>
+        <p class="text-sm text-[#5C4E42] mt-2 leading-relaxed">
+          부산항은 단순 '입구(Gateway)' 역할에 머물고 있습니다. 아래 4단계 공급망 흐름 카드를 클릭하여 통관 이후 생두가 어떤 경로로 수도권으로 이동했다가 다시 부산으로 역유통되는지 단계별 병목과 근거 기업 사례를 살펴보세요.
+        </p>
+      </div>
+
+      <div class="bg-[#F2EDE4] border border-[#E2D8C5] rounded-2xl p-5 sm:p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-sm sm:text-base font-bold text-[#2C2520]">부산항 수입 커피 역유통(Reverse Logistics) 4단계 흐름</h3>
+          <span class="text-xs text-[#7A6655]">각 단계를 클릭해 상세 근거 확인</span>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-3" id="flow-steps-container"></div>
+        <div id="flow-detail-box" class="mt-4 bg-[#FAF8F5] border border-[#DFD5C3] rounded-xl p-4 text-sm text-[#3E2C23]"></div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <article class="bg-white border border-[#E5DEC9] rounded-2xl p-5 shadow-sm card-hover flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2.5 py-1 rounded-md bg-[#3E2C23] text-[#FAF8F5] text-xs font-bold">원인 1 · 최대 요인</span>
+              <span class="text-lg">🏢</span>
+            </div>
+            <h3 class="text-base font-bold text-[#2C2520] mb-2">수입사·대형 로스터·프랜차이즈 본사의 수도권 집중</h3>
+            <p class="text-xs sm:text-sm text-[#5C4E42] leading-relaxed mb-3">
+              국내 커피 수입업체 대부분과 대규모 원두 소비처 본사가 수도권·충청권에 몰려 있어 결제와 부가가치가 지역에 남지 않습니다.
+            </p>
+            <ul class="space-y-1.5 text-xs text-[#4F4339] bg-[#FAF8F5] p-3 rounded-xl border border-[#EFE9DC]">
+              <li>• <strong>지에스씨인터내셔날(GSC):</strong> 서울 마포구 본사, 부산은 영업소 형태 지사만 운영</li>
+              <li>• <strong>알마씨엘로:</strong> 고객센터 경기 지역번호(031) 사용 확인</li>
+              <li>• <strong>메가MGC커피:</strong> 서울 강남구 본사 (2026년 4,117개점 위키 / 2024.04 2,937개점 기사)</li>
+              <li>• <strong>한국맥널티:</strong> 수입~로스팅 수직계열화 본사·공장 충남 천안 위치</li>
+            </ul>
+          </div>
+          <p class="text-[11px] text-[#8C6D53] mt-3 pt-2 border-t border-[#F0EAE0]">
+            * 코빈즈·블레스빈·이디야·컴포즈커피·동서식품의 정확한 로스팅 공장 위치는 이번 조사에서 확인 못 함
+          </p>
+        </article>
+
+        <article class="bg-white border border-[#E5DEC9] rounded-2xl p-5 shadow-sm card-hover flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2.5 py-1 rounded-md bg-[#A85A32] text-[#FAF8F5] text-xs font-bold">원인 2 · 인프라 병목</span>
+              <span class="text-lg">🏭</span>
+            </div>
+            <h3 class="text-base font-bold text-[#2C2520] mb-2">배후 전용 저장·가공 인프라 및 앵커 기업 부재</h3>
+            <p class="text-xs sm:text-sm text-[#5C4E42] leading-relaxed mb-3">
+              항만 직후 단계에서 대량 생두를 보관·선별·로스팅할 전용 시설과 앵커 기업이 부족해 통관 물량의 80% 이상이 곧바로 수도권으로 이동합니다.
+            </p>
+            <ul class="space-y-1.5 text-xs text-[#4F4339] bg-[#FAF8F5] p-3 rounded-xl border border-[#EFE9DC]">
+              <li>• <strong>전용 창고 부족:</strong> 부산항 기점 커피 물류창고 수는 10곳 중 2곳 수준 (이투데이)</li>
+              <li>• <strong>혼합 보관 한계:</strong> 부산 내 상위 창고도 타 품목과 함께 취급하는 형태 (헤럴드경제)</li>
+              <li>• <strong>로스팅 생태계 약세:</strong> 로스팅기기 관련 앵커 기업 및 전문 인력 부족 지적</li>
+            </ul>
+          </div>
+          <p class="text-[11px] text-[#8C6D53] mt-3 pt-2 border-t border-[#F0EAE0]">
+            * 부산일보(2026.04.15): 수도권 로스팅 후 부산으로 재유입되는 역유통 구조 지적
+          </p>
+        </article>
+
+        <article class="bg-white border border-[#E5DEC9] rounded-2xl p-5 shadow-sm card-hover flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-3">
+              <span class="px-2.5 py-1 rounded-md bg-[#4A6B5D] text-[#FAF8F5] text-xs font-bold">원인 3 · MVP 타깃</span>
+              <span class="text-lg">🔗</span>
+            </div>
+            <h3 class="text-base font-bold text-[#2C2520] mb-2">부산 카페-로스터리 간 매입 경로 단절과 분산</h3>
+            <p class="text-xs sm:text-sm text-[#5C4E42] leading-relaxed mb-3">
+              부산 내부에도 납품 역량을 갖춘 로컬 로스터리가 활동 중이나, 동네 카페가 조건을 비교하고 샘플을 받아 볼 직거래 접점이 약합니다.
+            </p>
+            <ul class="space-y-1.5 text-xs text-[#4F4339] bg-[#FAF8F5] p-3 rounded-xl border border-[#EFE9DC]">
+              <li>• <strong>영도구 모모스커피:</strong> 산지 직거래 소싱, 자체 로스팅, 생두·B2B 납품 운영</li>
+              <li>• <strong>금정구 ㈜씨지씨(CGC):</strong> 오전 10시 전 주문 시 당일 출고 원칙 원두 납품</li>
+              <li>• <strong>모지포그라운드 등:</strong> 부산 로컬 로스터리 다수 영업 중이나 개별 탐색 비용 높음</li>
+            </ul>
+          </div>
+          <p class="text-[11px] text-[#8C6D53] mt-3 pt-2 border-t border-[#F0EAE0]">
+            * 부산 카페의 수도권 vs 로컬 원두 조달 비율 공식 통계는 확인 못 함 (1주차 인터뷰 검증 대상)
+          </p>
+        </article>
+      </div>
+    </section>
+
+    <section id="section-cases" class="scroll-mt-20 space-y-6">
+      <div class="border-l-4 border-[#4A6B5D] pl-4">
+        <span class="text-xs font-bold tracking-wider text-[#4A6B5D] uppercase">03. Domestic & Global Benchmarks</span>
+        <h2 class="text-xl sm:text-2xl font-bold text-[#2C2520] mt-0.5">기존 해결 시도 분석: 국내 정책·민간 플랫폼 및 해외 항구 도시</h2>
+        <p class="text-sm text-[#5C4E42] mt-2 leading-relaxed">
+          지자체 클러스터 사업부터 민간 원두 플랫폼, 해외 커피 항만 도시(트리에스테·함부르크·앤트워프)까지 9개 사례의 현재 운영 여부와 한계를 비교합니다. 카테고리 버튼을 눌러 정책·민간·해외 사례별 시사점을 확인하세요.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap items-center justify-between gap-3">
+        <div class="flex flex-wrap gap-1.5 text-xs sm:text-sm">
+          <button type="button" data-case-filter="all" class="case-filter-btn px-3.5 py-1.5 rounded-full font-semibold tab-active transition">전체 사례 (9)</button>
+          <button type="button" data-case-filter="policy" class="case-filter-btn px-3.5 py-1.5 rounded-full font-semibold bg-[#F2EDE4] text-[#3E2C23] transition">국내 정책 (2)</button>
+          <button type="button" data-case-filter="private" class="case-filter-btn px-3.5 py-1.5 rounded-full font-semibold bg-[#F2EDE4] text-[#3E2C23] transition">국내 민간 (4)</button>
+          <button type="button" data-case-filter="global" class="case-filter-btn px-3.5 py-1.5 rounded-full font-semibold bg-[#F2EDE4] text-[#3E2C23] transition">해외 항만 (3)</button>
+        </div>
+        <span class="text-xs text-[#7A6655]">* 기업 자체 발표 수치는 ‘회사 주장’으로 구분 표기</span>
+      </div>
+
+      <div id="cases-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    </section>
+
+    <section id="section-mvp" class="scroll-mt-20 space-y-6">
+      <div class="border-l-4 border-[#3E2C23] pl-4">
+        <span class="text-xs font-bold tracking-wider text-[#A85A32] uppercase">04. 6-Week MVP Candidates & Recommendation</span>
+        <h2 class="text-xl sm:text-2xl font-bold text-[#2C2520] mt-0.5">대학생 팀 6주 MVP 후보 비교 및 최종 추천안</h2>
+        <p class="text-sm text-[#5C4E42] mt-2 leading-relaxed">
+          가상 데이터 없이 공공데이터(소진공 상가정보, 식약처 제조업 인허가, 관세청 API)와 현장 수집 데이터만으로 6주 내 시연 가능한 4가지 MVP를 비교합니다. 후보 카드를 선택하면 사용 데이터, 개발 난이도·병목 지점, 기존 서비스 대비 차별점, 검증 지표를 상세히 확인할 수 있습니다.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3" id="mvp-selector-cards"></div>
+
+      <div id="mvp-detail-panel" class="bg-white border-2 border-[#3E2C23] rounded-2xl p-6 shadow-md"></div>
+
+      <div class="bg-white border border-[#E5DEC9] rounded-2xl overflow-hidden shadow-sm">
+        <div class="px-5 py-3.5 bg-[#F2EDE4] border-b border-[#E5DEC9]">
+          <h3 class="text-sm sm:text-base font-bold text-[#2C2520]">4개 MVP 후보 핵심 항목 한눈에 비교하기</h3>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="bg-[#FAF8F5] text-[#5C4E42] border-b border-[#E5DEC9]">
+                <th class="py-3 px-3.5 font-semibold w-32">비교 기준</th>
+                <th class="py-3 px-3.5 font-semibold bg-amber-50/70 text-[#3E2C23]">후보 1 (추천): 로컬 로스터리 원두 매칭·샘플 웹</th>
+                <th class="py-3 px-3.5 font-semibold">후보 2: 동네 카페 소모품·생두 합배송 보드</th>
+                <th class="py-3 px-3.5 font-semibold">후보 3: 부산항 가치 유출·상권 공백 트래커</th>
+                <th class="py-3 px-3.5 font-semibold">후보 4: 수도권 vs 부산 직배 실질 원가 계산기</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-[#F0EAE0] text-[#3E2C23]">
+              <tr>
+                <td class="py-3 px-3.5 font-semibold bg-[#FAF8F5]">타깃 사용자</td>
+                <td class="py-3 px-3.5 bg-amber-50/40 font-medium">부산 개인 카페 사장님 + 부산 로컬 로스터리</td>
+                <td class="py-3 px-3.5">영도·전포 등 밀집 상권 내 카페·소형 로스터리</td>
+                <td class="py-3 px-3.5">부산시·부산TP(영도 클러스터), 예비 창업자</td>
+                <td class="py-3 px-3.5">부산 예비 창업자·개인 카페, 부산 중소 로스터리</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-3.5 font-semibold bg-[#FAF8F5]">6주 구현 가능성</td>
+                <td class="py-3 px-3.5 bg-amber-50/40"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 font-semibold">높음 (개발 3~4주)</span><br/><span class="text-[#6E5846] mt-1 inline-block">B2B 납품 가능 여부 전화·방문 검증 필수</span></td>
+                <td class="py-3 px-3.5"><span class="px-2 py-0.5 rounded bg-rose-100 text-rose-900 font-semibold">고위험 (운영 장벽)</span><br/><span class="text-[#6E5846] mt-1 inline-block">도매 합의, 소분·보관 장소, 세금계산서·정산 책임</span></td>
+                <td class="py-3 px-3.5"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 font-semibold">최고 (공공API 중심)</span><br/><span class="text-[#6E5846] mt-1 inline-block">실제 거래 변화 증명이 약함 (후보1 상단 요약 결합 권장)</span></td>
+                <td class="py-3 px-3.5"><span class="px-2 py-0.5 rounded bg-amber-100 text-amber-900 font-semibold">보통 (영업 장벽)</span><br/><span class="text-[#6E5846] mt-1 inline-block">비공개인 로스터리 B2B 실단가 10곳 이상 확보 난이도</span></td>
+              </tr>
+              <tr>
+                <td class="py-3 px-3.5 font-semibold bg-[#FAF8F5]">핵심 공공데이터</td>
+                <td class="py-3 px-3.5 bg-amber-50/40">소진공 상가정보(`15012005`/`15083033`), 식품·즉석제조가공업(`15044976`/`15155245`), 품목제조보고(`15064909`)</td>
+                <td class="py-3 px-3.5">소진공 상가정보(`15012005`/`15083033`) + 도매처 실단가표</td>
+                <td class="py-3 px-3.5">관세청 시도별(`15101641`)·품목별(`15101609`), 소진공(`15012005`), 제조가공업(`15044976`)</td>
+                <td class="py-3 px-3.5">소진공 상가정보(`15012005`), 품목제조보고(`15064909`) + 직접 수집 납품 단가 DB</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-3.5 font-semibold bg-[#FAF8F5]">효과 측정 숫자</td>
+                <td class="py-3 px-3.5 bg-amber-50/40 font-semibold text-[#4A6B5D]">입점 로스터리 수(곳), 샘플·견적 요청(건), 계약 전환(건)</td>
+                <td class="py-3 px-3.5">참여 매장 수(곳), 성사 회차·물량(박스), 명세서 기준 절감액(원)</td>
+                <td class="py-3 px-3.5">클러스터 담당자 피드백(건), 데이터 다운로드(회), 발굴 로스터리(곳)</td>
+                <td class="py-3 px-3.5">계산기 완료 사업자 수(명), 결과 화면 견적·샘플 클릭 수(건)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="section-week1" class="scroll-mt-20 space-y-6">
+      <div class="border-l-4 border-[#4A6B5D] pl-4">
+        <span class="text-xs font-bold tracking-wider text-[#4A6B5D] uppercase">05. Week-1 Execution & Source Archive</span>
+        <h2 class="text-xl sm:text-2xl font-bold text-[#2C2520] mt-0.5">1주차 최우선 실행 체크리스트 및 전체 출처 목록</h2>
+        <p class="text-sm text-[#5C4E42] mt-2 leading-relaxed">
+          코드를 짜기 전 1주차에 반드시 끝내야 할 원문 PDF 확보, 공공데이터 추출, 로스터리·카페·클러스터 인터뷰 과제를 인터랙티브 체크리스트로 정리했습니다. 하단에서는 보고서에 인용된 모든 공식·기사·2차 자료 출처를 검색·분류해 확인할 수 있습니다.
+        </p>
+      </div>
+
+      <div class="bg-[#F2EDE4] border border-[#E2D8C5] rounded-2xl p-5 sm:p-6">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
+          <div>
+            <h3 class="text-base font-bold text-[#2C2520]">1주차 팀 실행 로드맵 (4인 역할 분담)</h3>
+            <p class="text-xs text-[#6E5846]">항목을 클릭해 완료 상태를 점검하세요.</p>
+          </div>
+          <div class="flex items-center gap-2.5">
+            <div class="w-36 h-2.5 bg-[#DFD5C3] rounded-full overflow-hidden">
+              <div id="week1-progress-bar" class="h-full bg-[#4A6B5D] transition-all duration-300" style="width: 0%;"></div>
+            </div>
+            <span id="week1-progress-text" class="text-xs font-bold text-[#3E2C23]">0 / 5 완료</span>
+          </div>
+        </div>
+        <div id="week1-checklist" class="space-y-2.5"></div>
+      </div>
+
+      <div class="bg-white border border-[#E5DEC9] rounded-2xl p-5 shadow-sm space-y-4">
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+          <div>
+            <h3 class="text-base font-bold text-[#2C2520]">검증 출처 아카이브 (원문 확인 여부 및 링크)</h3>
+            <p class="text-xs text-[#6E5846]">모든 주장과 숫자에는 원문 직접 확인 여부와 2차 자료 구분이 명시되어 있습니다.</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <input id="source-search" type="text" placeholder="기관, 키워드, API 번호 검색..." class="px-3 py-1.5 text-xs rounded-lg border border-[#DFD5C3] bg-[#FAF8F5] focus:outline-none focus:border-[#3E2C23]" />
+            <select id="source-category" class="px-3 py-1.5 text-xs rounded-lg border border-[#DFD5C3] bg-[#FAF8F5] focus:outline-none focus:border-[#3E2C23]">
+              <option value="all">전체 분류</option>
+              <option value="official">공공·법령·보고서</option>
+              <option value="data">공공데이터 API·파일</option>
+              <option value="media">언론 보도·기사</option>
+              <option value="company">기업 공식·블로그·2차자료</option>
+            </select>
+          </div>
+        </div>
+        <div id="sources-list" class="divide-y divide-[#F0EAE0] max-h-96 overflow-y-auto pr-1"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-[#E5DEC9] bg-[#F2EDE4] mt-16 py-6">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-[#6E5846]">
+      <p>부산 커피 산업 가치 유출 구조 분석 및 6주 대학생 팀 MVP 기획 리서치 대시보드</p>
+      <p>추측성 수치 배제 · 가상 데이터 미사용 원칙 준수</p>
+    </div>
+  </footer>
+
+  <script>
+    const verificationData = [
+      {
+        item: "한국은행 부산본부 보고서 발간 및 산출 데이터",
+        figures: "2025년 7월 보고서, 소모품 공동구매 플랫폼 제안 등",
+        status: "partial",
+        badge: "발간 확인 · PDF 미확인",
+        detail: "2025.07.10 「부산지역 신성장동력으로서의 커피산업 여건점검 및 발전과제」 발표 제목·개요 공식 확인. 첨부 PDF 본문 미확인으로 세부 산식 대조 필요."
+      },
+      {
+        item: "부산항 커피 수입 비중",
+        figures: "2020~2024년 물량 92.1% (수입액 94.2%)",
+        status: "partial",
+        badge: "유사 수치 교차 확인",
+        detail: "한은 원문 수치는 미확인이나 부산시 공식 뉴스 92.5%(17만4천t), 경남도민일보 94%(2022년 20만t), 세계일보(2023.09.20) 90% 등 다수 출처에서 90% 이상 확인."
+      },
+      {
+        item: "2024년 지역별 커피 수입액 비중",
+        figures: "서울 48.2%, 경기 19.5%, 인천 19.0%, 부산 3.0%",
+        status: "unverified",
+        badge: "확인 못 함 (원문 필요)",
+        detail: "기사 인용 수치만 존재하며 한국은행 웹페이지 본문에는 PDF 첨부파일만 제공되어 직접 대조하지 못함."
+      },
+      {
+        item: "도매 대비 가공업체 비율",
+        figures: "2023년 부산 39.0%, 전국 평균 53.2%",
+        status: "unverified",
+        badge: "확인 못 함 (원문 필요)",
+        detail: "배경 인용 수치만 존재. 헤럴드경제 기사에서 부산의 원두 로스팅 비율이 전국 평균에 못 미친다는 정성적 서술만 확인."
+      },
+      {
+        item: "지역별 수입액 집계 기준",
+        figures: "수입 회사 소재지 vs 통관 항구 기준",
+        status: "partial",
+        badge: "법령 구분 확인",
+        detail: "관세청 「무역통계 작성 및 교부에 관한 고시」상 ‘수출입화주의 소재지 지역별’과 ‘신고세관별·항구별’을 구분 작성. 바다가 없는 서울 1위는 화주 소재지 기준 추정."
+      },
+      {
+        item: "공공데이터로 수치 재현 가능 여부",
+        figures: "15101641 활용 및 0901.11 / 0901.12 분리",
+        status: "unverified",
+        badge: "코드표 추가 확인 필요",
+        detail: "관세청 시도별(15101641) API로 월 1회 현행화 재현 가능. 다만 6단위(0901.11/12)는 품목별(15101609)에서 공식 지원하며 15101641 지원 여부는 첨부 엑셀 확인 필요."
+      }
+    ];
+
+    const flowSteps = [
+      {
+        step: "STEP 1 · 반입 및 통관",
+        title: "부산항 물량 90% 이상 집중",
+        location: "부산항 (신항·북항)",
+        summary: "국내 수입 생두의 절대다수가 부산항으로 입항합니다.",
+        detail: "부산시 공식 보도(92.5%) 및 언론 인용(90~94%)에 따르면 국내 커피 수입 물량의 90% 이상이 부산항을 통해 들어옵니다. 하지만 부산항 배후 커피 전용 물류창고는 10곳 중 2곳에 불과하고 타 품목 혼합 보관이 많아 장기 저장·선별 기반이 약합니다."
+      },
+      {
+        step: "STEP 2 · 결제 및 소유권",
+        title: "수입액의 86.7% 수도권 귀속",
+        location: "서울(48.2%) · 경기(19.5%) · 인천(19.0%)",
+        summary: "통관 직후 생두 소유권과 무역 실적은 수도권 수입사에 귀속됩니다.",
+        detail: "지에스씨인터내셔날(서울 마포구 본사, 부산은 영업소 지사), 알마씨엘로(경기 031) 등 주요 생두 수입사 본사가 수도권에 있어 무역통계(화주 소재지 기준)와 수입 마진이 수도권에 잡힙니다."
+      },
+      {
+        step: "STEP 3 · 가공 및 로스팅",
+        title: "생두 80% 이상 수도권 이동",
+        location: "수도권 및 충남 천안 등",
+        summary: "부산항 반입 생두의 80% 이상이 곧바로 내륙으로 올라가 볶입니다.",
+        detail: "부산일보(2026.04.15) 보도에 따르면 부산항 유입 생두의 80% 이상이 수도권으로 이동해 로스팅됩니다. 한국맥널티(충남 천안 공장)와 대형 프랜차이즈 본사(메가MGC커피 서울 강남구 등) 중심의 대량 가공 구조 때문입니다."
+      },
+      {
+        step: "STEP 4 · 역유통 소비",
+        title: "로스팅 원두의 부산 재유입",
+        location: "부산 전역 개인 카페 · 매장",
+        summary: "수도권에서 가공된 원두가 택배·물류를 거쳐 다시 부산 카페로 내려옵니다.",
+        detail: "부산 내에도 모모스커피, ㈜씨지씨(CGC), 모지포그라운드 등 우수한 로컬 로스터리가 있으나, 동네 카페 사장님이 납품 단가와 샘플을 쉽게 비교할 창구가 부족해 수도권 원두를 역유통으로 매입하는 구조가 고착되어 있습니다."
+      }
+    ];
+
+    const benchmarkCases = [
+      {
+        category: "policy",
+        categoryLabel: "국내 정책",
+        name: "부산시 신항 배후단지·스마트 커피물류 정책",
+        status: "추진 중 (2025~2026 보도)",
+        statusType: "active",
+        summary: "신항 배후단지 자유무역지역 내 수입·가공·재수출 물류센터 추진 및 과기정통부 블록체인 기반 커피 특화 물류 플랫폼 선정(부산TP·동방물류·한국맥널티 협업).",
+        limitation: "대형 항만·물류 인프라 중심 장기 사업이라 영세 로스터리·개인 카페가 당장 체감하는 거래량이나 원가 절감 성과는 외부 자료에서 확인 못 함."
+      },
+      {
+        category: "policy",
+        categoryLabel: "국내 정책",
+        name: "영도구 커피산업 생태계 R&D 클러스터",
+        status: "운영 중 (2026년 3차 공고)",
+        statusType: "active",
+        summary: "중기부 공모 국비 12억 원 등 투입(총사업비 17억1,400만 원은 배경 인용 수치로 미확인). 부산TP 주도로 블록체인 물류·AI 생두 분석·시제품·관광·마케팅 지원.",
+        limitation: "R&D·관광·기업지원 프로그램 중심이며, 스마트 물류 플랫폼이 부산 전역 카페·로스터리의 일상적 조달로 확산된 실적은 확인 못 함."
+      },
+      {
+        category: "private",
+        categoryLabel: "국내 민간",
+        name: "모모스커피 (영도구 로컬 로스터리)",
+        status: "정상 운영 중",
+        statusType: "active",
+        summary: "산지 직거래 스페셜티 생두 소싱, 자체 로스팅, 공식몰(momos.co.kr)을 통한 원두·생두 판매 및 B2B 납품 운영. 2019 WBC 우승 등 브랜드 경쟁력 보유.",
+        limitation: "스페셜티 중심 개별 기업 모델이라 부산 전체 대중 카페의 역유통 물량을 단독 흡수하긴 어려움 (최신 B2B 납품량 확인 못 함)."
+      },
+      {
+        category: "private",
+        categoryLabel: "국내 민간",
+        name: "코케비즈 (컨슈머브릿지)",
+        status: "운영 중 (부산 업체 입점)",
+        statusType: "active",
+        summary: "전국 로스터리·카페 B2B 단가 비교 플랫폼. 전국 400여 로스터리·1,400여 종, 2만 사업자 가입, 누적 거래액 100억 원 돌파는 ‘회사 주장’. 부산 CGC·모지포그라운드 입점 확인.",
+        limitation: "전국 단위 택배·도매 오픈마켓 구조라 부산항 생두 직소싱이나 부산 내 근거리 직배 물류비 절감·소모품 공동구매에는 특화되지 않음."
+      },
+      {
+        category: "private",
+        categoryLabel: "국내 민간",
+        name: "원두 / ONEDO (스프링온워드)",
+        status: "B2E 구독 중심으로 전환",
+        statusType: "pivot",
+        summary: "2020년 카페(B2B)·제조업·소비자를 잇는 ‘원두 공동구매’와 커뮤니티 앱 출시 후, 현재는 기업·호텔 커피 구독(‘원두데일리’·‘원두랜드’) 중심으로 운영.",
+        limitation: "초기 카페 대상 공동구매 앱 기능의 2026년 활성 여부는 확인 못 함. 오피스 복지 구독(B2E)으로 이동한 점이 초기 B2B 공구 모델의 한계를 시사."
+      },
+      {
+        category: "private",
+        categoryLabel: "국내 민간",
+        name: "마켓로스팅",
+        status: "자체 브랜드 병행 전환",
+        statusType: "pivot",
+        summary: "원두 직거래·B2B 플랫폼으로 출발했으나 2024년 10월 보도 기준 자체 로스팅 브랜드(‘디벨롭 로스터리’)를 병행 운영.",
+        limitation: "대표 인터뷰(2024.10.31)에서 “초기 플랫폼만으로는 자리 잡는 데 한계가 있어 자체 브랜드를 론칭해 직접 로스팅·공급한다”고 밝힘."
+      },
+      {
+        category: "global",
+        categoryLabel: "해외 항만",
+        name: "이탈리아 트리에스테 항구",
+        status: "유럽 핵심 커피 거점 작동",
+        statusType: "active",
+        summary: "자유무역지대 지정 창고에 관세 없이 생두 보관 후 ‘로스팅 직전에만 과세’하고 유럽 전역으로 재수출. 수심 18m 부두·내륙 기지·불량두 선별 인프라 결합.",
+        limitation: "국가 간 관세 유예 제도와 유럽 전역 배후 수요가 전제되어 단기 모방 난이도가 높음."
+      },
+      {
+        category: "global",
+        categoryLabel: "해외 항만",
+        name: "독일 함부르크 항구",
+        status: "운영 중 (물동량 둔화 리스크)",
+        statusType: "active",
+        summary: "해운·항만·물류 기업 본사를 적극 유치하고 항만 배후에 로스팅·블렌딩·물류 사업자가 집적해 유럽 주요 커피 처리 거점 형성(블로그 2차 자료).",
+        limitation: "거대 앵커 기업과 해운 본사가 동반 집적해야 작동하며, 2018~2023년 물동량 연평균 성장률 -3.27% 둔화 및 혼잡 보도 존재."
+      },
+      {
+        category: "global",
+        categoryLabel: "해외 항만",
+        name: "벨기에 앤트워프 항구",
+        status: "운영 중",
+        statusType: "active",
+        summary: "유럽 3대 관문항 중 하나로서 항만 인프라와 시내 스페셜티 로스터리의 국내외 원두 공급망이 공존(여행 매체 2차 자료).",
+        limitation: "커피 전용 세제나 구체적 생두 저장·가공 점유율 등 핵심 이익 메커니즘 수치는 이번 조사 자료에서 확인 못 함."
+      }
+    ];
+
+    const mvpCandidates = [
+      {
+        id: 1,
+        recommended: true,
+        shortTitle: "후보 1 (최종 추천)",
+        title: "부산 로컬 로스터리 원두 매칭 및 샘플 신청 웹",
+        targetCause: "부산항 생두가 수도권에서 볶여 다시 내려오는 역유통과 부산 로스터리-카페 간 정보 단절",
+        users: "부산 개인 카페 사장님(구매) + 부산 로컬 로스터리(공급)",
+        features: [
+          "부산 구·군별 로스터리·카페 분포 지도 및 팀이 직접 검증한 로스터리 납품 조건표(MOQ, 원두 스타일, 직배 권역)",
+          "희망 향미·사용량 선택 후 반경 내 부산 로스터리에 바로 ‘샘플·견적 신청’을 보내는 1페이지 폼 (+ 상단에 구별 가공 공백 요약 카드 결합)"
+        ],
+        dataSources: [
+          "소진공 상가(상권)정보 API(15012005, OpenAPI 신청) 및 파일(15083033, CSV, 분기 갱신)",
+          "식품제조가공업(15044976, CSV) 및 즉석판매제조가공업(15155245, OpenAPI)",
+          "식약처 품목제조보고(15064909 / I1250, API·파일) + 현장 인터뷰로 검증한 실거래 조건"
+        ],
+        feasibility: "개발 1명이 3~4주 내 충분히 구현 가능. 나머지 3명이 발로 뛰어 로스터리를 섭외·검증하는 구조라 팀 역할 분담이 완벽함.",
+        blocker: "공공 인허가 목록만으로는 ‘실제 B2B 납품을 하는 로스터리’가 구분되지 않으므로 1~2주차 전화·방문 검증이 필수.",
+        differentiation: "전국 택배·단가 나열형인 코케비즈와 달리, 부산 내 당일·근거리 직배 권역과 오프라인 샘플·커핑 접점에 집중.",
+        metrics: "입점 완료 부산 로스터리 수(곳), 실제 접수·발송된 샘플·견적 요청 수(건), 샘플 후 납품 계약 전환 수(건)"
+      },
+      {
+        id: 2,
+        recommended: false,
+        shortTitle: "후보 2 (운영 고위험)",
+        title: "동네 카페·로스터리 소모품/생두 합배송 공동발주 보드",
+        targetCause: "소규모 매장의 소량 발주로 인한 컵·필터·생두 단가 및 물류비 열위",
+        users: "특정 1~2개 밀집 상권(예: 영도·전포) 내 카페·소형 로스터리",
+        features: [
+          "상권 밀집도 기반 공구 품목(컵·필터 등) 목표 수량 달성 게이지",
+          "사업자 인증 후 합배송 참여 수량·픽업 방식 제출 화면"
+        ],
+        dataSources: [
+          "소진공 상가(상권)정보(15012005/15083033, OpenAPI/CSV, 분기 갱신)로 타깃 상권 매장 좌표 추출",
+          "참여 도매처·수입사에서 직접 받은 실단가표"
+        ],
+        feasibility: "웹 화면 구현은 2~3주 내 가능하나, 물류·정산 운영 난이도가 대학생 팀 한계를 초과함.",
+        blocker: "도매처 사전 단가 합의, 소분·보관 장소 확보, 대금 정산·세금계산서 발행 책임(원두 ONEDO·마켓로스팅이 피벗한 핵심 이유).",
+        differentiation: "전국 오픈마켓이나 기업 복지 구독(원두데일리)과 달리 특정 동네(도보·차량 15분 내) 합배송으로 MOQ 장벽 완화.",
+        metrics: "공동발주 참여 매장 수(곳), 성사 회차 및 누적 물량(박스/kg), 실제 명세서 기준 단가 절감액(원)"
+      },
+      {
+        id: 3,
+        recommended: false,
+        shortTitle: "후보 3 (후보1과 결합 권장)",
+        title: "부산항 커피 가치 유출 및 상권 공백 트래커",
+        targetCause: "부산항 유입 대비 가공·수입사 부족 실태의 월별 추적 부재 및 정책 타깃 데이터 부족",
+        users: "부산시·부산테크노파크(영도 클러스터 운영진), 예비 로스터리 창업자",
+        features: [
+          "수도권 vs 부산 커피 수입액 월별 추이 자동 갱신 대시보드",
+          "부산 시군구별 카페 수 대비 로스팅 제조업체 수 공백 히트맵"
+        ],
+        dataSources: [
+          "관세청 시도별 품목별 수출입실적(15101641, OpenAPI 신청, 월 1회 현행화)",
+          "관세청 품목별 수출입실적(15101609, OpenAPI), 소진공 상가정보(15012005), 식품제조가공업(15044976)"
+        ],
+        feasibility: "100% 공개 공공데이터 기반이라 6주 내 구현 확실성이 가장 높음.",
+        blocker: "15101641의 HS 6단위 분리 미지원 시 15101609 병행 해석 필요. 또한 대시보드만으로는 6주 시연에서 ‘실제 거래 변화’를 증명하기 약함.",
+        differentiation: "1회성 한은 보고서와 달리 매월 관세청 API 갱신에 맞춰 지역 격차와 부산 구별 가공 공백을 자동 추적.",
+        metrics: "정책·클러스터 담당자 시연·활용 피드백(건), 월간 데이터 다운로드 수(회), 발굴·연계된 로스터리 수(곳)"
+      },
+      {
+        id: 4,
+        recommended: false,
+        shortTitle: "후보 4 (단가 DB 확보 난관)",
+        title: "수도권 대 부산 직배 원두 실질 원가·신선도 계산기",
+        targetCause: "카페 사장님이 수도권 택배 원두의 물류비·배송 지연 손실을 체감하지 못하는 문제",
+        users: "부산 예비 창업자·개인 카페 사장님, 부산 중소 로스터리",
+        features: [
+          "월 사용량·현재 단가·배송비·배송일 입력 시 부산 로컬 실거래 견적과 월 비용·배송일수 비교표 산출",
+          "상위 3곳 로스터리 견적 문의 즉시 연결"
+        ],
+        dataSources: [
+          "소진공 상가정보(15012005, OpenAPI), 식약처 품목제조보고(15064909 / I1250, API·파일)",
+          "부산 로스터리 10곳 이상에서 직접 수집한 실제 납품 견적·배송 조건 DB"
+        ],
+        feasibility: "계산기 로직 구현은 2주 내 가능하나 사전 영업 데이터 수집에 시간이 많이 소요됨.",
+        blocker: "로스터리 B2B 납품 단가는 대외비·비공개인 경우가 많아 실제 단가 DB를 10곳 이상 확보하는 영업 장벽이 높음.",
+        differentiation: "단순 kg 단가 비교가 아니라 수도권→부산 택배비·배송 소요일을 실질 비용으로 환산해 보여줌.",
+        metrics: "계산기 완료 카페 사업자 수(명), 결과 화면에서 로스터리 견적·샘플 문의 클릭 수(건)"
+      }
+    ];
+
+    const week1Tasks = [
+      {
+        id: "t1",
+        day: "1~3일차 · 기획 담당",
+        title: "한국은행 부산본부 보고서 원문 PDF 직접 다운로드 및 수치 대조",
+        desc: "한은 조사연구자료 페이지(nttId=10092439) 첨부파일을 내려받아 미확인 수치(92.1%, 48.2%, 39.0%)와 원자료·지역 기준 확정."
+      },
+      {
+        id: "t2",
+        day: "1~3일차 · 개발 담당",
+        title: "공공데이터포털 API/CSV 추출 및 관세청 코드표 확인",
+        desc: "소진공 상가정보(15012005)와 식품·즉석제조가공업(15044976/15155245)으로 부산 구·군별 카페 및 잠재 로스터리 명단 추출, 관세청조회코드_v1.3.xlsx 확인."
+      },
+      {
+        id: "t3",
+        day: "3~7일차 · 조사팀 2인",
+        title: "부산 로컬 로스터리 5곳 심층 인터뷰 및 입점 조건 확보",
+        desc: "금정구 ㈜씨지씨(CGC), 모지포그라운드, 영도·전포 일대 로스터리 5곳 접촉. 생두 조달 경로, 부산 카페 납품 MOQ, 무료/유료 샘플 조건 확인."
+      },
+      {
+        id: "t4",
+        day: "3~7일차 · 조사팀 2인",
+        title: "부산 개인 카페 사장님 5~7곳 매입 경로·전환 장벽 인터뷰",
+        desc: "수도권 원두 사용 매장 vs 부산 로컬 원두 사용 매장 비교. 현재 kg당 체감 매입가, 배송 소요일, 거래처 변경 시 가장 큰 장벽(분쇄도·일관성 등) 파악."
+      },
+      {
+        id: "t5",
+        day: "5~7일차 · 팀 리더",
+        title: "부산테크노파크 영도 클러스터 담당자 1명 자문 및 시연 협조 요청",
+        desc: "‘2026년 3차 부산 커피산업 생태계 R&D 클러스트 구축사업’ 공고 담당 부서에 기존 스마트 물류 플랫폼 참여 범위 확인 및 로스터리 추천 협조 요청."
+      }
+    ];
+
+    const sourcesData = [
+      { category: "official", tag: "공식 누리집 · PDF 미확인", title: "한국은행 부산본부, 「부산지역 신성장동력으로서의 커피산업 여건점검 및 발전과제」 (2025.07.10)", url: "https://www.bok.or.kr/portal/bbs/P0000800/view.do?menuNo=201087&nttId=10092439" },
+      { category: "official", tag: "2차 요약 원문 확인", title: "KDI 경제교육·정보센터, 「부산지역 신성장동력으로서의 커피산업 여건점검 및 발전과제」 요약 (2025.07.10)", url: "https://eiec.kdi.re.kr/policy/domesticView.do?ac=0000196428" },
+      { category: "official", tag: "법령 원문 확인", title: "관세청(국가법령정보센터), 「무역통계 작성 및 교부에 관한 고시」 (화주 소재지·항구별 기준)", url: "https://www.law.go.kr/LSW/admRulLsInfoP.do?admRulSeq=2100000215133" },
+      { category: "official", tag: "공식 보도 원문 확인", title: "부산광역시 시정 뉴스, 부산항 커피 수입량 92.5%(17만4천t) 비중 안내", url: "https://www.busan.go.kr/news/totalnews01/view?dataNo=67953" },
+      { category: "data", tag: "API 안내 원문 확인", title: "공공데이터포털, 「관세청 시도별 품목별 수출입실적」 (15101641, 월 1회 현행화)", url: "https://www.data.go.kr/data/15101641/openapi.do" },
+      { category: "data", tag: "API 안내 원문 확인", title: "공공데이터포털, 「관세청 품목별 수출입실적」 (15101609, HS 2·4·6·10단위 조회 지원)", url: "https://www.data.go.kr/data/15101609/openapi.do" },
+      { category: "data", tag: "원문 확인", title: "공공데이터포털, 「소상공인시장진흥공단 상가(상권)정보 API (15012005) 및 파일 (15083033)」", url: "https://www.data.go.kr/data/15012005/openapi.do" },
+      { category: "data", tag: "원문 확인", title: "공공데이터포털·식품안전나라, 「식품제조가공업(15044976)·즉석판매제조가공업(15155245)·품목제조보고(15064909)」", url: "https://www.data.go.kr/data/15044976/fileData.do" },
+      { category: "media", tag: "기사 확인", title: "부산일보, 부산항 유입 생두 80% 이상 수도권 이동·로스팅 후 역유통 보도 (2026.04.15)", url: "https://www.busan.com/view/busan/view.php?code=2026041518114706620" },
+      { category: "media", tag: "기사 확인", title: "헤럴드경제, 국내 커피 수입업체 수도권 집중 및 부산 로스팅 앵커 기업 부재 보도", url: "https://biz.heraldcorp.com/article/10529373" },
+      { category: "media", tag: "기사 확인", title: "이투데이, 부산항 기점 커피 물류창고 수 10곳 중 2곳 수준 보도", url: "https://www.etoday.co.kr/news/view/2487260" },
+      { category: "media", tag: "기사·공고 확인", title: "비즈공유·전자신문, 2026년 3차 부산 커피산업 생태계 R&D 클러스터 기업지원 공고", url: "https://www.biz0u.co.kr/programs/cmqvc5y40000f5ntn8kh6vznb" },
+      { category: "media", tag: "기사 확인", title: "한국경제, 마켓로스팅 대표 인터뷰 — 플랫폼 한계로 자체 브랜드 병행 운영 (2024.10.31)", url: "https://plus.hankyung.com/apps/newsinside.view?aid=202410313073d&category=&sns=y" },
+      { category: "media", tag: "기사 확인", title: "부산일보·해사뉴스, 이탈리아 트리에스테 자유무역지대 로스팅 직전 과세 및 함부르크 본사 유치 사례", url: "https://www.busan.com/view/busan/view.php?code=2023072018263584348" },
+      { category: "company", tag: "공식 원문 확인", title: "지에스씨인터내셔날(GSC)·알마씨엘로·한국맥널티·모모스커피 공식 사이트 (본사·지사·B2B 현황)", url: "https://momos.co.kr/b2b" },
+      { category: "company", tag: "회사 주장 포함", title: "코케비즈 공식 블로그 (전국 400여 로스터리·거래액 100억 원 돌파 주장 및 부산 CGC·모지포그라운드 입점)", url: "https://biz.koke.kr/posts/485" },
+      { category: "company", tag: "공식·기사 확인", title: "원두(ONEDO / 스프링온워드), 2020년 공동구매 앱 출시 후 B2E 구독(‘원두데일리’) 전환 현황", url: "https://onedodaily.kr/blog/?bmode=view&idx=13141417" }
+    ];
+
+    function wrapLabel(label) {
+      if (label.length <= 16) return label;
+      const words = label.split(' ');
+      const lines = [];
+      let current = '';
+      words.forEach(w => {
+        if ((current + ' ' + w).trim().length > 16) {
+          if (current) lines.push(current.trim());
+          current = w;
+        } else {
+          current = (current + ' ' + w).trim();
+        }
+      });
+      if (current) lines.push(current.trim());
+      return lines;
+    }
+
+    let regionalChartInstance = null;
+    function renderRegionalChart(mode) {
+      const ctx = document.getElementById('regionalVerifyChart').getContext('2d');
+      if (regionalChartInstance) regionalChartInstance.destroy();
+
+      const isRegional = mode === 'regional';
+      const labels = isRegional
+        ? ['서울 (화주 기준 추정)', '경기', '인천', '기타 지역', '부산 (관문항 소재)']
+        : ['한은 인용(물량)', '한은 인용(수입액)', '부산시 공식뉴스', '경남도민일보(2022)', '세계일보(2023)'];
+      const values = isRegional ? [48.2, 19.5, 19.0, 10.3, 3.0] : [92.1, 94.2, 92.5, 94.0, 90.0];
+      const colors = isRegional
+        ? ['#3E2C23', '#6E5846', '#8C6D53', '#C9BFA9', '#A85A32']
+        : ['#8C6D53', '#8C6D53', '#4A6B5D', '#4A6B5D', '#4A6B5D'];
+
+      document.getElementById('chart-regional-desc').textContent = isRegional
+        ? '기사 인용 기준 2024년 지역별 커피 수입액 비중(%)입니다. 수도권(서울·경기·인천) 합계가 86.7%인 반면 부산은 3.0%에 그칩니다. (원문 PDF 대조 필요)'
+        : '부산항의 국내 커피 수입 비중(%) 교차 출처 비교입니다. 한은 인용 수치(92.1%·94.2%)와 유사한 90~94%대 수치가 공식 보도 및 언론에서 확인됩니다.';
+
+      regionalChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels.map(wrapLabel),
+          datasets: [{
+            label: isRegional ? '2024 수입액 비중 (%)' : '부산항 수입 비중 (%)',
+            data: values,
+            backgroundColor: colors,
+            borderRadius: 6,
+            barThickness: 26
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#2C2520',
+              padding: 10,
+              callbacks: {
+                label: function(context) {
+                  return ` ${context.parsed.x}%`;
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              beginAtZero: true,
+              max: 100,
+              grid: { color: '#F0EAE0' },
+              ticks: { color: '#5C4E42', font: { size: 11 }, callback: v => v + '%' }
+            },
+            y: {
+              grid: { display: false },
+              ticks: { color: '#2C2520', font: { size: 11, weight: '600' } }
+            }
+          }
+        }
+      });
+    }
+
+    function renderProcessingChart() {
+      const ctx = document.getElementById('processingGapChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['도매 대비 가공업체 비율 (2023)', '부산항 커피 물류창고 비중', '통관 후 수도권 이동 비중'].map(wrapLabel),
+          datasets: [
+            {
+              label: '부산 현황 (%)',
+              data: [39.0, 20.0, 80.0],
+              backgroundColor: ['#A85A32', '#A85A32', '#3E2C23'],
+              borderRadius: 6
+            },
+            {
+              label: '비교 기준 / 잔여 (%)',
+              data: [53.2, 80.0, 20.0],
+              backgroundColor: ['#D6CCB8', '#E5DEC9', '#4A6B5D'],
+              borderRadius: 6
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: {
+              position: 'bottom',
+              labels: { color: '#3E2C23', font: { size: 11 }, boxWidth: 12 }
+            },
+            tooltip: {
+              backgroundColor: '#2C2520',
+              padding: 10,
+              callbacks: {
+                afterLabel: function(ctx) {
+                  const notes = [
+                    ['부산 39.0% (기사 인용)', '전국 평균 53.2% (기사 인용)'],
+                    ['부산항 기점 창고 10곳 중 2곳 (20%)', '기타·비전용 비중 (80%)'],
+                    ['수도권 이동·로스팅 (80% 이상)', '부산 내 잔류 추정 (20% 미만)']
+                  ];
+                  return notes[ctx.dataIndex][ctx.datasetIndex];
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 100,
+              grid: { color: '#F0EAE0' },
+              ticks: { color: '#5C4E42', font: { size: 11 }, callback: v => v + '%' }
+            },
+            x: {
+              grid: { display: false },
+              ticks: { color: '#2C2520', font: { size: 11, weight: '600' } }
+            }
+          }
+        }
+      });
+    }
+
+    function renderVerifyTable(filter) {
+      const tbody = document.getElementById('verify-table-body');
+      const filtered = filter === 'all' ? verificationData : verificationData.filter(d => d.status === filter);
+      tbody.innerHTML = filtered.map(row => {
+        const badgeStyle = row.status === 'partial'
+          ? 'bg-emerald-100 text-emerald-900'
+          : 'bg-amber-100 text-amber-900';
+        return `
+          <tr class="hover:bg-[#FAF8F5] transition">
+            <td class="py-3 px-4 font-semibold text-[#2C2520]">${row.item}</td>
+            <td class="py-3 px-4 text-[#4F4339]">${row.figures}</td>
+            <td class="py-3 px-4"><span class="inline-block px-2 py-0.5 rounded text-xs font-semibold ${badgeStyle}">${row.badge}</span></td>
+            <td class="py-3 px-4 text-xs text-[#5C4E42] leading-relaxed">${row.detail}</td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    let activeFlowIdx = 0;
+    function renderFlowSteps() {
+      const container = document.getElementById('flow-steps-container');
+      container.innerHTML = flowSteps.map((s, idx) => {
+        const isActive = idx === activeFlowIdx;
+        return `
+          <button type="button" data-flow-idx="${idx}" class="text-left p-4 rounded-xl border transition ${isActive ? 'bg-[#3E2C23] text-[#FAF8F5] border-[#3E2C23] shadow-sm' : 'bg-[#FAF8F5] text-[#2C2520] border-[#DFD5C3] hover:border-[#8C6D53]'}">
+            <div class="flex items-center justify-between text-[11px] font-bold ${isActive ? 'text-amber-200' : 'text-[#A85A32]'} mb-1">
+              <span>${s.step}</span>
+              <span>${idx < 3 ? '→' : '↺'}</span>
+            </div>
+            <p class="font-bold text-sm mb-1">${s.title}</p>
+            <p class="text-xs ${isActive ? 'text-[#E5DEC9]' : 'text-[#6E5846]'}">${s.location}</p>
+          </button>
+        `;
+      }).join('');
+
+      const active = flowSteps[activeFlowIdx];
+      document.getElementById('flow-detail-box').innerHTML = `
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+          <span class="font-bold text-[#2C2520]">${active.step}: ${active.title} (${active.location})</span>
+          <span class="text-xs px-2 py-0.5 rounded bg-[#E5DEC9] text-[#3E2C23] font-medium">${active.summary}</span>
+        </div>
+        <p class="text-xs sm:text-sm text-[#4F4339] leading-relaxed">${active.detail}</p>
+      `;
+
+      container.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          activeFlowIdx = Number(btn.dataset.flowIdx);
+          renderFlowSteps();
+        });
+      });
+    }
+
+    function renderCases(filter) {
+      const grid = document.getElementById('cases-grid');
+      const filtered = filter === 'all' ? benchmarkCases : benchmarkCases.filter(c => c.category === filter);
+      grid.innerHTML = filtered.map(c => {
+        const catColor = c.category === 'policy'
+          ? 'bg-[#3E2C23] text-[#FAF8F5]'
+          : c.category === 'private'
+            ? 'bg-[#A85A32] text-[#FAF8F5]'
+            : 'bg-[#4A6B5D] text-[#FAF8F5]';
+        const statusColor = c.statusType === 'pivot'
+          ? 'bg-amber-100 text-amber-900'
+          : 'bg-[#F2EDE4] text-[#4F4339]';
+        return `
+          <div class="bg-white border border-[#E5DEC9] rounded-2xl p-5 shadow-sm card-hover flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-2.5">
+                <span class="px-2 py-0.5 rounded text-[11px] font-bold ${catColor}">${c.categoryLabel}</span>
+                <span class="px-2 py-0.5 rounded text-[11px] font-medium ${statusColor}">${c.status}</span>
+              </div>
+              <h3 class="text-base font-bold text-[#2C2520] mb-2">${c.name}</h3>
+              <p class="text-xs text-[#4F4339] leading-relaxed mb-3">${c.summary}</p>
+            </div>
+            <div class="bg-[#FAF8F5] border border-[#EFE9DC] rounded-xl p-3 text-xs text-[#5C4E42]">
+              <span class="font-bold text-[#A85A32] block mb-0.5">성과 한계 및 시사점</span>
+              ${c.limitation}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    let selectedMvpId = 1;
+    function renderMvpSection() {
+      const cardsEl = document.getElementById('mvp-selector-cards');
+      cardsEl.innerHTML = mvpCandidates.map(m => {
+        const isSelected = m.id === selectedMvpId;
+        return `
+          <button type="button" data-mvp-id="${m.id}" class="text-left p-4 rounded-2xl border-2 transition flex flex-col justify-between ${isSelected ? 'bg-[#3E2C23] text-[#FAF8F5] border-[#3E2C23] shadow-md' : 'bg-white text-[#2C2520] border-[#E5DEC9] hover:border-[#8C6D53]'}">
+            <div>
+              <div class="flex items-center justify-between gap-1 mb-1.5">
+                <span class="text-[11px] font-bold px-2 py-0.5 rounded ${m.recommended ? 'bg-amber-400 text-[#2C2520]' : (isSelected ? 'bg-[#5C4E42] text-[#FAF8F5]' : 'bg-[#F2EDE4] text-[#5C4E42]')}">${m.shortTitle}</span>
+              </div>
+              <p class="font-bold text-sm leading-snug">${m.title}</p>
+            </div>
+            <p class="text-[11px] mt-3 ${isSelected ? 'text-amber-200' : 'text-[#8C6D53]'} font-medium">상세 스펙·데이터 보기 →</p>
+          </button>
+        `;
+      }).join('');
+
+      const active = mvpCandidates.find(m => m.id === selectedMvpId);
+      const panelEl = document.getElementById('mvp-detail-panel');
+      panelEl.innerHTML = `
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-4 mb-4 border-b border-[#EFE9DC]">
+          <div>
+            <div class="flex items-center gap-2 mb-1">
+              <span class="px-2.5 py-0.5 rounded text-xs font-bold ${active.recommended ? 'bg-[#4A6B5D] text-white' : 'bg-[#F2EDE4] text-[#3E2C23]'}">${active.shortTitle}</span>
+              <span class="text-xs text-[#7A6655]">타깃 원인: ${active.targetCause}</span>
+            </div>
+            <h3 class="text-lg sm:text-xl font-bold text-[#2C2520]">${active.title}</h3>
+          </div>
+          <span class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-[#FAF8F5] border border-[#DFD5C3] text-[#3E2C23]">주요 사용자: ${active.users}</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs sm:text-sm">
+          <div class="space-y-4">
+            <div class="bg-[#FAF8F5] p-4 rounded-xl border border-[#EFE9DC]">
+              <h4 class="font-bold text-[#3E2C23] mb-1.5">핵심 구현 화면 및 기능 (1~2개)</h4>
+              <ul class="space-y-1.5 text-[#4F4339]">
+                ${active.features.map(f => `<li>• ${f}</li>`).join('')}
+              </ul>
+            </div>
+            <div class="bg-[#FAF8F5] p-4 rounded-xl border border-[#EFE9DC]">
+              <h4 class="font-bold text-[#3E2C23] mb-1.5">활용 공공데이터 및 실제 데이터</h4>
+              <ul class="space-y-1.5 text-[#4F4339]">
+                ${active.dataSources.map(d => `<li>• ${d}</li>`).join('')}
+              </ul>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <div class="bg-[#FAF8F5] p-4 rounded-xl border border-[#EFE9DC]">
+              <h4 class="font-bold text-[#3E2C23] mb-1">6주 구현 가능성 및 막히는 지점</h4>
+              <p class="text-[#4F4339] mb-2">${active.feasibility}</p>
+              <p class="text-xs text-[#A85A32] font-semibold">⚠️ 핵심 병목: ${active.blocker}</p>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="bg-[#FAF8F5] p-3.5 rounded-xl border border-[#EFE9DC]">
+                <h4 class="font-bold text-[#3E2C23] text-xs mb-1">기존 서비스 대비 차별점</h4>
+                <p class="text-xs text-[#4F4339] leading-relaxed">${active.differentiation}</p>
+              </div>
+              <div class="bg-[#F2EDE4] p-3.5 rounded-xl border border-[#DFD5C3]">
+                <h4 class="font-bold text-[#3E2C23] text-xs mb-1">효과 검증 지표 (실측 숫자)</h4>
+                <p class="text-xs text-[#2C2520] font-medium leading-relaxed">${active.metrics}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      cardsEl.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          selectedMvpId = Number(btn.dataset.mvpId);
+          renderMvpSection();
+        });
+      });
+    }
+
+    const completedTasks = new Set();
+    function renderWeek1Checklist() {
+      const container = document.getElementById('week1-checklist');
+      container.innerHTML = week1Tasks.map(t => {
+        const checked = completedTasks.has(t.id);
+        return `
+          <label class="flex items-start gap-3 p-3.5 rounded-xl border cursor-pointer transition ${checked ? 'bg-[#FAF8F5]/70 border-[#C5D1CA]' : 'bg-[#FAF8F5] border-[#DFD5C3] hover:border-[#8C6D53]'}">
+            <input type="checkbox" data-task-id="${t.id}" ${checked ? 'checked' : ''} class="mt-1 w-4 h-4 accent-[#4A6B5D] rounded cursor-pointer" />
+            <div class="flex-1">
+              <div class="flex flex-wrap items-center justify-between gap-1">
+                <span class="text-sm font-bold ${checked ? 'line-through text-[#8C6D53]' : 'text-[#2C2520]'}">${t.title}</span>
+                <span class="text-[11px] font-semibold px-2 py-0.5 rounded bg-[#E5DEC9] text-[#3E2C23]">${t.day}</span>
+              </div>
+              <p class="text-xs text-[#5C4E42] mt-1 leading-relaxed">${t.desc}</p>
+            </div>
+          </label>
+        `;
+      }).join('');
+
+      const pct = Math.round((completedTasks.size / week1Tasks.length) * 100);
+      document.getElementById('week1-progress-bar').style.width = pct + '%';
+      document.getElementById('week1-progress-text').textContent = `${completedTasks.size} / ${week1Tasks.length} 완료`;
+
+      container.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+        cb.addEventListener('change', () => {
+          const id = cb.dataset.taskId;
+          if (cb.checked) completedTasks.add(id);
+          else completedTasks.delete(id);
+          renderWeek1Checklist();
+        });
+      });
+    }
+
+    function renderSources() {
+      const keyword = document.getElementById('source-search').value.trim().toLowerCase();
+      const cat = document.getElementById('source-category').value;
+      const listEl = document.getElementById('sources-list');
+
+      const filtered = sourcesData.filter(s => {
+        const matchCat = cat === 'all' || s.category === cat;
+        const matchKw = !keyword || s.title.toLowerCase().includes(keyword) || s.tag.toLowerCase().includes(keyword);
+        return matchCat && matchKw;
+      });
+
+      if (filtered.length === 0) {
+        listEl.innerHTML = `<p class="py-6 text-center text-xs text-[#7A6655]">검색 조건에 일치하는 출처가 없습니다.</p>`;
+        return;
+      }
+
+      listEl.innerHTML = filtered.map(s => `
+        <div class="py-2.5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 text-xs">
+          <div class="flex items-start sm:items-center gap-2">
+            <span class="shrink-0 px-2 py-0.5 rounded bg-[#F2EDE4] text-[#5C4E42] font-semibold text-[11px]">${s.tag}</span>
+            <span class="text-[#2C2520] font-medium">${s.title}</span>
+          </div>
+          <a href="${s.url}" target="_blank" rel="noopener noreferrer" class="shrink-0 text-[#A85A32] hover:underline font-semibold">원문 링크 ↗</a>
+        </div>
+      `).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderRegionalChart('regional');
+      renderProcessingChart();
+      renderVerifyTable('all');
+      renderFlowSteps();
+      renderCases('all');
+      renderMvpSection();
+      renderWeek1Checklist();
+      renderSources();
+
+      const btnRegional = document.getElementById('btn-chart-regional');
+      const btnPort = document.getElementById('btn-chart-port');
+      btnRegional.addEventListener('click', () => {
+        btnRegional.classList.add('tab-active');
+        btnRegional.classList.remove('text-[#5C4E42]');
+        btnPort.classList.remove('tab-active');
+        btnPort.classList.add('text-[#5C4E42]');
+        renderRegionalChart('regional');
+      });
+      btnPort.addEventListener('click', () => {
+        btnPort.classList.add('tab-active');
+        btnPort.classList.remove('text-[#5C4E42]');
+        btnRegional.classList.remove('tab-active');
+        btnRegional.classList.add('text-[#5C4E42]');
+        renderRegionalChart('port');
+      });
+
+      document.querySelectorAll('.verify-filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.verify-filter-btn').forEach(b => {
+            b.classList.remove('tab-active');
+            b.classList.add('bg-[#FAF8F5]', 'text-[#5C4E42]', 'border', 'border-[#DFD5C3]');
+          });
+          btn.classList.add('tab-active');
+          btn.classList.remove('bg-[#FAF8F5]', 'text-[#5C4E42]', 'border', 'border-[#DFD5C3]');
+          renderVerifyTable(btn.dataset.verifyFilter);
+        });
+      });
+
+      document.querySelectorAll('.case-filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.case-filter-btn').forEach(b => {
+            b.classList.remove('tab-active');
+            b.classList.add('bg-[#F2EDE4]', 'text-[#3E2C23]');
+          });
+          btn.classList.add('tab-active');
+          btn.classList.remove('bg-[#F2EDE4]', 'text-[#3E2C23]');
+          renderCases(btn.dataset.caseFilter);
+        });
+      });
+
+      document.getElementById('source-search').addEventListener('input', renderSources);
+      document.getElementById('source-category').addEventListener('change', renderSources);
+    });
+  </script>
+</body>
+</html>

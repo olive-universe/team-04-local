@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>부산 요트 안심 거래 가이드 · 타당성 및 제도·시장 분석 대시보드</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  body {
+    background-color: #FAF8F5;
+    color: #1E293B;
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Noto Sans KR', sans-serif;
+    overflow-x: hidden;
+  }
+  .chart-container {
+    position: relative;
+    width: 100%;
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 300px;
+    max-height: 380px;
+  }
+  @media (min-width: 768px) {
+    .chart-container {
+      height: 340px;
+    }
+  }
+  .nav-pill.active {
+    background-color: #0F4C5C;
+    color: #FFFFFF;
+    border-color: #0F4C5C;
+  }
+  .tab-btn.active {
+    background-color: #0F4C5C;
+    color: #FFFFFF;
+  }
+  .card-surface {
+    background-color: #FFFFFF;
+    border: 1px solid #E6E1D6;
+    box-shadow: 0 2px 8px rgba(15, 76, 92, 0.04);
+  }
+  .badge-fact {
+    background-color: #E0F2FE;
+    color: #0369A1;
+  }
+  .badge-hypothesis {
+    background-color: #FEF3C7;
+    color: #B45309;
+  }
+  .badge-claim {
+    background-color: #F3E8FF;
+    color: #6B21A8;
+  }
+  .badge-check {
+    background-color: #FFE4E6;
+    color: #BE123C;
+  }
+</style>
+</head>
+<body class="antialiased selection:bg-teal-100 selection:text-teal-900">
+<!-- Chosen Palette: Warm Sand & Deep Marine (Background: #FAF8F5, Surface: #FFFFFF, Border: #E6E1D6, Primary Text: #1E293B, Primary Accent: #0F4C5C, Secondary Accent: #D97706) -->
+<!-- Application Structure Plan: Designed a 5-part thematic & task-oriented SPA structure rather than a linear 1-to-8 list. (1) Executive Summary & Core Thesis: Immediately frames the 'Weak-to-Moderate' evidence finding and pivots the MVP focus from 'fraud panic' to 'berth & paperwork verification'. (2) Market & Regulatory Gap: Combines Busan Marina infrastructure data (Chart.js) and local marina risk cards with an interactive regulatory benchmark (Korea Yacht vs. Korea Fishing Vessel vs. Florida Chapter 326). (3) Legal Classification & Official Lookup Limits: Uses a vessel tonnage toggle (<20t vs >=20t) to simplify complex maritime laws and clarifies what buyers can/cannot verify online. (4) Interactive MVP Prototype: Lets users actively test the core MVP value—exploring the 6 fraud/risk types and checking off a 6-step transaction & document checklist with live progress tracking. (5) Ecosystem, Strategic Risks & Week 1 Action Plan: Organizes local vendors (separating 'company claims' from public registries), AX Track alignment, top 3 risks, Week 1 validation questions, and a searchable 29-source citation table. -->
+<!-- Visualization & Content Choices: 1. Busan Coast Guard Leisure Business Trend (2018-2025) & Korea vs Japan Marina Gap -> Goal: Compare & Change -> Interactive Chart.js Bar/Line Chart on Canvas with dataset switcher, 16-char label wrapping, and custom tooltips -> Justifies local market context without SVG. 2. Regulatory & Brokerage Comparison -> Goal: Compare -> Interactive Tabbed Matrix (HTML/Tailwind + JS) -> Simplifies multi-jurisdiction legal rules. 3. Vessel Tonnage Legal Calculator (<20t vs >=20t) -> Goal: Inform & Organize -> Interactive Toggle updating penalties, deadlines, inspection cycles, and taxes dynamically -> Prevents legal confusion. 4. Transaction Checklist & Fraud Explorer -> Goal: Engage & Synthesize -> Interactive state-managed checklist with progress bar and filterable risk cards -> Demonstrates the actual MVP product experience. 5. Source Table -> Goal: Organize -> Searchable HTML table -> Preserves full traceability of all 29 cited sources. -->
+<!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+<header class="sticky top-0 z-40 bg-[#FAF8F5]/95 backdrop-blur border-b border-[#E6E1D6]">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+    <div class="flex items-center gap-3">
+      <span class="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-[#0F4C5C] text-white text-xl font-bold shadow-sm">⛵</span>
+      <div>
+        <div class="flex items-center gap-2">
+          <h1 class="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">부산 요트 안심 거래 가이드</h1>
+          <span class="text-xs font-semibold px-2 py-0.5 rounded-full bg-teal-100 text-[#0F4C5C]">타당성·제도·MVP 분석</span>
+        </div>
+        <p class="text-xs text-slate-500">대학생 팀 (6주 · 개발 1명 · 무예산) · AX 데이터·서비스 트랙 리서치 대시보드</p>
+      </div>
+    </div>
+    <nav class="flex flex-wrap gap-1.5" aria-label="주요 섹션 이동">
+      <button onclick="scrollToSection('sec-summary')" class="nav-pill active text-xs sm:text-sm font-medium px-3 py-1.5 rounded-lg border border-[#E6E1D6] transition">1. 핵심 결론</button>
+      <button onclick="scrollToSection('sec-market')" class="nav-pill text-xs sm:text-sm font-medium px-3 py-1.5 rounded-lg border border-[#E6E1D6] bg-white text-slate-700 hover:bg-stone-100 transition">2. 시장·제도 비교</button>
+      <button onclick="scrollToSection('sec-legal')" class="nav-pill text-xs sm:text-sm font-medium px-3 py-1.5 rounded-lg border border-[#E6E1D6] bg-white text-slate-700 hover:bg-stone-100 transition">3. 등록·조회 한계</button>
+      <button onclick="scrollToSection('sec-mvp')" class="nav-pill text-xs sm:text-sm font-medium px-3 py-1.5 rounded-lg border border-[#E6E1D6] bg-white text-slate-700 hover:bg-stone-100 transition">4. MVP 체크리스트</button>
+      <button onclick="scrollToSection('sec-strategy')" class="nav-pill text-xs sm:text-sm font-medium px-3 py-1.5 rounded-lg border border-[#E6E1D6] bg-white text-slate-700 hover:bg-stone-100 transition">5. 위험·1주차·출처</button>
+    </nav>
+  </div>
+</header>
+
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+  <section id="sec-summary" class="space-y-6">
+    <div class="card-surface rounded-2xl p-6 sm:p-8 border-l-4 border-l-[#0F4C5C]">
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+        <span class="text-xs font-bold uppercase tracking-wider text-[#0F4C5C]">Executive Summary · 한 줄 결론</span>
+        <div class="flex flex-wrap gap-1.5 text-xs">
+          <span class="badge-fact px-2 py-0.5 rounded font-medium">출처 확인 사실</span>
+          <span class="badge-hypothesis px-2 py-0.5 rounded font-medium">가설: 팀 추론</span>
+          <span class="badge-claim px-2 py-0.5 rounded font-medium">회사·커뮤니티 주장</span>
+          <span class="badge-check px-2 py-0.5 rounded font-medium">[확인 필요]</span>
+        </div>
+      </div>
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-3 leading-snug">
+        근거 수준: <span class="text-[#0F4C5C] underline decoration-amber-400 decoration-4 underline-offset-4">약함 ~ 보통</span> — '사기 공포'보다 '선석·서류 사전 검증 도우미'로 설계해야 합니다.
+      </h2>
+      <p class="text-slate-600 text-sm sm:text-base leading-relaxed mb-6">
+        본 섹션은 국내 판례·해경 보도·소비자원·권익위·국정감사 자료를 교차 검증한 핵심 판단을 요약합니다. 국내 개인 간 중고 요트 매매 사기만을 따로 집계한 공식 통계는 확인되지 않았으나, 인접 불법 유통 사례와 제도적 사각지대(중개 규제 부재·온라인 권리 조회 불가)가 명확히 존재하므로 MVP의 방향을 현실적인 사전 검증 도구로 재정의할 필요가 있습니다.
+      </p>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div class="rounded-xl bg-[#FAF8F5] border border-[#E6E1D6] p-5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-sm font-bold text-slate-800">📉 직접 피해 통계 근거</span>
+            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-rose-100 text-rose-800">약함</span>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            한국소비자원, 권익위, 국정감사, 대법원 판례 포털에서 개인 간 중고 요트 사기 전용 통계는 <strong>찾지 못함</strong>. 단, 부산 사하경찰서의 폐선 보트 불법 개조 판매 입건 및 통영해경의 무검사 수입 요트 검거 사례는 확인됨.
+          </p>
+        </div>
+
+        <div class="rounded-xl bg-[#FAF8F5] border border-[#E6E1D6] p-5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-sm font-bold text-slate-800">⚖️ 구조적 정보 비대칭 근거</span>
+            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800">보통</span>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            2017년 등록제가 도입된 어선과 달리 요트 매매 중개업의 법정 자격·보증보험 규제가 확인되지 않으며, 등록원부·선박등기부의 제3자 온라인 열람이 막혀 있어 2017년 이전 어선 시장과 동일한 허점이 존재함.
+          </p>
+        </div>
+
+        <div class="rounded-xl bg-[#0F4C5C] text-white p-5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-sm font-bold">🧭 6주 MVP 핵심 전략</span>
+            <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-white/20 text-white">실무 피벗</span>
+          </div>
+          <p class="text-xs sm:text-sm text-teal-50 leading-relaxed">
+            API 자동 조회 구현 불가 한계를 인정하고, ① 부산 마리나(수영만·남천 등) 계류 선석 리스크 안내 ② 매도인에게 직접 받아 대조할 서류·현장 질문 가이드 ③ 공식 정비업체 연결 리포트로 구성.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sec-market" class="space-y-6">
+    <div>
+      <span class="text-xs font-bold uppercase tracking-wider text-[#0F4C5C]">Section 02 · Market & Regulatory Context</span>
+      <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mt-1">부산 마리나 계류 환경과 국내외 중개 제도 비교</h2>
+      <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+        이 섹션에서는 부산 지역 주요 마리나의 실제 현장 변수(수영만 재개발·영업정지 갈등, 남천마리나 폐쇄)와 해양경찰청 공공데이터 추이를 시각화하고, 국내 어선법 및 미국 플로리다주 요트중개법(Chapter 326)과의 제도적 격차를 비교합니다. 차트 버튼을 눌러 지표를 전환하고, 탭을 클릭해 제도 차이를 확인하세요.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div class="lg:col-span-7 card-surface rounded-2xl p-6 flex flex-col justify-between">
+        <div>
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-4">
+            <div>
+              <h3 class="text-base sm:text-lg font-bold text-slate-900" id="chart-title">부산해경 관내 수상레저사업장 추이 (2018~2025년)</h3>
+              <p class="text-xs text-slate-500 mt-0.5" id="chart-subtitle">출처: 공공데이터포털 해양경찰청 (데이터번호 15029395, 단위: 개소)</p>
+            </div>
+            <div class="flex gap-1.5 bg-[#FAF8F5] p-1 rounded-lg border border-[#E6E1D6]">
+              <button onclick="switchChart('busanBiz')" id="btn-chart-busan" class="tab-btn active text-xs font-semibold px-2.5 py-1.5 rounded-md transition">부산 사업장 추이</button>
+              <button onclick="switchChart('marinaGap')" id="btn-chart-marina" class="tab-btn text-xs font-semibold px-2.5 py-1.5 rounded-md text-slate-600 hover:text-slate-900 transition">한·일 마리나 수</button>
+            </div>
+          </div>
+          <div class="chart-container">
+            <canvas id="marketChart"></canvas>
+          </div>
+        </div>
+        <div class="mt-4 pt-3 border-t border-[#E6E1D6] text-xs text-slate-600 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <span id="chart-takeaway">💡 남해청 부산서 관내 사업장은 2018년 40개소에서 최근 45~48개소 수준으로 완만히 증가했습니다.</span>
+          <span class="badge-check px-2 py-0.5 rounded self-start sm:self-auto">[확인 필요: 연도별 정확한 컬럼 매칭]</span>
+        </div>
+      </div>
+
+      <div class="lg:col-span-5 card-surface rounded-2xl p-6 space-y-4">
+        <div class="flex items-center justify-between">
+          <h3 class="text-base sm:text-lg font-bold text-slate-900">⚓ 부산 주요 마리나 현장 리스크</h3>
+          <span class="text-xs text-slate-500">2026년 11월 기준</span>
+        </div>
+        <p class="text-xs text-slate-600">
+          한국 전체 등록 마리나는 30개(일본 600여 개 대비 1/20)에 불과해, 부산에서는 배를 사는 것만큼 <strong>계류 선석 확보</strong>가 핵심 거래 리스크입니다.
+        </p>
+        <div class="space-y-3">
+          <div class="p-3.5 rounded-xl bg-amber-50/70 border border-amber-200">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-sm text-slate-900">1. 수영만 요트경기장 (해운대구)</span>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded bg-amber-200 text-amber-900">재개발·갈등</span>
+            </div>
+            <p class="text-xs text-slate-700 mt-1 leading-relaxed">
+              면적 234,693㎡(육상 142,451㎡·해상 92,242㎡) 복합 마리나 재개발 추진 중. 2026년 2월 이주·선석 우선배정 공문 언급 및 3월 부산시 영업정지 처분·법원 집행정지 등 분쟁 발생.
+            </p>
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-rose-50/70 border border-rose-200">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-sm text-slate-900">2. 남천마리나 (수영구 남천동)</span>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded bg-rose-200 text-rose-900">폐쇄·무단계류</span>
+            </div>
+            <p class="text-xs text-slate-700 mt-1 leading-relaxed">
+              안전등급 C·D등급으로 출입 전면 금지·폐쇄(부산관광공사 소유권 이전 후 재개장 추진). 2026년 11월 기준 테트라포드 옆 선박 13척 무단 계류 및 공유수면 위반 고발 진행.
+            </p>
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-[#FAF8F5] border border-[#E6E1D6]">
+            <div class="flex items-center justify-between">
+              <span class="font-bold text-sm text-slate-900">3. 더베이101 & 부산 북항 마리나</span>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded bg-slate-200 text-slate-800">운영 중</span>
+            </div>
+            <p class="text-xs text-slate-700 mt-1 leading-relaxed">
+              더베이101은 동백섬마리나·요트탈래 등 투어 중심 운영, 북항 마리나는 부산항만공사가 다이빙풀·수영장 등 운영. <span class="text-rose-700 font-medium">[확인 필요: 개인 요트 위탁 계류 잔여 선석 수]</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-surface rounded-2xl p-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+        <div>
+          <h3 class="text-base sm:text-lg font-bold text-slate-900">중개 자격·보증보험·에스크로 제도 3자 비교</h3>
+          <p class="text-xs text-slate-500 mt-0.5">국내 요트 시장은 2017년 등록제가 신설된 국내 어선 및 미국 플로리다주와 달리 법정 보호장치가 부재합니다.</p>
+        </div>
+        <div class="flex flex-wrap gap-1.5">
+          <button onclick="selectRegTab('all')" id="reg-tab-all" class="tab-btn active text-xs font-semibold px-3 py-1.5 rounded-lg border border-[#E6E1D6]">전체 비교표</button>
+          <button onclick="selectRegTab('krYacht')" id="reg-tab-krYacht" class="tab-btn text-xs font-semibold px-3 py-1.5 rounded-lg border border-[#E6E1D6] bg-white text-slate-700">🇰🇷 국내 요트 (현황)</button>
+          <button onclick="selectRegTab('krFish')" id="reg-tab-krFish" class="tab-btn text-xs font-semibold px-3 py-1.5 rounded-lg border border-[#E6E1D6] bg-white text-slate-700">🇰🇷 국내 어선 (2017~)</button>
+          <button onclick="selectRegTab('flYacht')" id="reg-tab-flYacht" class="tab-btn text-xs font-semibold px-3 py-1.5 rounded-lg border border-[#E6E1D6] bg-white text-slate-700">🇺🇸 미국 플로리다주</button>
+        </div>
+      </div>
+
+      <div id="reg-comparison-container" class="overflow-x-auto">
+      </div>
+    </div>
+  </section>
+
+  <section id="sec-legal" class="space-y-6">
+    <div>
+      <span class="text-xs font-bold uppercase tracking-wider text-[#0F4C5C]">Section 03 · Legal Procedures & Verification Limits</span>
+      <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mt-1">중고 요트 공식 등록 절차와 거래 전 온라인 조회 한계</h2>
+      <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+        요트는 크기(총톤수 20톤 기준)에 따라 적용 법률과 담당 기관, 과태료가 완전히 달라집니다. 아래 버튼으로 구매하려는 요트의 규모를 선택해 핵심 법적 의무를 확인하고, 하단 표에서 구매 예정자가 온라인으로 직접 확인할 수 있는 항목과 없는 항목을 구분해 보세요.
+      </p>
+    </div>
+
+    <div class="card-surface rounded-2xl p-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-[#E6E1D6]">
+        <div>
+          <h3 class="text-base sm:text-lg font-bold text-slate-900">⚖️ 요트 규모별 적용 법률 및 절차 시뮬레이터</h3>
+          <p class="text-xs text-slate-500 mt-0.5">세일링 요트 및 20톤 미만 모터보트는 대부분 '동력수상레저기구'에 해당합니다.</p>
+        </div>
+        <div class="inline-flex rounded-xl bg-[#FAF8F5] p-1 border border-[#E6E1D6]">
+          <button onclick="setVesselType('under20')" id="btn-under20" class="tab-btn active text-xs sm:text-sm font-bold px-4 py-2 rounded-lg transition">
+            동력수상레저기구 (세일링요트 · 20톤 미만)
+          </button>
+          <button onclick="setVesselType('over20')" id="btn-over20" class="tab-btn text-xs sm:text-sm font-bold px-4 py-2 rounded-lg text-slate-700 transition">
+            선박 (총톤수 20톤 이상 등)
+          </button>
+        </div>
+      </div>
+
+      <div id="vessel-legal-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-5">
+      </div>
+    </div>
+
+    <div class="card-surface rounded-2xl p-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+        <div>
+          <h3 class="text-base sm:text-lg font-bold text-slate-900">🔍 구매 예정자(제3자)의 공식 권리·이력 조회 가능 여부</h3>
+          <p class="text-xs text-slate-500 mt-0.5">핵심 기술적 제약: 압류·저당이 기록된 등록원부와 선박등기부는 비대면 온라인 열람이 제한되어 있습니다.</p>
+        </div>
+        <span class="text-xs font-semibold px-3 py-1 rounded-full bg-amber-100 text-amber-900">MVP 설계 핵심 제약사항</span>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse text-xs sm:text-sm">
+          <thead>
+            <tr class="border-b-2 border-[#E6E1D6] bg-[#FAF8F5] text-slate-700">
+              <th class="py-3 px-3 font-bold">확인 항목</th>
+              <th class="py-3 px-3 font-bold">확인 가능 정보</th>
+              <th class="py-3 px-3 font-bold">공식 창구</th>
+              <th class="py-3 px-3 font-bold">제3자 온라인 조회</th>
+              <th class="py-3 px-3 font-bold">실무 대처 방법</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-[#E6E1D6]">
+            <tr>
+              <td class="py-3 px-3 font-bold text-slate-900">동력수상레저기구 등록원부</td>
+              <td class="py-3 px-3 text-slate-600">갑구(소유자), 을구(저당권), 압류 등 전체 등록 이력</td>
+              <td class="py-3 px-3 text-slate-600">시·군·구청</td>
+              <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-bold text-xs">불가 (방문·면전 열람)</span></td>
+              <td class="py-3 px-3 text-slate-700">매도인에게 <strong>계약 당일 발급본</strong> 제출 요구 (제3자는 이해관계인 사유 기재 필요)</td>
+            </tr>
+            <tr class="bg-teal-50/30">
+              <td class="py-3 px-3 font-bold text-slate-900">기구 공유자 조회</td>
+              <td class="py-3 px-3 text-slate-600">공동 소유자(공유자) 존재 여부</td>
+              <td class="py-3 px-3 text-slate-600">수상레저종합정보 (boat.kcg.go.kr)</td>
+              <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-xs">조건부 가능</span></td>
+              <td class="py-3 px-3 text-slate-700">소유자 성명, 생년월일(6자리), 등록번호판(`MB-연도-일련번호`) 3가지 입력 시 조회</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-3 font-bold text-slate-900">선박등기부 (20톤 이상 등)</td>
+              <td class="py-3 px-3 text-slate-600">소유권, 저당권 등 등기 권리관계</td>
+              <td class="py-3 px-3 text-slate-600">관할 등기소</td>
+              <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-rose-100 text-rose-800 font-bold text-xs">불가 (방문 전용)</span></td>
+              <td class="py-3 px-3 text-slate-700">인터넷등기소 열람 불가 안내(선박등기규칙 제9조 인용). 선박명·선적항·톤수로 등기소 방문</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-3 font-bold text-slate-900">안전검사 이력</td>
+              <td class="py-3 px-3 text-slate-600">정기검사 합격 여부, 유효기간, 정원·운항구역</td>
+              <td class="py-3 px-3 text-slate-600">해양경찰청 · KOMSA</td>
+              <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-bold text-xs">[확인 필요: 비소유자 공개]</span></td>
+              <td class="py-3 px-3 text-slate-700">매도인 보유 <strong>안전검사증</strong>과 선체 부착 <strong>안전검사필증</strong> 실물 대조</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-3 font-bold text-slate-900">책임보험 가입 여부</td>
+              <td class="py-3 px-3 text-slate-600">수상레저안전법 제49조 의무보험 유지 여부</td>
+              <td class="py-3 px-3 text-slate-600">보험사 · 등록관청</td>
+              <td class="py-3 px-3"><span class="px-2 py-0.5 rounded bg-amber-100 text-amber-800 font-bold text-xs">[확인 필요: 타인 조회]</span></td>
+              <td class="py-3 px-3 text-slate-700">매도인에게 유효한 보험가입증명서 사본 요구 및 명의 변경 시 신규 가입</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="sec-mvp" class="space-y-6">
+    <div>
+      <span class="text-xs font-bold uppercase tracking-wider text-[#0F4C5C]">Section 04 · Interactive MVP Prototype</span>
+      <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mt-1">실전 MVP 기능 체험: 사기·피해 유형 진단 & 거래 체크리스트</h2>
+      <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+        보고서 제3장에서 도출된 <strong>MVP 즉시 탑재 콘텐츠</strong>를 인터랙티브 화면으로 구현했습니다. 좌측에서는 국내외 사례와 부산 현장 여건에서 도출한 6대 위험 유형을 탐색할 수 있고, 우측에서는 실제 구매자가 거래 단계별로 완료 여부를 체크하고 필수 서류를 확인할 수 있습니다.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <div class="lg:col-span-6 card-surface rounded-2xl p-6 space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <h3 class="text-base sm:text-lg font-bold text-slate-900">🚨 6대 사기·피해 유형 및 예방법</h3>
+          <div class="flex gap-1">
+            <button onclick="filterRisks('all')" id="risk-filter-all" class="tab-btn active text-xs font-semibold px-2.5 py-1 rounded-md border border-[#E6E1D6]">전체 (6)</button>
+            <button onclick="filterRisks('domestic')" id="risk-filter-domestic" class="tab-btn text-xs font-semibold px-2.5 py-1 rounded-md border border-[#E6E1D6] bg-white text-slate-700">국내 사례·제도</button>
+            <button onclick="filterRisks('busan')" id="risk-filter-busan" class="tab-btn text-xs font-semibold px-2.5 py-1 rounded-md border border-[#E6E1D6] bg-white text-slate-700">부산·해외 경고</button>
+          </div>
+        </div>
+        <p class="text-xs text-slate-500">카드를 클릭하면 구체적인 수법과 현장 예방 수칙이 펼쳐집니다.</p>
+        <div id="risk-cards-list" class="space-y-2.5">
+        </div>
+      </div>
+
+      <div class="lg:col-span-6 card-surface rounded-2xl p-6 flex flex-col justify-between space-y-5">
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="text-base sm:text-lg font-bold text-slate-900">✅ 6단계 안심 거래 체크리스트</h3>
+              <p class="text-xs text-slate-500 mt-0.5">단계를 클릭해 완료 표시하고 필요 서류를 점검하세요.</p>
+            </div>
+            <button onclick="resetChecklist()" class="text-xs font-medium text-slate-500 hover:text-slate-800 underline">초기화</button>
+          </div>
+
+          <div class="bg-[#FAF8F5] rounded-xl p-3.5 border border-[#E6E1D6]">
+            <div class="flex items-center justify-between text-xs font-bold mb-1.5">
+              <span class="text-slate-700">거래 안전 점검 진행률</span>
+              <span id="checklist-progress-text" class="text-[#0F4C5C]">0 / 6 단계 완료 (0%)</span>
+            </div>
+            <div class="w-full h-2.5 bg-stone-200 rounded-full overflow-hidden">
+              <div id="checklist-progress-bar" class="h-full bg-[#0F4C5C] transition-all duration-300" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <div id="checklist-steps" class="space-y-2.5">
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-[#E6E1D6]">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-2.5">📄 필수 확인 서류 4종 요약</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
+            <div class="p-2.5 rounded-lg bg-[#FAF8F5] border border-[#E6E1D6]">
+              <div class="font-bold text-slate-800">1. 등록원부 (또는 선박등기부)</div>
+              <div class="text-slate-600 mt-0.5">실소유자·공유자·근저당(을구)·압류 확인</div>
+            </div>
+            <div class="p-2.5 rounded-lg bg-[#FAF8F5] border border-[#E6E1D6]">
+              <div class="font-bold text-slate-800">2. 안전검사증 & 선체 필증</div>
+              <div class="text-slate-600 mt-0.5">정기검사(5년/1년) 유효기간 및 정원 대조</div>
+            </div>
+            <div class="p-2.5 rounded-lg bg-[#FAF8F5] border border-[#E6E1D6]">
+              <div class="font-bold text-slate-800">3. 책임보험 가입증명서 & 영수증</div>
+              <div class="text-slate-600 mt-0.5">의무보험 유지 및 엔진 사용시간 일관성 검증</div>
+            </div>
+            <div class="p-2.5 rounded-lg bg-[#FAF8F5] border border-[#E6E1D6]">
+              <div class="font-bold text-slate-800">4. 이전등록 민원 서류 (지자체)</div>
+              <div class="text-slate-600 mt-0.5">신분증·초본(공동이용) + <span class="text-rose-700">[양도증·인감 확인 필요]</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="sec-strategy" class="space-y-6">
+    <div>
+      <span class="text-xs font-bold uppercase tracking-wider text-[#0F4C5C]">Section 05 · Ecosystem, Risks & Execution Plan</span>
+      <h2 class="text-xl sm:text-2xl font-bold text-slate-900 mt-1">부산 업체·유사 서비스 현황, 3대 위험, 1주차 검증 및 출처</h2>
+      <p class="text-sm text-slate-600 mt-2 leading-relaxed">
+        부산 현지 매매·정비 업체와 국내외 유사 서비스의 한계를 정리하고, 6주 프로젝트 성공을 위해 1주차에 반드시 검증해야 할 핵심 질문 3가지와 AX 데이터·서비스 트랙 설계안을 제시합니다. 하단에서는 보고서에 인용된 전체 출처와 원문 문장을 검색할 수 있습니다.
+      </p>
+    </div>
+
+    <div class="card-surface rounded-2xl p-6">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
+        <div>
+          <h3 class="text-base sm:text-lg font-bold text-slate-900">🔄 AX 데이터·서비스 트랙 구조화 방안 (1주차 검증 핵심)</h3>
+          <p class="text-xs text-slate-500 mt-0.5">단순 정보 안내서를 넘어 트랙 평가 흐름에 맞춘 서비스 가치사슬 모델입니다.</p>
+        </div>
+        <span class="badge-hypothesis text-xs font-semibold px-2.5 py-1 rounded">가설: MVP 서비스 구조</span>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-5 gap-3 text-center">
+        <div class="p-3.5 rounded-xl bg-[#FAF8F5] border border-[#E6E1D6] flex flex-col justify-between">
+          <div class="text-xs font-bold text-[#0F4C5C]">1. 지역 생산자</div>
+          <div class="text-sm font-bold text-slate-900 my-1">부산 정비·점검 전문가<br>& 공공데이터</div>
+          <div class="text-xs text-slate-500">인포마리나 등록 정비소 · 해경/지자체 데이터</div>
+        </div>
+        <div class="p-3.5 rounded-xl bg-[#FAF8F5] border border-[#E6E1D6] flex flex-col justify-between">
+          <div class="text-xs font-bold text-[#0F4C5C]">2. 가공</div>
+          <div class="text-sm font-bold text-slate-900 my-1">체크리스트 &<br>위험진단 리포트</div>
+          <div class="text-xs text-slate-500">서류 대조 항목 및 마리나 선석 리스크 표준화</div>
+        </div>
+        <div class="p-3.5 rounded-xl bg-[#FAF8F5] border border-[#E6E1D6] flex flex-col justify-between">
+          <div class="text-xs font-bold text-[#0F4C5C]">3. 리테일 채널</div>
+          <div class="text-sm font-bold text-slate-900 my-1">부산 요트 안심<br>거래 가이드 웹앱</div>
+          <div class="text-xs text-slate-500">초보 매수자 맞춤형 모바일·웹 접점</div>
+        </div>
+        <div class="p-3.5 rounded-xl bg-[#FAF8F5] border border-[#E6E1D6] flex flex-col justify-between">
+          <div class="text-xs font-bold text-[#0F4C5C]">4. 주문</div>
+          <div class="text-sm font-bold text-slate-900 my-1">사전 점검(서베이) &<br>서류 가이드 신청</div>
+          <div class="text-xs text-slate-500">구매 후보 요트 정보 입력 및 점검 매칭 요청</div>
+        </div>
+        <div class="p-3.5 rounded-xl bg-[#0F4C5C] text-white flex flex-col justify-between">
+          <div class="text-xs font-bold text-teal-200">5. 배송</div>
+          <div class="text-sm font-bold my-1">맞춤형 안전진단<br>리포트 전달</div>
+          <div class="text-xs text-teal-100">현장 점검 결과 및 이전등록 체크리스트 제공</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="card-surface rounded-2xl p-6 space-y-4">
+        <h3 class="text-base sm:text-lg font-bold text-slate-900">⚠️ 프로젝트 가장 큰 위험 3가지</h3>
+        <div class="space-y-3">
+          <div class="p-4 rounded-xl bg-[#FAF8F5] border border-[#E6E1D6]">
+            <div class="font-bold text-sm text-rose-800">위험 1. 고객 고통과 가설(사기 빈도)의 불일치</div>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+              국내 요트 사기 공식 통계가 없는 반면, 부산 현장에서는 수영만 재개발 갈등과 남천마리나 폐쇄 등 <strong>계류 선석 부족과 유지·정비 비용 불확실성</strong>이 더 큰 문제로 보임. 고객 니즈에 맞춰 가치 제안 초점을 이동해야 함.
+            </p>
+          </div>
+          <div class="p-4 rounded-xl bg-[#FAF8F5] border border-[#E6E1D6]">
+            <div class="font-bold text-sm text-amber-800">위험 2. 원부·검사·보험 데이터 실시간 연동 불가</div>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+              시·군·구 면전 열람 원칙과 비소유자 조회 API 부재로 '등록번호판 입력 시 자동 조회' 기능은 6주·무예산·개발 1명 조건에서 구현 불가. 정적 안내문이 되지 않도록 실무형 서류 진단 UX가 필수적임.
+            </p>
+          </div>
+          <div class="p-4 rounded-xl bg-[#FAF8F5] border border-[#E6E1D6]">
+            <div class="font-bold text-sm text-slate-800">위험 3. 업자 추천 책임 및 AX 트랙 정합성</div>
+            <p class="text-xs text-slate-600 mt-1 leading-relaxed">
+              목록에 올린 정비·중개 업체에서 분쟁 발생 시 책임 시비 가능성(공식 등록 여부와 업체 주장의 괴리 주의). 또한 단순 정보 나열은 '생산자→가공→리테일→주문→배송' 트랙 기준과 어긋날 수 있음.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-surface rounded-2xl p-6 space-y-4">
+        <h3 class="text-base sm:text-lg font-bold text-slate-900">🎯 1주차에 반드시 확인할 질문 3개</h3>
+        <div class="space-y-3">
+          <div class="p-4 rounded-xl bg-teal-50/60 border border-teal-200">
+            <div class="font-bold text-sm text-[#0F4C5C]">질문 1. (수요자 고통 검증)</div>
+            <p class="text-xs text-slate-700 mt-1 leading-relaxed">
+              부산 수영만·해운대·북항 일대에서 최근 2년 내 중고 요트를 거래했거나 알아본 사람 5~10명이 겪은 가장 큰 어려움은 <strong>'사기 불안(권리 은닉·계약금 편취)'</strong>인가, 아니면 <strong>'계류 선석 구하기·기계 상태·이전등록 서류'</strong>인가?
+            </p>
+          </div>
+          <div class="p-4 rounded-xl bg-teal-50/60 border border-teal-200">
+            <div class="font-bold text-sm text-[#0F4C5C]">질문 2. (공식 민원·법정 기한 확인)</div>
+            <p class="text-xs text-slate-700 mt-1 leading-relaxed">
+              해운대구청·수영구청 담당자 및 KOMSA 부산지사 확인 시, ① 제3자(구매 예정자)가 매도인 위임 없이 등록원부를 열람할 수 있는가? ② 소유권 이전 변경등록의 법정 신청 기한(며칠 이내)과 필수 제출 서류(양도증명서·인감 등)는 무엇인가?
+            </p>
+          </div>
+          <div class="p-4 rounded-xl bg-teal-50/60 border border-teal-200">
+            <div class="font-bold text-sm text-[#0F4C5C]">질문 3. (전문가 공급망 검증)</div>
+            <p class="text-xs text-slate-700 mt-1 leading-relaxed">
+              해양수산부 인포마리나에 등록된 부산 마리나 정비업체 3~5곳은 매수 전 유료 선체 점검(서베이) 요청을 받을 의향이 있는가? 이를 통해 AX 트랙의 '지역 생산자-리테일' 연결이 가능한가?
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-surface rounded-2xl p-6 space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+        <div>
+          <h3 class="text-base sm:text-lg font-bold text-slate-900">🏢 부산 주요 업체·매물 채널 및 유사 서비스 현황</h3>
+          <p class="text-xs text-slate-500 mt-0.5">업체가 스스로 밝힌 수치는 '회사 주장'으로 명확히 구분하였으며, 공공 인허가 목록은 해수부 인포마리나 교차 확인이 필요합니다.</p>
+        </div>
+        <div class="flex gap-1.5">
+          <button onclick="filterVendors('all')" id="ven-filter-all" class="tab-btn active text-xs font-semibold px-2.5 py-1 rounded-md border border-[#E6E1D6]">전체</button>
+          <button onclick="filterVendors('busan')" id="ven-filter-busan" class="tab-btn text-xs font-semibold px-2.5 py-1 rounded-md border border-[#E6E1D6] bg-white text-slate-700">부산 현지 업체</button>
+          <button onclick="filterVendors('platform')" id="ven-filter-platform" class="tab-btn text-xs font-semibold px-2.5 py-1 rounded-md border border-[#E6E1D6] bg-white text-slate-700">채널·유사서비스</button>
+        </div>
+      </div>
+      <div id="vendor-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
+      </div>
+    </div>
+
+    <div class="card-surface rounded-2xl p-6 space-y-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h3 class="text-base sm:text-lg font-bold text-slate-900">📚 검증 출처 표 (총 29건)</h3>
+          <p class="text-xs text-slate-500 mt-0.5">법 조문, 보도자료, 공공데이터, 해외 법령 및 원문 문장을 검색하여 확인할 수 있습니다.</p>
+        </div>
+        <input type="text" id="source-search" onkeyup="filterSources()" placeholder="키워드 검색 (예: 수상레저, 플로리다, 수영만, 과태료)..." class="w-full sm:w-72 text-xs px-3 py-2 rounded-lg border border-[#E6E1D6] bg-[#FAF8F5] focus:outline-none focus:border-[#0F4C5C]">
+      </div>
+
+      <div class="overflow-x-auto max-h-96 overflow-y-auto border border-[#E6E1D6] rounded-xl">
+        <table class="w-full text-left border-collapse text-xs">
+          <thead class="sticky top-0 bg-[#FAF8F5] border-b border-[#E6E1D6] text-slate-700 z-10">
+            <tr>
+              <th class="py-2.5 px-3 font-bold w-12">번호</th>
+              <th class="py-2.5 px-3 font-bold w-48">제목 / 발행처</th>
+              <th class="py-2.5 px-3 font-bold w-28">발행일</th>
+              <th class="py-2.5 px-3 font-bold">원문 문장 (그대로)</th>
+              <th class="py-2.5 px-3 font-bold w-16 text-center">링크</th>
+            </tr>
+          </thead>
+          <tbody id="source-table-body" class="divide-y divide-[#E6E1D6]">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="border-t border-[#E6E1D6] bg-white mt-12 py-6">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+    <div>부산 요트 안심 거래 가이드 · 타당성 및 제도·시장 분석 대시보드 (2026-11-24 리서치 기반)</div>
+    <div>출처 미확인 항목은 [확인 필요]로 표기되었으며, 개인 성명 및 전화번호는 제외되었습니다.</div>
+  </div>
+</footer>
+
+<script>
+const chartDatasets = {
+  busanBiz: {
+    title: '부산해경 관내 수상레저사업장 추이 (2018~2025년)',
+    subtitle: '출처: 공공데이터포털 해양경찰청 (데이터번호 15029395, 단위: 개소)',
+    takeaway: '💡 남해청 부산서 관내 수상레저사업장은 40 → 39 → 40 → 38 → 42 → 48 → 48 → 45개소로 집계되었습니다.',
+    type: 'line',
+    labels: ['1기(2018 추정)', '2기(2019 추정)', '3기(2020 추정)', '4기(2021 추정)', '5기(2022 추정)', '6기(2023 추정)', '7기(2024 추정)', '8기(2025 추정)'],
+    datasetLabel: '남해청_부산서 수상레저사업장 수 (개소)',
+    data: [40, 39, 40, 38, 42, 48, 48, 45],
+    bgColor: 'rgba(15, 76, 92, 0.15)',
+    borderColor: '#0F4C5C'
+  },
+  marinaGap: {
+    title: '한국 vs 일본 전체 등록 마리나 시설 수 비교',
+    subtitle: '출처: 국제신문 (2025-06-16 보도 기준, 단위: 개소)',
+    takeaway: '💡 한국 전체 등록 마리나는 30개로 일본(600여 개) 대비 약 20배 적어, 부산 내 계류 선석 확보 경쟁이 치열합니다.',
+    type: 'bar',
+    labels: ['대한민국 전체 등록 마리나', '일본 전체 등록 마리나 (약)'],
+    datasetLabel: '등록 마리나 시설 수 (개)',
+    data: [30, 600],
+    bgColor: ['#D97706', '#0F4C5C'],
+    borderColor: ['#B45309', '#0F4C5C']
+  }
+};
+
+let marketChartInstance = null;
+
+function wrapLabel(label) {
+  if (label.length <= 16) return label;
+  const words = label.split(' ');
+  const lines = [];
+  let current = '';
+  words.forEach(w => {
+    if ((current + ' ' + w).trim().length <= 16) {
+      current = (current + ' ' + w).trim();
+    } else {
+      if (current) lines.push(current);
+      current = w;
+    }
+  });
+  if (current) lines.push(current);
+  return lines;
+}
+
+function renderMarketChart(key) {
+  const cfg = chartDatasets[key];
+  document.getElementById('chart-title').textContent = cfg.title;
+  document.getElementById('chart-subtitle').textContent = cfg.subtitle;
+  document.getElementById('chart-takeaway').textContent = cfg.takeaway;
+
+  const ctx = document.getElementById('marketChart').getContext('2d');
+  if (marketChartInstance) {
+    marketChartInstance.destroy();
+  }
+
+  marketChartInstance = new Chart(ctx, {
+    type: cfg.type,
+    data: {
+      labels: cfg.labels.map(wrapLabel),
+      datasets: [{
+        label: cfg.datasetLabel,
+        data: cfg.data,
+        backgroundColor: cfg.bgColor,
+        borderColor: cfg.borderColor,
+        borderWidth: 2,
+        fill: cfg.type === 'line',
+        tension: 0.3,
+        pointRadius: 5,
+        pointBackgroundColor: '#0F4C5C',
+        borderRadius: cfg.type === 'bar' ? 8 : 0
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: true,
+          labels: { color: '#334155', font: { size: 12 } }
+        },
+        tooltip: {
+          backgroundColor: '#1E293B',
+          padding: 10,
+          callbacks: {
+            title: function(items) {
+              const raw = items[0].label;
+              return Array.isArray(raw) ? raw.join(' ') : raw;
+            }
+          }
+        }
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          grid: { color: '#E6E1D6' },
+          ticks: { color: '#475569', font: { size: 11 } }
+        },
+        x: {
+          grid: { display: false },
+          ticks: { color: '#475569', font: { size: 11 } }
+        }
+      }
+    }
+  });
+}
+
+function switchChart(key) {
+  document.getElementById('btn-chart-busan').classList.remove('active');
+  document.getElementById('btn-chart-busan').classList.add('text-slate-600');
+  document.getElementById('btn-chart-marina').classList.remove('active');
+  document.getElementById('btn-chart-marina').classList.add('text-slate-600');
+
+  const activeBtn = key === 'busanBiz' ? document.getElementById('btn-chart-busan') : document.getElementById('btn-chart-marina');
+  activeBtn.classList.add('active');
+  activeBtn.classList.remove('text-slate-600');
+  renderMarketChart(key);
+}
+
+const regRows = [
+  {
+    item: '근거 법령',
+    krYacht: '전담 매매 중개업 법규 미확인 <span class="badge-check px-1.5 py-0.5 rounded text-[11px]">[확인 필요]</span>',
+    krFish: '「어선법」 제31조의2 ~ 제31조의9 (2017년 개정 신설)',
+    flYacht: 'Florida Statutes Chapter 326 & FAC 61B-60'
+  },
+  {
+    item: '적용 대상',
+    krYacht: '규제 공백 상태 (민간 업체·직거래 자유 영업)',
+    krFish: '어선·어선설비 매매 및 임대차 중개',
+    flYacht: '전장 32피트 초과 레저 선박 (§326.002(4) / DBPR: 300톤 미만)'
+  },
+  {
+    item: '자격·등록 요건',
+    krYacht: '법정 교육·면허 제한 확인되지 않음',
+    krFish: '교육 이수(3과목 평균 60점 이상), 2년 보수교육, 근린생활시설 사무소',
+    flYacht: '세일즈퍼슨 후 4건 거래 또는 20학점 이수, 지문·범죄조회, 물리적 사업장'
+  },
+  {
+    item: '보증보험·에스크로',
+    krYacht: '법정 의무 없음 <span class="badge-hypothesis px-1.5 py-0.5 rounded text-[11px]">가설: 배상장치 부재</span>',
+    krFish: '보증보험 필수 (개인 1억 원 이상, 법인 2억 원 이상)',
+    flYacht: '보증보험/신용장(세일즈퍼슨 $10,000, 브로커 $25,000) & 신탁계좌 의무'
+  },
+  {
+    item: '위반 제재 및 특징',
+    krYacht: '무자격 중개 시 일반 형법(사기·횡령) 외 특별행정처분 부재',
+    krFish: '해수부 어업관리단 등록제 (단, 어선거래시스템 이용률은 저조)',
+    flYacht: '신탁계좌 고의 위반 시 3급 중범죄(§326.005), 무단 쌍방대리 금지'
+  }
+];
+
+function selectRegTab(mode) {
+  ['all', 'krYacht', 'krFish', 'flYacht'].forEach(t => {
+    const btn = document.getElementById('reg-tab-' + t);
+    btn.classList.remove('active');
+    btn.classList.add('bg-white', 'text-slate-700');
+  });
+  const active = document.getElementById('reg-tab-' + mode);
+  active.classList.add('active');
+  active.classList.remove('bg-white', 'text-slate-700');
+
+  const container = document.getElementById('reg-comparison-container');
+  let html = '<table class="w-full text-left border-collapse text-xs sm:text-sm">';
+  html += '<thead><tr class="border-b-2 border-[#E6E1D6] bg-[#FAF8F5] text-slate-700">';
+  html += '<th class="py-3 px-3 font-bold w-32">비교 항목</th>';
+  if (mode === 'all' || mode === 'krYacht') html += '<th class="py-3 px-3 font-bold text-[#0F4C5C]">🇰🇷 한국 요트·수상레저기구</th>';
+  if (mode === 'all' || mode === 'krFish') html += '<th class="py-3 px-3 font-bold">🇰🇷 한국 어선 (비교 참고)</th>';
+  if (mode === 'all' || mode === 'flYacht') html += '<th class="py-3 px-3 font-bold">🇺🇸 미국 플로리다주 (요트중개법)</th>';
+  html += '</tr></thead><tbody class="divide-y divide-[#E6E1D6]">';
+
+  regRows.forEach(r => {
+    html += '<tr>';
+    html += `<td class="py-3 px-3 font-bold text-slate-900 bg-[#FAF8F5]/50">${r.item}</td>`;
+    if (mode === 'all' || mode === 'krYacht') html += `<td class="py-3 px-3 text-slate-800 bg-teal-50/20 font-medium">${r.krYacht}</td>`;
+    if (mode === 'all' || mode === 'krFish') html += `<td class="py-3 px-3 text-slate-600">${r.krFish}</td>`;
+    if (mode === 'all' || mode === 'flYacht') html += `<td class="py-3 px-3 text-slate-600">${r.flYacht}</td>`;
+    html += '</tr>';
+  });
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+const vesselData = {
+  under20: [
+    { label: '적용 법률 및 대상', value: '「수상레저기구등록법」 & 「수상레저안전법」', desc: '세일링 요트, 총톤수 20톤 미만 모터보트, 30마력 이상 고무보트' },
+    { label: '담당 등록·검사 기관', value: '소유자 주소지 시·군·구청 / 해경·KOMSA', desc: '지자체 변경등록 신청 후 3일 이내 새 등록증 발급 (시행규칙)' },
+    { label: '등록 기한 및 과태료', value: '신규 1개월 이내 / 변경등록 미이행 50만 원 이하', desc: '신규등록·사업자 검사 미이행은 100만 원 이하 과태료 (법 제32조)' },
+    { label: '안전검사 정기 주기', value: '비사업용(개인) 5년 / 수상레저사업용 1년', desc: '법 제15조 기준. 현장 검사증과 선체 부착 검사필증 확인 필수' },
+    { label: '책임보험 가입 의무', value: '등록 기간 중 의무 가입 필수 (법 제49조)', desc: '미가입 시 지자체 청문 및 과태료 부과 [확인 필요: 구체 과태료 금액]' },
+    { label: '취득세 및 제출 서류', value: '취득세 1천분의 20.2 안내 (수험자료)', desc: '초본·법인등기는 공동이용 확인. [확인 필요: 양도증·인감 필수 목록]' }
+  ],
+  over20: [
+    { label: '적용 법률 및 대상', value: '「선박등기법」 제2조 & 「선박법」 제8조', desc: '총톤수 20톤 이상 대형 선박 등 (등기 후 등록 절차 진행)' },
+    { label: '담당 등록·등기 기관', value: '관할 등기소(선박등기) + 지방해양수산청(선박원부)', desc: '등기소 방문 등기 완료 후 지방해수청에 선박원부 등록' },
+    { label: '등록 기한 및 과태료', value: '등록 미신청 시 200만 원 이하 과태료', desc: '「선박법」 제8조제1항 위반 시 제재 [확인 필요: 변경등기 법정 기한]' },
+    { label: '안전검사 및 정기 주기', value: '「선박안전법」 적용 대상', desc: '[확인 필요: 20톤 이상 레저 선박의 정기검사 주기 및 세부 기준]' },
+    { label: '권리관계 열람 방식', value: '등기소 직접 방문 열람 (인터넷등기소 불가)', desc: '선박명·선적항·톤수 3가지 정보 지참 후 등기소 방문 필요' },
+    { label: '취득세 및 세무 처리', value: '「지방세법」상 선박 취득세 신고 대상', desc: '[확인 필요: 20톤 이상 레저 선박의 현행 지방세법상 정확한 세율]' }
+  ]
+};
+
+function setVesselType(type) {
+  document.getElementById('btn-under20').classList.remove('active');
+  document.getElementById('btn-under20').classList.add('text-slate-700');
+  document.getElementById('btn-over20').classList.remove('active');
+  document.getElementById('btn-over20').classList.add('text-slate-700');
+
+  const btn = document.getElementById('btn-' + type);
+  btn.classList.add('active');
+  btn.classList.remove('text-slate-700');
+
+  const grid = document.getElementById('vessel-legal-grid');
+  grid.innerHTML = vesselData[type].map(item => `
+    <div class="p-4 rounded-xl bg-[#FAF8F5] border border-[#E6E1D6]">
+      <div class="text-xs font-bold text-[#0F4C5C]">${item.label}</div>
+      <div class="text-sm font-bold text-slate-900 mt-1">${item.value}</div>
+      <div class="text-xs text-slate-600 mt-1.5 leading-relaxed">${item.desc}</div>
+    </div>
+  `).join('');
+}
+
+const riskItems = [
+  {
+    id: 1,
+    category: 'domestic',
+    tag: '국내 입건 사례',
+    tagClass: 'badge-fact',
+    title: '1. 폐선·노후 보트 불법 개조 및 이력 은닉 판매',
+    summary: '부산 사하경찰서 적발 사례: 폐선 의뢰를 받은 고급 보트를 외관만 불법 개조해 정상 중고 매물로 판매 시도.',
+    prevention: '예방: 등록원부 이력, 선체식별번호(HIN), 날짜·선명이 기재된 정비 영수증 원본과 엔진 사용시간(Hour meter)의 일관성을 대조하세요.'
+  },
+  {
+    id: 2,
+    category: 'domestic',
+    tag: '국내 검거 사례',
+    tagClass: 'badge-fact',
+    title: '2. 미검사·불법 반입 해외 중고 요트 판매',
+    summary: '통영해경 검거 사례: 일본 등에서 요트·모터보트를 매입한 뒤 선박검사를 받지 않고 반입·판매해 정상 등록이 불가한 매물.',
+    prevention: '예방: 동력수상레저기구 안전검사증 원본과 선체에 부착된 안전검사필증 실물을 반드시 대조하세요.'
+  },
+  {
+    id: 3,
+    category: 'domestic',
+    tag: '제도 허점·판례',
+    tagClass: 'badge-fact',
+    title: '3. 근저당·압류 및 공유자(공동 소유자) 은닉 매매',
+    summary: '구매자가 온라인으로 압류·저당을 바로 못 본다는 점을 악용해 채무가 묶인 배를 팔거나 공동 소유자 동의 없이 단독 매각.',
+    prevention: '예방: 매도인에게 계약 당일 시·군·구 발급 등록원부(갑구·을구)를 요구하고, 수상레저종합정보에서 공유자 여부를 조회하세요.'
+  },
+  {
+    id: 4,
+    category: 'domestic',
+    tag: '국내·해외 사례',
+    tagClass: 'badge-fact',
+    title: '4. 무자격 중개·대리인 사칭 및 선금 편취',
+    summary: '해경 지정 교육장 공신력 악용 피해 주장 보도 및 어선 위임서류 위조 사례처럼, 관계자를 사칭하거나 위조 위임장으로 계약금 수령 후 잠적.',
+    prevention: '예방: 등록원부상 소유자와 매도인 신분증을 직접 대조하고, 계약금·잔금은 반드시 등록원부상 실소유주 본인 계좌로만 이체하세요.'
+  },
+  {
+    id: 5,
+    category: 'busan',
+    tag: '해외 커뮤니티 경고',
+    tagClass: 'badge-claim',
+    title: '5. 가짜 에스크로·이력조회 결제 유도 및 허위 매물',
+    summary: '시세보다 지나치게 싼 매물로 유인해 검증되지 않은 사설 에스크로 송금이나 유료 선박이력조회 사이트 결제를 유도하는 피싱 수법.',
+    prevention: '예방: 현장 실물 확인 및 해상 시운전 전 선금 송금을 금지하고, 매도인이 보내는 낯선 외부 결제 링크는 거절하세요.'
+  },
+  {
+    id: 6,
+    category: 'busan',
+    tag: '가설: 부산 현장 리스크',
+    tagClass: 'badge-hypothesis',
+    title: '6. 마리나 계류 선석 승계 불가 피해',
+    summary: '수영만 요트경기장 재개발 갈등, 남천마리나 폐쇄 등 부산 계류난 속에서 "기존 선석을 그대로 쓸 수 있다"는 말만 믿고 샀다가 정박지를 잃는 피해.',
+    prevention: '예방: 잔금 지급 전 해당 마리나 관리 사무소에 직접 연락해 계류비 체납 여부와 매수 후 선석 승계·신규 배정 가능 여부를 확인하세요.'
+  }
+];
+
+let expandedRiskId = 1;
+
+function filterRisks(cat) {
+  ['all', 'domestic', 'busan'].forEach(c => {
+    const btn = document.getElementById('risk-filter-' + c);
+    btn.classList.remove('active');
+    btn.classList.add('bg-white', 'text-slate-700');
+  });
+  const active = document.getElementById('risk-filter-' + cat);
+  active.classList.add('active');
+  active.classList.remove('bg-white', 'text-slate-700');
+
+  const filtered = cat === 'all' ? riskItems : riskItems.filter(r => r.category === cat);
+  const container = document.getElementById('risk-cards-list');
+  container.innerHTML = filtered.map(r => {
+    const isOpen = expandedRiskId === r.id;
+    return `
+      <div onclick="toggleRiskCard(${r.id}, '${cat}')" class="cursor-pointer rounded-xl border ${isOpen ? 'border-[#0F4C5C] bg-teal-50/30' : 'border-[#E6E1D6] bg-[#FAF8F5] hover:bg-stone-100/70'} p-3.5 transition">
+        <div class="flex items-center justify-between gap-2">
+          <span class="font-bold text-xs sm:text-sm text-slate-900">${r.title}</span>
+          <span class="${r.tagClass} text-[11px] font-semibold px-2 py-0.5 rounded shrink-0">${r.tag}</span>
+        </div>
+        ${isOpen ? `
+          <p class="text-xs text-slate-600 mt-2 leading-relaxed">${r.summary}</p>
+          <div class="mt-2 p-2.5 rounded-lg bg-white border border-teal-200 text-xs font-medium text-[#0F4C5C]">
+            🛡️ ${r.prevention}
+          </div>
+        ` : `<p class="text-[11px] text-slate-500 mt-1 truncate">${r.summary}</p>`}
+      </div>
+    `;
+  }).join('');
+}
+
+function toggleRiskCard(id, currentCat) {
+  expandedRiskId = expandedRiskId === id ? null : id;
+  filterRisks(currentCat);
+}
+
+const checklistData = [
+  { step: '1단계 · 매물 탐색', title: '등록번호판·총톤수·정박 마리나 확인', detail: '등록번호판(MB-연도-일련번호), 20톤 미만/이상 여부, 현재 정박지를 매도인에게 확인' },
+  { step: '2단계 · 사전 서류 요청', title: '당일 발급 등록원부·안전검사증·보험증 수령', detail: '시·군·구 등록원부(갑·을구), 안전검사증, 책임보험 가입증명서, 정비 영수증 원본 사본 요청' },
+  { step: '3단계 · 현장 및 선석 확인', title: '선체 필증 대조 및 마리나 선석 승계 문의', detail: '선체 번호판·검사필증·HIN·엔진번호 대조 + 마리나 사무소에 계류비 체납 및 승계 가능 여부 확인' },
+  { step: '4단계 · 전문가 점검(서베이)', title: '정비업체 동행 선체·기관 점검 및 시운전', detail: '인포마리나 등록 정비업체 동행 점검 및 계약서 내 "중대 결함 시 계약금 반환" 특약 명시' },
+  { step: '5단계 · 계약 및 대금 지급', title: '실소유주 신분증 대조 및 본인 계좌 송금', detail: '공유자 전원 동의 확인, 실소유자 계좌 이체, 저당·압류 존재 시 잔금일 동시 말소 처리' },
+  { step: '6단계 · 이전등록 마무리', title: '지자체 변경등록(3일 내 발급)·보험·취득세', detail: '매수인 관할 시·군·구 변경등록, 본인 명의 책임보험 가입, 지자체 취득세 신고·납부 완료' }
+];
+
+let checkedSteps = new Set();
+
+function renderChecklist() {
+  const container = document.getElementById('checklist-steps');
+  container.innerHTML = checklistData.map((item, idx) => {
+    const isChecked = checkedSteps.has(idx);
+    return `
+      <div onclick="toggleCheckStep(${idx})" class="cursor-pointer flex items-start gap-3 p-3 rounded-xl border ${isChecked ? 'bg-teal-50/50 border-[#0F4C5C]' : 'bg-[#FAF8F5] border-[#E6E1D6] hover:bg-stone-100/70'} transition">
+        <div class="mt-0.5 w-5 h-5 rounded-md border flex items-center justify-center text-xs font-bold shrink-0 ${isChecked ? 'bg-[#0F4C5C] border-[#0F4C5C] text-white' : 'bg-white border-slate-300 text-transparent'}">✓</div>
+        <div class="flex-1">
+          <div class="flex items-center justify-between gap-2">
+            <span class="text-[11px] font-bold text-[#0F4C5C]">${item.step}</span>
+            ${isChecked ? '<span class="text-[11px] font-semibold text-emerald-700">점검 완료</span>' : ''}
+          </div>
+          <div class="text-xs sm:text-sm font-bold ${isChecked ? 'line-through text-slate-400' : 'text-slate-900'} mt-0.5">${item.title}</div>
+          <div class="text-xs text-slate-600 mt-1 leading-relaxed">${item.detail}</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  const pct = Math.round((checkedSteps.size / checklistData.length) * 100);
+  document.getElementById('checklist-progress-text').textContent = `${checkedSteps.size} / ${checklistData.length} 단계 완료 (${pct}%)`;
+  document.getElementById('checklist-progress-bar').style.width = pct + '%';
+}
+
+function toggleCheckStep(idx) {
+  if (checkedSteps.has(idx)) {
+    checkedSteps.delete(idx);
+  } else {
+    checkedSteps.add(idx);
+  }
+  renderChecklist();
+}
+
+function resetChecklist() {
+  checkedSteps.clear();
+  renderChecklist();
+}
+
+const vendorData = [
+  { name: '디스커버마린 (discovermarine.co.kr)', group: 'busan', loc: '부산 수영만요트경기장', desc: '중고보트 전시장, 요트 케어·티크 수리. [회사 주장: 해수부 2024-2호 마리나 정비업 국내 유일 정식 등록 및 통신판매업 표기]' },
+  { name: '플레이보트 (playboat.kr)', group: 'busan', loc: '부산 수영만 기반', desc: '신품·중고 보트 매매, 해외 구매대행, 80피트급 파워요트 정비. [회사 주장: 2010년부터 이어온 현장 경험 표방]' },
+  { name: '한성마린 (hansungmarine.com)', group: 'busan', loc: '부산 소재', desc: '보트 수입 전문, 중고보트 매매, 장비 설치 및 차터 서비스 운영. 별도 에스크로·등록원부 검증 장치 미확인.' },
+  { name: '리보트 (reboat.kr)', group: 'platform', loc: '국내 온라인 직거래', desc: '보트·선외기 엔진·트레일러 등 수수료 없는 직거래 및 수리·보관 업체 안내. 자체 에스크로·권리 검증 시스템 미확인.' },
+  { name: '수상레저종합정보 (boat.kcg.go.kr)', group: 'platform', loc: '해양경찰청 공식 포털', desc: '면허·안전검사 신청 및 기구 공유자 조회(조건부) 제공. 구매자용 사기 예방·서류 대조 통합 가이드는 부재.' },
+  { name: '해외 서비스 (Boat History Report · YachtCloser)', group: 'platform', loc: '미국·글로벌 참고', desc: 'USCG DB 통합 조회 및 클로징·에스크로 제공. 단, 주(State) 단위 유치권 누락 및 비규제 독립 클로징 대행사 주의 필요.' }
+];
+
+function filterVendors(group) {
+  ['all', 'busan', 'platform'].forEach(g => {
+    const btn = document.getElementById('ven-filter-' + g);
+    btn.classList.remove('active');
+    btn.classList.add('bg-white', 'text-slate-700');
+  });
+  const active = document.getElementById('ven-filter-' + group);
+  active.classList.add('active');
+  active.classList.remove('bg-white', 'text-slate-700');
+
+  const list = group === 'all' ? vendorData : vendorData.filter(v => v.group === group);
+  document.getElementById('vendor-grid').innerHTML = list.map(v => `
+    <div class="p-4 rounded-xl bg-[#FAF8F5] border border-[#E6E1D6] flex flex-col justify-between">
+      <div>
+        <div class="flex items-center justify-between gap-2 mb-1">
+          <span class="text-xs font-bold text-[#0F4C5C]">${v.loc}</span>
+          <span class="text-[11px] px-2 py-0.5 rounded bg-white border border-[#E6E1D6] text-slate-600">${v.group === 'busan' ? '부산 현지' : '채널·서비스'}</span>
+        </div>
+        <div class="text-sm font-bold text-slate-900">${v.name}</div>
+        <p class="text-xs text-slate-600 mt-1.5 leading-relaxed">${v.desc}</p>
+      </div>
+    </div>
+  `).join('');
+}
+
+const sourceList = [
+  { no: 1, title: '[확인 필요: 일본산 중고 요트 무검사 반입 무죄 보도]', org: '부산일보', date: '[확인 필요]', url: 'https://www.busan.com/view/busan/view.php?code=2020092115122941358', quote: '임시항해검사도 받지 않은 외국산 중고 요트를 직접 몰고 국내에 들여온 혐의로 재판에 넘겨진 수입업자들이 2년여의 지난한 법정 다툼 끝에 1, 2심에서 무죄를 판결을' },
+  { no: 2, title: '중고 동력보트 거래 피해관련 뉴스', org: '유튜브', date: '[확인 필요]', url: 'https://www.youtube.com/watch?v=-LozjNHCCV0', quote: '피해자들은 교육기관의 공신력을 믿고 보트를 구매했다며 해양경찰이 지정한 교육장이 보트거래에 이용됐다고 주장합니다.' },
+  { no: 3, title: '[확인 필요: 폐선 의뢰 고급 보트 불법 개조 판매 입건 보도]', org: 'BBS 뉴스', date: '[확인 필요]', url: 'https://news.bbsi.co.kr/news/articleView.html?idxno=829103', quote: '폐선 의뢰를 받은 고급 보트를 불법 개조해 중고로 판매하려 한 일당이 경찰에 붙잡혔습니다.부산 사하경찰서 해양범죄수사팀은 사기와 선박법위반 등의 혐의로 폐선' },
+  { no: 4, title: '[확인 필요: 일본산 요트·보트 무검사 반입 판매 검거 보도]', org: '경남도민일보', date: '[확인 필요]', url: 'http://www.idomin.com/news/articleView.html?idxno=560745', quote: '통영해양경찰서는 요트와 모터보트 수 십대를 일본에서 매입한 다음 선박검사를 받지 않고 국내에 들여와 판매한 업체 대표 ㄱ(57) 씨 등 6명을 검거했다고 6일 밝혔다.' },
+  { no: 5, title: '[확인 필요: 어선 중고거래 사기 구조 보도]', org: '내외뉴스통신', date: '[확인 필요]', url: 'http://www.nwtnews.co.kr/news/articleView.html?idxno=121672', quote: '이처럼 어선 중고거래가 매년 수천 건씩 꾸준히 이루어지면서 어선의 실소유주 , 어업권에 대한 정보를 확인하기 어렵다는 허점을 활용한 사기 피해도 꾸준히 발생하고' },
+  { no: 6, title: '[확인 필요: 중고거래 플랫폼 어선 사기 증가 보도]', org: '한국농어촌방송', date: '[확인 필요]', url: 'https://www.livefnews.com/news/article.html?no=43325', quote: '최근 중고거래 플랫폼을 통한 어선 거래가 급증하면서 어선 중고거래 사기가 늘어나고 있음에도, 해양수산부가 운영하는 어선거래시스템을 통한 거래는 극히 저조한' },
+  { no: 7, title: '수상레저기구의 등록 및 검사에 관한 법률 (제32조)', org: '국가법령정보센터(법제처)', date: '[확인 필요: 모법 시행일]', url: 'https://www.law.go.kr/%EB%B2%95%EB%A0%B9/%EC%88%98%EC%83%81%EB%A0%80%EC%A0%80%EA%B8%B0%EA%B5%AC%EC%9D%98%EB%93%B1%EB%A1%9D%EB%B0%8F%EA%B2%80%EC%82%AC%EC%97%90%EA%B4%80%ED%95%9C%EB%B2%95%EB%A5%A0', quote: '제6조제1항을 위반하여 동력수상레저기구를 취득한 날부터 1개월 이내에 등록신청을 하지 아니한 자 ... ② 다음 각 호의 어느 하나에 해당하는 자에게는 50만원 이하의 과태료를 부과한다. * 제9조를 위반하여 변경등록을 하지 아니한 자' },
+  { no: 8, title: '수상레저기구의 등록 및 검사에 관한 법률 (제15조)', org: '국가법령정보센터(법제처)', date: '[확인 필요: 모법 시행일]', url: 'https://www.law.go.kr/%EB%B2%95%EB%A0%B9/%EC%88%98%EC%83%81%EB%A0%80%EC%A0%80%EA%B8%B0%EA%B5%AC%EC%9D%98%EB%93%B1%EB%A1%9D%EB%B0%8F%EA%B2%80%EC%82%AC%EC%97%90%EA%B4%80%ED%95%9C%EB%B2%95%EB%A5%A0', quote: '② 안전검사의 대상 동력수상레저기구 중 「수상레저안전법」 제37조에 따른 수상레저사업에 이용되는 동력수상레저기구는 1년마다, 그 밖의 동력수상레저기구는 5년마다 정기검사를 받아야 한다.' },
+  { no: 9, title: '수상레저기구의 등록 및 검사에 관한 법률 시행령', org: '국가법령정보센터(법제처)', date: '2023-06-07 공포 / 2023-06-11 시행', url: 'https://www.law.go.kr/lsInfoP.do?lsiSeq=251365&viewCls=lsRvsDocInfoR', quote: '제1조(시행일) 이 영은 2023년 6월 11일부터 시행한다.' },
+  { no: 10, title: '수상레저기구의 등록 및 검사에 관한 법률 시행규칙 (변경등록 처리)', org: '국가법령정보센터(법제처)', date: '[확인 필요]', url: 'https://www.law.go.kr/%EB%B2%95%EB%A0%B9/%EC%88%98%EC%83%81%EB%A0%80%EC%A0%80%EA%B8%B0%EA%B5%AC%EC%9D%98%20%EB%93%B1%EB%A1%9D%20%EB%B0%8F%20%EA%B2%80%EC%82%AC%EC%97%90%20%EA%B4%80%ED%95%9C%20%EB%B2%95%EB%A5%A0%20%EC%8B%9C%ED%96%89%EA%B7%9C%EC%B9%99/%EC%A0%9C11%EC%A1%B0', quote: '③ 시장ㆍ군수ㆍ구청장은 제1항에 따른 변경등록 신청이 적합하다고 인정되는 경우에는 변경신청서가 제출된 날부터 3일 이내에 그 변경사항을 반영하여 등록증을 새로' },
+  { no: 11, title: '동력수상레저기구 등록원부 열람·발급 신청 서식', org: '국가법령정보센터(법제처)', date: '[확인 필요]', url: 'https://www.law.go.kr/LSW/flDownload.do?flSeq=131449781', quote: '2. 동력수상레저기구 등록원부의 열람은 등록관청의 담당 공무원이 보는 앞에서 해야 합니다. 3. 이해관계인란에는 동력수상레저기구 소유자가 아닌 제3자가 등록원부의 열람 또는 발급을 신청하는 경우에 기재하며, 등록원부 에 기재된 사항(저당권자, 압류권자 등)을 적습니다.' },
+  { no: 12, title: '동력수상레저기구 등록원부 발급·열람 안내', org: '해양경찰청 수상레저종합정보', date: '[확인 필요]', url: 'https://boat.kcg.go.kr/wrls/info/wtrReCtrgs2.do', quote: '동력수상레저기구의 관련된 소유자, 저당, 압류 등 모든 자료가 기재된 내용을 특별자치시 • 특별자치도 • 시 • 군 • 구에서 발급하는 민원 사무입니다.' },
+  { no: 13, title: '동력수상레저기구 기구 공유자 정보 조회', org: '해양경찰청 수상레저종합정보', date: '[확인 필요]', url: 'https://boat.kcg.go.kr/wrls/cvlcpt/wtrAtrpNoplt.do', quote: '등록번호판 번호 : MB(기구의 명칭) - 00(발급년도) - 0001(일렬번호) 동력수상레저기구 기구 공유자 정보를 조회할 수 있습니다.' },
+  { no: 14, title: '수상레저안전법 (제49조 보험등의 가입)', org: '국가법령정보센터(법제처)', date: '2024-12-20 개정 / 2025-06-21 시행', url: 'https://www.law.go.kr/LSW/lsInfoP.do?lsiSeq=267437', quote: '수상레저안전법 [시행 2025. 6. 21.] [법률 제20599호, 2024. 12. 20., 일부 ... 제49조(보험등의 가입) ① 등록 대상 동력수상레저기구의 소유자는 동력수상레저' },
+  { no: 15, title: '선박법 (과태료 조항)', org: '예스로', date: '[확인 필요]', url: 'http://www.yeslaw.com/lims/front/page/fulltext.html?action=LAW&lawid=290', quote: '② 다음 각 호의 어느 하나에 해당하는 선박소유자에게는 200만원 이하의 과태료를 부과한다. < 개정 2018ㆍ12ㆍ31 법16151> 1. 제8조제1항을 위반하여 등록신청을 하지 아니한 경우.' },
+  { no: 16, title: '선박등기부 인터넷 열람 및 발급 가능 여부', org: '개인 블로그 (선박등기규칙 제9조 인용)', date: '[확인 필요]', url: 'https://raevuuu.tistory.com/entry/%EC%84%A0%EB%B0%95%EB%93%B1%EA%B8%B0%EB%B6%80-%EC%9D%B8%ED%84%B0%EB%84%B7-%EC%97%B4%EB%9E%8C-%EB%B0%8F-%EB%B0%9C%EA%B8%89-%EA%B0%80%EB%8A%A5-%EC%97%AC%EB%B6%80', quote: '선박등기부는 인터넷으로 열람/발급이 되지 않습니다. 선박등기부를 발급하고자 하는 경우 선박명, 선적항, 톤수 3가지를 알고 가까운 등기소를 방문하시기 바랍니다. [선박등기규칙 제9조, (규칙 제2413호)]' },
+  { no: 17, title: '어선중개업 등록제도 안내 FAQ', org: '해양수산부 어선거래시스템', date: '[확인 필요]', url: 'https://www.xn--v69ap5sduh6ve.kr/civil/openFaqView.do;jsessionid=86000776FD25CABC701CBBF47F852291', quote: '* 어선중개업 교육 이수증(신청일 전 1년 이내에 받은 교육만 해당) * 보증보험 가입 증서(개인 1억원 이상, 법인 2억원 이상) * 중개사무소 확보를 증명하는 서류(건축물대장에 기재된 건물)' },
+  { no: 18, title: 'Florida Statutes Chapter 326 (Yacht and Ship Brokers)', org: 'Florida Senate', date: '2024~2026', url: 'https://www.flsenate.gov/Laws/Statutes/2024/Chapter326/All', quote: '“Yacht” means any vessel that is propelled by sail or machinery in the water, exceeds 32 feet in length, and is: (a) Manufactured or operated primarily for pleasure' },
+  { no: 19, title: 'Florida Statutes § 326.005 (Escrow depository)', org: 'Florida Senate', date: '2026', url: 'https://www.flsenate.gov/Laws/Statutes/2026/0326.005', quote: 'A broker who intentionally fails to comply with the provisions of this section concerning the establishment of a trust account, deposits of funds into a trust account, and withdrawal therefrom, commits a felony of the third degree' },
+  { no: 20, title: 'Yacht and Ship Brokers FAQs', org: 'Florida DBPR', date: '[확인 필요]', url: 'https://www2.myfloridalicense.com/yacht-and-ships/faqs/', quote: 'a $551 fee. a complete set of fingerprints. an original surety bond or letter of credit in the amount of $10,000 for a salesperson\'s license or $25,000 for a broker\'s license.' },
+  { no: 21, title: '[확인 필요: 폐쇄 남천마리나 선박 13척 무단 계류 보도]', org: '연합뉴스', date: '[확인 필요]', url: 'https://www.yna.co.kr/view/AKR20261117113100051', quote: '폐쇄된 이곳에 올해 초부터 선박 13척이 무단으로 계류 중이다. 정상적인 계류 시설은 접근이 차단돼 선박들은 테트라포드 옆에 계류돼 있다.' },
+  { no: 22, title: '수영만 요트경기장 재개발 민간투자사업 안내', org: '부산광역시', date: '[확인 필요]', url: 'https://www.busan.go.kr/depart/ahmarina05', quote: '위 치 : 해운대구 해운대해변로 84 일원(現 요트경기장) · 면 적 : 234,693㎡(육상 142,451㎡, 해상 92,242㎡) · 사업내용 : 계류장, 수리시설, 컨벤션 등 복합 마리나시설' },
+  { no: 23, title: '[확인 필요: 수영만 요트경기장 영업정지 집행정지 보도]', org: '국제신문', date: '[확인 필요]', url: 'https://www.kookje.co.kr/news2011/asp/newsbody.asp?code=0300&key=20260326.22006007954', quote: '25일 시와 마리나선박대여업협동조합에 따르면 이날 부산지법은 시가 해운대구 수영만요트경기장 내 계류 업체들을 대상으로 내린 영업정지 처분을 사건의 결정까지 집행' },
+  { no: 24, title: '[확인 필요: 한일 마리나 시설 비교 보도]', org: '국제신문', date: '[확인 필요]', url: 'https://www.kookje.co.kr/news2011/asp/newsbody.asp?code=0200&key=20250616.22006003280', quote: '일본에는 600여 개의 등록 마리나 시설이 운영 중인데, 한국의 전체 등록 마리나 수는 30개에 불과하다. 수치만 놓고 보더라도 20배가량 차이가 나는 셈이다.' },
+  { no: 25, title: '해양경찰청 동력수상레저기구 등록현황 (15076944)', org: '공공데이터포털', date: '[확인 필요]', url: 'https://www.data.go.kr/data/15076944/fileData.do', quote: '최근 6년간(2018년~2024년) 동력수상레저기구 등록 현황에 대한 종합 자료로서 모터보트, 고무보트, 수상오토바이, 세일링요트 등 주요 기종별 등록 추세 및 연도별' },
+  { no: 26, title: '해양경찰청 관서별 수상레저사업장 현황 (15029395)', org: '공공데이터포털', date: '[확인 필요]', url: 'https://www.data.go.kr/data/15029395/fileData.do', quote: '남해청_부산서, 40, 39, 40, 38, 42, 48, 48, 45.' },
+  { no: 27, title: 'Why Yacht Ownership History Verification Matters', org: 'SC Yacht & Ship', date: '[확인 필요]', url: 'https://www.scyachtandship.com/news/why-yacht-ownership-history-verification-matters', quote: 'A recorded maritime lien travels with the vessel, not the seller. ... Reconcile engine hours across documents. Hour meter readings appear on service invoices, oil analysis reports, and survey documents.' },
+  { no: 28, title: 'Boat Closing & Escrow Services', org: 'MarineTitle', date: '[확인 필요]', url: 'https://www.marinetitle.com/boat-definitions/escrow-closing-overview.htm', quote: 'There are no bonding or fiduciary requirements whatsoever for independent boat closing agents and very little by way of governmental oversight.' },
+  { no: 29, title: '[확인 필요: 디스커버마린 회사 소개 및 사업자정보]', org: '디스커버마린', date: '[확인 필요]', url: 'https://www.discovermarine.co.kr/101', quote: '마리나 정비업 공식 등록 업체 국내 유일한 정식 등록 업체 "해양수산부 2024-2호"' }
+];
+
+function renderSources(filterText = '') {
+  const q = filterText.trim().toLowerCase();
+  const filtered = q ? sourceList.filter(s =>
+    s.title.toLowerCase().includes(q) ||
+    s.org.toLowerCase().includes(q) ||
+    s.quote.toLowerCase().includes(q)
+  ) : sourceList;
+
+  document.getElementById('source-table-body').innerHTML = filtered.map(s => `
+    <tr class="hover:bg-stone-50">
+      <td class="py-2.5 px-3 font-bold text-slate-700">${s.no}</td>
+      <td class="py-2.5 px-3">
+        <div class="font-bold text-slate-900">${s.title}</div>
+        <div class="text-[11px] text-[#0F4C5C] mt-0.5">${s.org}</div>
+      </td>
+      <td class="py-2.5 px-3 text-slate-500">${s.date}</td>
+      <td class="py-2.5 px-3 text-slate-700 leading-relaxed">"${s.quote}"</td>
+      <td class="py-2.5 px-3 text-center">
+        <a href="${s.url}" target="_blank" rel="noopener noreferrer" class="inline-block px-2 py-1 rounded bg-teal-50 text-[#0F4C5C] font-bold hover:bg-teal-100 transition">원문 ↗</a>
+      </td>
+    </tr>
+  `).join('');
+}
+
+function filterSources() {
+  const val = document.getElementById('source-search').value;
+  renderSources(val);
+}
+
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  document.querySelectorAll('.nav-pill').forEach(btn => {
+    btn.classList.remove('active');
+    btn.classList.add('bg-white', 'text-slate-700');
+  });
+  event.currentTarget.classList.add('active');
+  event.currentTarget.classList.remove('bg-white', 'text-slate-700');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderMarketChart('busanBiz');
+  selectRegTab('all');
+  setVesselType('under20');
+  filterRisks('all');
+  renderChecklist();
+  filterVendors('all');
+  renderSources();
+});
+</script>
+</body>
+</html>
