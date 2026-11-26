@@ -12,10 +12,11 @@
 
 | 구분 | 건수 |
 |---|---|
-| 넣음 | 36 |
-| 확인 필요 | 10 |
+| 넣음 | 43 |
+| 확인 필요 | 0 |
 | 뺌 · 기간 밖 | 10 |
 | 뺌 · 관련 없음 | 1 |
+| 뺌 · 혜선 판단 | 3 |
 | 합 | 57 |
 
 2026-11-26 추가 수집 O-P28~O-P57 (30건: 넣음 16 · 확인 필요 10 · 뺌 기간 밖 4)
@@ -56,27 +57,27 @@
 | O-P30 | YBW 포럼 | 2024-02-21 | 넣음 |  | 3, 4 | 매물 진위, 정보 부족 | 광고의 엔진 연식이 실제와 달랐고 광고된 차트플로터가 없었음. 알고 있는 정보는 중개인이 숨기지 말아야 한다는 의견 | https://forums.ybw.com/threads/how-common-is-it-to-mis-sell.605969/ |
 | O-P31 | YBW 포럼 | 2024-02-21 | 넣음 |  | 4 | 배 상태(엔진·선체), 판매자 응대 | 판매자가 옛 구조 점검서로 손상을 알고 있었는데 서베이에서야 드러남. 중개인을 더 규제해야 한다고 봄 | https://forums.ybw.com/threads/how-common-is-it-to-mis-sell.605969/ |
 | O-P32 | YBW 포럼 | 2024-02-21 | 넣음 |  | 5 | 판매자 응대, 숨은 비용 | 보증금 10%를 냈는데 결함을 알렸는데도 중개인이 처음엔 돌려주지 않아 여러 번 메일을 보낸 뒤에야 환불 | https://forums.ybw.com/threads/how-common-is-it-to-mis-sell.605969/ |
-| O-P33 | YBW 포럼 | 2024-02-21 | 확인 필요 |  | (4) | (판매자 응대) | 네 번째 배인데 중개인에게서 이런 속임수는 처음이라고 함 · 구체 내용이 없어 이 글타래 사례를 가리키는지 애매 | https://forums.ybw.com/threads/how-common-is-it-to-mis-sell.605969/ |
+| O-P33 | YBW 포럼 | 2024-02-21 | 넣음 |  | 4 | 판매자 응대 | 네 번째 배인데 중개인에게서 이런 속임수는 처음이라고 함 · 구체 내용이 없어 이 글타래 사례를 가리키는지 애매 (2026-11-26 혜선 판단으로 넣음) | https://forums.ybw.com/threads/how-common-is-it-to-mis-sell.605969/ |
 | O-P34 | YBW 포럼 | 2024-02-21 | 넣음 |  | 2, 4 | 판매자 응대, 정보 부족 | 중개인은 장점만 말하고 단점은 감춘다고 함. 방치된 배를 보러 헛걸음했고, 광고된 장비가 없거나 새것이 아닌 배도 겪었는데 중개인이 바로잡지 않음 | https://forums.ybw.com/threads/how-common-is-it-to-mis-sell.605969/ |
 | O-P35 | YBW 포럼 | 2024-02-14 | 넣음 |  | 5 | 판매자 응대 | 구매자가 결함 때문에 배를 거절했는데 중개 회사가 결함을 판매자도 다투지 않았음에도 보증금 환불을 거부 | https://forums.ybw.com/threads/problems-with-ancasta.605800/ |
-| O-P36 | YBW 포럼 | 2024-02-21 | 확인 필요 |  | (5) | (판매자 응대) | 같은 중개 회사에서 비슷한 문제를 겪은 사람이 처음이 아니라고 함 · 글쓴이 신분·사례 불명 | https://forums.ybw.com/threads/problems-with-ancasta.605800/ |
-| O-P37 | YBW 포럼 | 2024-02-22 | 확인 필요 |  | (4, 5) | (배 상태, 판매자 응대) | 새 배를 샀는데 알고 보니 거절했던 시연용 배였고 엔진·기어박스가 고장, 법적 압박 끝에 돈을 돌려받음 · 신조선이라 중고 구매와 맞는지 애매 | https://forums.ybw.com/threads/problems-with-ancasta.605800/ |
+| O-P36 | YBW 포럼 | 2024-02-21 | 넣음 |  | 5 | 판매자 응대 | 같은 중개 회사에서 비슷한 문제를 겪은 사람이 처음이 아니라고 함 · 글쓴이 신분·사례 불명 (2026-11-26 혜선 판단으로 넣음) | https://forums.ybw.com/threads/problems-with-ancasta.605800/ |
+| O-P37 | YBW 포럼 | 2024-02-22 | 넣음 |  | 4, 5 | 배 상태, 판매자 응대 | 새 배를 샀는데 알고 보니 거절했던 시연용 배였고 엔진·기어박스가 고장, 법적 압박 끝에 돈을 돌려받음 · 신조선이라 중고 구매와 맞는지 애매 (2026-11-26 혜선 판단으로 넣음) | https://forums.ybw.com/threads/problems-with-ancasta.605800/ |
 | O-P38 | YBW 포럼 | 2026-08-10 | 넣음 |  | 4, 5 | 정보 부족, 숨은 비용 | 중개인은 구속력 있는 계약과 보증금 전에는 시운전을 못 하게 해 배가 맞는지 알 수 없고, 잘못 고르면 서베이·운송·진수·재판매 수수료로 1만~1만2천 파운드가 들 수 있다고 걱정 | https://forums.ybw.com/threads/on-buying-a-first-boat.630351/ |
 | O-P39 | YBW 포럼 | 2026-08-10 | 넣음 |  | 4 | 배 상태(엔진·선체) | 개인에게 산 배를 엔진 공회전만 해 보고 샀는데, 흡입구의 해초가 나중에 워터펌프와 인터쿨러를 상하게 했고 침상도 불편 | https://forums.ybw.com/threads/on-buying-a-first-boat.630351/ |
-| O-P40 | YBW 포럼 | 2026-08-10 | 확인 필요 |  | (4, 5) | (숨은 비용) | 맞지 않을 수 있는 배에 큰돈을 반복해서 쓰고 싶지 않다고 함 · 구체 불만 없이 마음가짐 | https://forums.ybw.com/threads/on-buying-a-first-boat.630351/ |
-| O-P41 | YBW 포럼 | 2026-08-10 | 확인 필요 |  | (5) | (숨은 비용) | 중개인이 약 10% 수수료로 무엇을 해 주는지 모르겠다고 함 · 구매 불만인지 궁금증인지 애매 | https://forums.ybw.com/threads/on-buying-a-first-boat.630351/ |
+| O-P40 | YBW 포럼 | 2026-08-10 | 뺌 | 혜선 판단 | (4, 5) | (숨은 비용) | 맞지 않을 수 있는 배에 큰돈을 반복해서 쓰고 싶지 않다고 함 · 구체 불만 없이 마음가짐 (2026-11-26 혜선 판단으로 뺌) | https://forums.ybw.com/threads/on-buying-a-first-boat.630351/ |
+| O-P41 | YBW 포럼 | 2026-08-10 | 넣음 |  | 5 | 숨은 비용 | 중개인이 약 10% 수수료로 무엇을 해 주는지 모르겠다고 함 · 구매 불만인지 궁금증인지 애매 (2026-11-26 혜선 판단으로 넣음) | https://forums.ybw.com/threads/on-buying-a-first-boat.630351/ |
 | O-P42 | YBW 포럼 | 2025-04-05 | 넣음 |  | 4 | 배 상태(엔진·선체) | 서베이어가 카펫 고정 문제는 짚었지만 조종석·코치루프의 넓은 목재 썩음은 못 봤고, 이후 보험 서베이에서 중요한 문제가 몇 개 나옴 | https://forums.ybw.com/threads/survey.617649/ |
-| O-P43 | YBW 포럼 | 2025-04-05 | 확인 필요 |  | (7) | (기타) | 구매 때 서베이는 별것 없었는데 이후 보험 서베이가 사소한 항목을 채워 목록이 길어졌다고 함 · 불만 정도 약함 | https://forums.ybw.com/threads/survey.617649/ |
-| O-P44 | YBW 포럼 | 2025-04-05 | 확인 필요 |  | (4) | (배 상태) | 새 선체에서 수지가 덜 굳어 선저가 끈적했고 서베이어가 보고함 · 신조선이라 중고 구매와 맞는지 애매 | https://forums.ybw.com/threads/survey.617649/ |
+| O-P43 | YBW 포럼 | 2025-04-05 | 넣음 |  | 7 | 기타 | 구매 때 서베이는 별것 없었는데 이후 보험 서베이가 사소한 항목을 채워 목록이 길어졌다고 함 · 불만 정도 약함 (2026-11-26 혜선 판단으로 넣음) | https://forums.ybw.com/threads/survey.617649/ |
+| O-P44 | YBW 포럼 | 2025-04-05 | 뺌 | 혜선 판단 | (4) | (배 상태) | 새 선체에서 수지가 덜 굳어 선저가 끈적했고 서베이어가 보고함 · 신조선이라 중고 구매와 맞는지 애매 (2026-11-26 혜선 판단으로 뺌) | https://forums.ybw.com/threads/survey.617649/ |
 | O-P45 | YBW 포럼 | 2025-02-01 | 넣음 |  | 3, 4, 6 | 정보 부족, 서류·명의 | 이탈리아에서 중고 모터요트를 사려는 사람이 시운전·엔진 전문가·변호사·공증이 꼭 필요한지, 첫 방문 때 뭘 물어야 할지 모름 | https://forums.ybw.com/threads/buying-a-used-motor-yacht-in-italy-need-some-help-for-sales-process.615921/ |
 | O-P46 | YBW 포럼 | 2025-02-01 | 넣음 |  | 4, 5 | 배 상태(엔진·선체), 숨은 비용 | 계약서에 서명하면 조건에 묶이니 보증금·양륙·연료비·거절 사유를 먼저 정해야 한다고 함. 제한된 서베이가 숨은 선체 결함을 놓친 적도 있음 (글쓴이는 사고판 경험이 있는 사람) | https://forums.ybw.com/threads/buying-a-used-motor-yacht-in-italy-need-some-help-for-sales-process.615921/ |
-| O-P47 | YBW 포럼 | 2025-02-02 | 확인 필요 |  | (4) | (배 상태) | 이 엔진 모델의 인터쿨러 고장 이력이 걱정이라며 제조사에 일련번호를 조회하라고 함 · 글쓴이가 사려는 사람인지 모름 | https://forums.ybw.com/threads/buying-a-used-motor-yacht-in-italy-need-some-help-for-sales-process.615921/ |
-| O-P48 | YBW 포럼 | 2025-02-02 | 확인 필요 |  | (5) | (숨은 비용) | 구매자가 중개 수수료 5%를 내야 하는지, 판매 중개인이 이해충돌 아닌지 의문 · 글쓴이 신분 불명 | https://forums.ybw.com/threads/buying-a-used-motor-yacht-in-italy-need-some-help-for-sales-process.615921/ |
+| O-P47 | YBW 포럼 | 2025-02-02 | 뺌 | 혜선 판단 | (4) | (배 상태) | 이 엔진 모델의 인터쿨러 고장 이력이 걱정이라며 제조사에 일련번호를 조회하라고 함 · 글쓴이가 사려는 사람인지 모름 (2026-11-26 혜선 판단으로 뺌) | https://forums.ybw.com/threads/buying-a-used-motor-yacht-in-italy-need-some-help-for-sales-process.615921/ |
+| O-P48 | YBW 포럼 | 2025-02-02 | 넣음 |  | 5 | 숨은 비용 | 구매자가 중개 수수료 5%를 내야 하는지, 판매 중개인이 이해충돌 아닌지 의문 · 글쓴이 신분 불명 (2026-11-26 혜선 판단으로 넣음) | https://forums.ybw.com/threads/buying-a-used-motor-yacht-in-italy-need-some-help-for-sales-process.615921/ |
 | O-P49 | YBW 포럼 | 2025-01-26 | 넣음 |  | 7 | 계류장·보관, 숨은 비용 | 계류비 3% 인상은 반갑지만 미터당 요금이 비싸다고 느낌 | https://forums.ybw.com/threads/mooring-price-increase.615759/ |
 | O-P50 | YBW 포럼 | 2025-01-26 | 넣음 |  | 7 | 계류장·보관, 숨은 비용 | 겨울 육상 보관 요금이 받아들이기 힘들다고 함 | https://forums.ybw.com/threads/mooring-price-increase.615759/ |
 | O-P51 | YBW 포럼 | 2025-01-27 | 넣음 |  | 7 | 계류장·보관, 숨은 비용 | 마리나 시설이 낡아 가는데 7~9% 올린다고 불만 | https://forums.ybw.com/threads/mooring-price-increase.615759/ |
 | O-P52 | YBW 포럼 | 2025-01-28 | 넣음 |  | 7 | 계류장·보관, 숨은 비용 | 계류비가 15% 올라 못마땅하다고 함 | https://forums.ybw.com/threads/mooring-price-increase.615759/ |
-| O-P53 | YBW 포럼 | 2025-01-28 | 확인 필요 |  | (7) | (계류장·보관) | 배정된 자리에서 화장실이 2마일 떨어져 있고 위치가 나쁘다고 함 · 글쓴이가 선주인지 불명 | https://forums.ybw.com/threads/mooring-price-increase.615759/ |
+| O-P53 | YBW 포럼 | 2025-01-28 | 넣음 |  | 7 | 계류장·보관 | 배정된 자리에서 화장실이 2마일 떨어져 있고 위치가 나쁘다고 함 · 글쓴이가 선주인지 불명 (2026-11-26 혜선 판단으로 넣음) | https://forums.ybw.com/threads/mooring-price-increase.615759/ |
 | O-P54 | YBW 포럼 | 2022-09-08 | 뺌 | 기간 밖 |  |  | 서베이 비용 500~900파운드는 사지 않으면 날리는 돈이라는 불만 | https://forums.ybw.com/threads/boat-yacht-surveys-do-buyer-paid-surveys-get-sold-to-brokers-or-sellers.587477/ |
 | O-P55 | YBW 포럼 | 2022-09-08 | 뺌 | 기간 밖 |  |  | 서베이 비용을 낸 첫 구매자가 손해 보고 두 번째 구매자가 이득 | https://forums.ybw.com/threads/boat-yacht-surveys-do-buyer-paid-surveys-get-sold-to-brokers-or-sellers.587477/ |
 | O-P56 | YBW 포럼 | 2022-09-08 | 뺌 | 기간 밖 |  |  | 거래가 끝나면 판매자에게 따질 수단이 없다는 경험 | https://forums.ybw.com/threads/boat-yacht-surveys-do-buyer-paid-surveys-get-sold-to-brokers-or-sellers.587477/ |
