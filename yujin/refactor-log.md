@@ -10,5 +10,6 @@
 | 2026-11-25 | `inputs/kaka0-raw.txt` → `inputs/kakao-raw.txt` | 파일 이름 오타(o 대신 숫자 0) 고침. 내용은 그대로 |
 | 2026-11-26 | `story/screens/screen5-v1.png`, `story/screens/screen3-v2.png` → 맨 위 `story/screens/` | Claude Design 화면 캡처. 팀 결과라 강의(8-5 2단계 ④)대로 맨 위로 옮김 (yujin "맨 위에 저장해") |
 | 2026-11-26 | `story/ImagePrint.jpg` → `inputs/ImagePrint.jpg` | 국제신문 제공 사진. 실린 페이지에 무단 배포 금지 문구가 있어 공개 저장소에 올리지 않음 (8일차 1교시 그림 연습용) |
+| 2026-11-26 | `journey/voc.md`, `journey/count_voc.py` → `old/journey/voc.md`, `old/journey/count_voc.py` | 유진 판(해외 포럼 글 131건). 11일차 3교시 voc는 혜선 님 `hyeseon/journey/voc.md` 복사본으로 쓰기로 함 (yujin 결정) |
 
 - 파일 개수 (`examples/` 뺌, 이 기록 파일 빼고 셈): 옮기기 전 30개 → 옮긴 뒤 30개
