@@ -1,5 +1,7 @@
 # channels · 핵심 메시지 하나를 네 채널로 (8일차 2교시)
 
+> **2026-11-27 메모:** 2026-11-26 팀 방향 전환(요트 정보·매매 가이드 + 업체 광고 수익, 경매·안전결제·수수료 없음) **전에 만든 기록**입니다. 본문은 그날 그대로 두었고, 경매 · 안전결제 · 수수료 · 매입자 · 시세 추정을 기능으로 적은 부분은 지금 방향과 다릅니다. 지금 방향은 `yujin/CLAUDE.md` 6주 목표를 봅니다.
+
 - 작성: 2026-11-26 · Claude 초안. 채널을 고르는 것은 팀입니다 (맨 아래 빈 줄).
 - 읽은 파일: `.claude/skills/marindealer-yujin/SKILL.md`, `brand/persona.md`, `brand/one-page.md`, `story/first-scene.md`, `archive/metadata.csv`, `research/2026-11-24-suyeongman-eviction.md`
 - 세 가지 항목

@@ -1,5 +1,7 @@
 # points · 마린딜러 단계마다 병목 · 비용 · 기회 (10일차 4교시)
 
+> **2026-11-27 메모:** 2026-11-26 팀 방향 전환(요트 정보·매매 가이드 + 업체 광고 수익, 경매·안전결제·수수료 없음) **전에 만든 기록**입니다. 본문은 그날 그대로 두었고, 경매 · 안전결제 · 수수료 · 매입자 · 시세 추정을 기능으로 적은 부분은 지금 방향과 다릅니다. 지금 방향은 `yujin/CLAUDE.md` 6주 목표를 봅니다.
+
 - 작성: 2026-11-26 · Claude 초안. 병목과 확인할 곳은 yujin이 Claude에게 맡겨 Claude가 고름
 - 읽은 파일: `yujin/valuechain/map.md` (단계 7개), 맨 위 `industry/one-page.md`, 맨 위 `LOCAL.md`, 그리고 근거를 찾으려고 `yujin/valuechain/flows.md`, 맨 위 `story/storyboard.md`, `yujin/busan_used_yacht_platform_plan.md`
 - 세 가지 항목

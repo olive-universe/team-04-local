@@ -11,5 +11,6 @@
 | 2026-11-26 | `story/screens/screen5-v1.png`, `story/screens/screen3-v2.png` → 맨 위 `story/screens/` | Claude Design 화면 캡처. 팀 결과라 강의(8-5 2단계 ④)대로 맨 위로 옮김 (yujin "맨 위에 저장해") |
 | 2026-11-26 | `story/ImagePrint.jpg` → `inputs/ImagePrint.jpg` | 국제신문 제공 사진. 실린 페이지에 무단 배포 금지 문구가 있어 공개 저장소에 올리지 않음 (8일차 1교시 그림 연습용) |
 | 2026-11-26 | `journey/voc.md`, `journey/count_voc.py` → `old/journey/voc.md`, `old/journey/count_voc.py` | 유진 판(해외 포럼 글 131건). 11일차 3교시 voc는 혜선 님 `hyeseon/journey/voc.md` 복사본으로 쓰기로 함 (yujin 결정) |
+| 2026-11-27 | `scenario.md` → `old/scenario.md` | 5일차 사용자 시나리오. 72시간 경매 · 에스크로 · 매입자(박 대표)가 뼈대라 2026-11-26 팀 방향 전환(정보 · 매매 가이드 + 광고 수익)과 거의 다 맞지 않음 (yujin 결정). 다른 기록 파일 16개는 옮기지 않고 맨 위에 '방향 전환 전 기록' 메모만 닮. 스킬의 `scenario.md` 링크는 `old/scenario.md`로 고침 |
 
 - 파일 개수 (`examples/` 뺌, 이 기록 파일 빼고 셈): 옮기기 전 30개 → 옮긴 뒤 30개
