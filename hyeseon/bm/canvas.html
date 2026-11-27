@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1280">
+<title>AX BM 캔버스 12칸 · 마린딜러 (혜선 통합판)</title>
+<style>
+  :root{
+    --ink:#1d2433; --muted:#5b6474; --line:#c9cfd9; --paper:#ffffff; --bg:#f3f5f8;
+    --ai:#eef4ff; --ai-line:#7a9cd6; --gap:#e4e6ea; --gap-ink:#4a4f58; --accent:#1f4f99;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 "Pretendard","Malgun Gothic","Apple SD Gothic Neo",sans-serif}
+  .page{width:100%;max-width:1280px;margin:0 auto;padding:24px 20px 32px}
+  header h1{font-size:22px;margin:0 0 6px}
+  header p{margin:2px 0;color:var(--muted);font-size:14px}
+  .legend{display:flex;gap:18px;margin:10px 0 14px;font-size:14px;color:var(--muted)}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .sw{width:16px;height:16px;border:1px solid var(--line);display:inline-block}
+  .grid{display:grid;grid-template-columns:repeat(10,1fr);gap:8px}
+  .cell{background:var(--paper);border:1px solid var(--line);border-radius:6px;padding:12px 13px 10px;display:flex;flex-direction:column}
+  .cell h2{font-size:15px;margin:0 0 6px;color:var(--accent);display:flex;gap:6px;align-items:baseline}
+  .cell h2 .no{font-size:14px;color:var(--muted);font-weight:600}
+  .cell ul{margin:0;padding-left:18px}
+  .cell li{margin:0 0 3px}
+  .cell .body{flex:1}
+  .src{margin-top:8px;padding-top:6px;border-top:1px dashed var(--line);font-size:14px;color:var(--muted);word-break:break-all}
+  .gap{background:var(--gap);color:var(--gap-ink);padding:0 4px;border-radius:3px}
+  .cell.gray{background:var(--gap)}
+  .ai{background:var(--ai);border-color:var(--ai-line)}
+  .ai h2{color:#173c7a}
+  .tag{font-size:14px;font-weight:600;color:#173c7a;background:#d9e6ff;border-radius:3px;padding:0 5px;margin-right:3px}
+  /* BM 캔버스 배치 */
+  .partners{grid-column:1 / span 2;grid-row:1 / span 2}
+  .activities{grid-column:3 / span 2;grid-row:1}
+  .resources{grid-column:3 / span 2;grid-row:2}
+  .value{grid-column:5 / span 2;grid-row:1 / span 2}
+  .relation{grid-column:7 / span 2;grid-row:1}
+  .channel{grid-column:7 / span 2;grid-row:2}
+  .customer{grid-column:9 / span 2;grid-row:1 / span 2}
+  .cost{grid-column:1 / span 5;grid-row:3}
+  .revenue{grid-column:6 / span 5;grid-row:3}
+  .airole{grid-column:1 / span 4;grid-row:4}
+  .aidata{grid-column:5 / span 3;grid-row:4}
+  .ailoop{grid-column:8 / span 3;grid-row:4}
+  .row-label{grid-column:1 / span 10;font-size:14px;color:#173c7a;font-weight:700;margin:6px 0 -2px}
+  footer{margin-top:14px;font-size:14px;color:var(--muted)}
+  footer b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="page">
+<header>
+  <h1>AX BM 캔버스 12칸 · 마린딜러 (요트 첫 구매자 정보 + 개인 매물 연결)</h1>
+  <p>작성: 김혜선 · 2026-11-27 (Claude 초안, 팀 확인 전) · 바탕: <code>hyeseon/bm/canvas-merged.md</code>(혜선·이지·유진 통합판, 커밋 7b31942) + AI 역량 표 <code>hyeseon/journey/ai-matrix.md</code> · <code>iji/journey/ai-matrix.md</code> · <code>yujin/ax/matrix.csv</code></p>
+  <p>기획 목적: AI가 무슨 일을 맡고, 그 데이터가 어디서 오는지까지 한 장에 보이게 한다. · 판단 기준: 칸마다 근거 파일을 붙인다. 근거 없는 것은 숨기지 않고 회색으로 둔다. · 뺀 것: 팀 파일에 없는 숫자, 허락 없이 긁어 오는 데이터, 어선 관련 내용</p>
+</header>
+<div class="legend">
+  <span><i class="sw" style="background:#fff"></i>BM 9칸</span>
+  <span><i class="sw" style="background:var(--ai);border-color:var(--ai-line)"></i>AI 칸 3개</span>
+  <span><i class="sw" style="background:var(--gap)"></i>근거 없음 · [확인 필요] · 제안</span>
+  <span>근거 줄 번호의 <b>M</b> = <code>hyeseon/bm/canvas-merged.md</code></span>
+</div>
+
+<div class="grid">
+
+  <section class="cell partners">
+    <h2><span class="no">8</span>핵심 파트너</h2>
+    <div class="body"><ul>
+      <li><b>정보 출처</b>(제휴 아님): 해양경찰청 수상레저종합정보, law.go.kr</li>
+      <li><b>등록 관청</b>: 시장·군수·구청장. 등록원부는 방문 민원 · <span class="gap">부산 담당 부서 [확인 필요]</span></li>
+      <li><b>검수원(서베이어)</b>: <span class="gap">[지금 없음]</span></li>
+      <li><b>감수</b>: 행정사 자문, 협회 후보(KMIA · 한국크루저요트협회) <span class="gap">가능한지 [확인 필요]</span></li>
+      <li><b>광고주</b>: 계류장·정비·보관 업체, 면허 교육장 <span class="gap">맺은 곳 없음</span></li>
+    </ul></div>
+    <div class="src">근거: M:40 · iji/bm/canvas-draft.md:37 · yujin/bm/canvas-draft.md:26</div>
+  </section>
+
+  <section class="cell activities">
+    <h2><span class="no">7</span>핵심 활동</h2>
+    <div class="body"><ul>
+      <li><b>매일</b>: 게시물 관리(업자·광고 글 막기, 정정), 문의 답변(서류·기한·과태료는 사람), AX 운영, 광고 심사·'광고' 표시, 게시 전 원문 대조·승인, 서버 보안·개인정보 보호</li>
+      <li><b>정기</b>: 의견 수렴(VOC), 법령·사기 수법 업데이트, 계류장 소식 · <span class="gap">주기 [확인 필요]</span></li>
+    </ul></div>
+    <div class="src">근거: M:39 · hyeseon/bm/canvas-draft.md:18</div>
+  </section>
+
+  <section class="cell resources">
+    <h2><span class="no">6</span>핵심 자원</h2>
+    <div class="body"><ul>
+      <li><b>있음</b>: law.go.kr 대조 법령 값, 출처 붙이는 브랜드 규칙, 매물 글 10건(비공개), 세 시범 화면, VOC(포럼 131 · 매수인 49), 해경 면허 CSV</li>
+      <li><b>없음</b>: <span class="gap">수리 이력·수리비 데이터</span>, <span class="gap">검수원</span>, <span class="gap">개인정보 보호책임자</span></li>
+      <li><b>베끼기 어려운 것</b>: 계속 고쳐 가는 확인 기록(가설), <span class="gap">선주 정비·운항 이력(제안)</span></li>
+    </ul></div>
+    <div class="src">근거: M:38 · iji/bm/canvas-draft.md:36 · yujin/bm/canvas-draft.md:24</div>
+  </section>
+
+  <section class="cell value">
+    <h2><span class="no">2</span>가치 제안</h2>
+    <div class="body">
+      <p style="margin:0 0 4px"><b>윤 씨에게</b>: 돈을 내기 전에 미리 안다</p>
+      <ul>
+        <li>① 산 뒤 드는 돈과 기한 <span class="tag">AI 생성</span></li>
+        <li>② 판매자에게 물을 것, 의심스러운 매물 <span class="tag">AI 생성·예측</span></li>
+        <li>③ 고장 나기 쉬운 곳, 대략 수리비 <span class="tag">AI 예측</span></li>
+        <li>④ 서류가 등록원부와 맞는지 <span class="tag">AI 자동화</span></li>
+        <li>숫자마다 누가 적었는지 · 확인한 날</li>
+      </ul>
+      <p style="margin:6px 0 0"><b>광고주에게</b>: 배를 막 산 사람이 기한·계류를 알아보는 바로 그 화면 옆 자리 · <span class="gap">효과 숫자 [확인 필요]</span></p>
+    </div>
+    <div class="src">근거: M:34 · M:19-25 (AX 표)</div>
+  </section>
+
+  <section class="cell relation">
+    <h2><span class="no">4</span>고객 관계</h2>
+    <div class="body"><ul>
+      <li><b>다시 찾아오게</b>: 정기 콘텐츠, 뉴스레터, 팔로워 알림, 광고주 이벤트(<span class="gap">제안</span>), 커뮤니티(입문 질문·사기 의심 신고)</li>
+      <li><b>믿게</b>: 확인일·출처, 게시 전 승인(<span class="gap">승인자 [확인 필요]</span>), AI는 대신 결정 안 함, 정정 원칙, 판매자 돈 안 받음, '광고' 표시</li>
+    </ul></div>
+    <div class="src">근거: M:36</div>
+  </section>
+
+  <section class="cell channel">
+    <h2><span class="no">3</span>채널</h2>
+    <div class="body"><ul>
+      <li><b>알기</b>: 인스타 → 무료 체크리스트 → 웹사이트 · <span class="gap">쇼츠·틱톡·X [확인 필요]</span></li>
+      <li><b>보기</b>: 웹사이트(베이스캠프) 세 화면 + 정보·개인 매물 게시판 + 광고 칸</li>
+      <li><b>받기</b>: 질문 넷 복사 → 윤 씨가 판매자에게 직접 연락</li>
+    </ul></div>
+    <div class="src">근거: M:35</div>
+  </section>
+
+  <section class="cell customer">
+    <h2><span class="no">1</span>고객</h2>
+    <div class="body"><ul>
+      <li><b>쓰는 사람</b>: 요트를 처음 사는 '윤 씨'(메인), 파는 개인 선주(보조)</li>
+      <li><b>돈 내는 사람</b>: 계류장·정비·보관 업체, 면허 교육장(광고주)</li>
+      <li><b>크기 감각</b>: 새로 면허 딴 사람 2025년 13120명(부산 990명), 세일링요트 등록 2025년 36척(신규인지는 가설)</li>
+      <li><span class="gap">요트 면허만 따로 낸 2025년 숫자 [확인 필요]</span></li>
+    </ul></div>
+    <div class="src">근거: M:33 · iji/bm/canvas-draft.md:30 · yujin/bm/canvas-draft.md:19</div>
+  </section>
+
+  <section class="cell cost">
+    <h2><span class="no">9</span>비용 구조</h2>
+    <div class="body"><ul>
+      <li>서버·클라우드 운영비(보안 포함) · <b>AI 구독료</b>(AX 운영) · 인건비(확인·승인·운영, 가장 클 것으로 봄 — 가설) · 데이터 확보비(공공데이터 기본, <span class="gap">수리 이력 데이터 구할 곳 [확인 필요]</span>) · 법률 검토·감수</li>
+      <li><span class="gap">금액은 모두 [확인 필요]</span></li>
+    </ul></div>
+    <div class="src">근거: M:41</div>
+  </section>
+
+  <section class="cell revenue">
+    <h2><span class="no">5</span>수익원</h2>
+    <div class="body"><ul>
+      <li><b>광고</b> · 계류장·정비·보관 업체와 면허 교육장이 · 배를 막 샀거나 살 사람에게 알리려고 · <span class="gap">언제마다 [확인 필요]</span> · <span class="gap">얼마쯤 [확인 필요]</span> 낸다</li>
+      <li>정보 글·개인 매물과 나뉜 업체 광고 칸에만 · 이벤트 광고 상품(<span class="gap">제안</span>) · 판매자·딜러·보험사 광고는 받지 않음</li>
+    </ul></div>
+    <div class="src">근거: M:37 · iji/bm/canvas-draft.md:34 · yujin/bm/canvas-draft.md:23</div>
+  </section>
+
+  <div class="row-label">AI 칸 3개 — AI가 맡는 일 · 그 데이터가 오는 곳 · 쌓이면 나아지는 것</div>
+
+  <section class="cell ai airole">
+    <h2><span class="no">A</span>AI 역할 (5가지 역량 중)</h2>
+    <div class="body"><ul>
+      <li><span class="tag">생성</span>산 뒤 기한·돈 안내 초안, 매물 정리 카드, 판매자에게 물을 질문 넷, 변경등록 서류 체크리스트 (사람이 승인한 뒤 게시)</li>
+      <li><span class="tag">예측</span>사기 의심 정도(C5, 손님 화면에 바로 띄우지 않음), 고장 나기 쉬운 곳·대략 수리비(C6, '검수 전 참고')</li>
+      <li><span class="tag">자동화</span>올린 서류의 주인·압류 칸 대조(E9), 매물 글에 사용시간·정비 이력이 적혔는지 칸마다 세기</li>
+      <li><span class="tag">추천</span><span class="tag">에이전트</span><span class="gap">이 BM에서는 아직 안 씀</span></li>
+    </ul></div>
+    <div class="src">근거: yujin/ax/matrix.csv:4-6, :8 · iji/journey/ai-matrix.md:27-28, :31 · hyeseon/journey/ax-risk-merged.md:19-21 · M:19-25</div>
+  </section>
+
+  <section class="cell ai aidata">
+    <h2><span class="no">B</span>데이터 원천</h2>
+    <div class="body"><ul>
+      <li><b>공식 문서</b>: law.go.kr 법령 본문, 해경 수상레저종합정보 → 기한·돈 안내</li>
+      <li><b>공공데이터</b>: 해경 조종면허 CSV → 고객 크기</li>
+      <li><b>직접 입력</b>: 개인 매물 게시판 글(선주) → 매물 카드·질문 넷·사기 의심 / 손님이 올린 서류 → 서류 대조</li>
+      <li><b>보도</b>: KNN 등 → 계류장 소식</li>
+      <li><span class="gap">수리 이력·수리비 → C6 재료 [확인 필요]</span></li>
+      <li><span class="gap">다른 사이트 매물 글·사진 → 허락 [확인 필요], 허락 없이 긁지 않음</span></li>
+    </ul></div>
+    <div class="src">근거: yujin/bm/canvas-draft.md:26 · yujin/ax/matrix.csv:5 · iji/bm/canvas-draft.md:36 · iji/journey/ai-risk-check.md:20-21, :33</div>
+  </section>
+
+  <section class="cell ai ailoop">
+    <h2><span class="no">C</span>학습 루프 (쌓이는 것 → 나아지는 것)</h2>
+    <div class="body"><ul>
+      <li><b>사기 의심 신고</b>가 쌓임 → 같은 사진·연락처 매물이 다시 오면 자동으로 막음</li>
+      <li><b>정정 기록</b>(틀린 곳·고친 날)이 쌓임 → 안내가 맞아지고 낡은 정보가 줄어듦</li>
+      <li><span class="gap">선주의 정비·운항 이력이 쌓임 → 고장·수리비 예측이 나아짐 (제안, 팀 파일 근거 없음)</span></li>
+      <li><span class="gap">AI 모델 자체가 다시 배우는 루프: 아직 없음</span></li>
+    </ul></div>
+    <div class="src">근거: iji/journey/ai-matrix.md:32 · iji/bm/canvas-draft.md:33 · hyeseon/lisa/2026-11-26-사업계획서-초안-v2-신뢰모으기.md:128, :205</div>
+  </section>
+
+</div>
+
+<footer>
+  <b>팀이 정할 것</b>: AX 최종 3가지 · 수익을 언제 붙일지 · 처음 어떻게 알고 들어오는지 · 광고주가 충분한지 · 개인정보 의무 (M:43 아래 8가지)
+</footer>
+</div>
+</body>
+</html>
