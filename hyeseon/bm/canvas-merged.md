@@ -2,7 +2,7 @@
 
 - 작성: 김혜선 · 2026-11-27 (Claude가 세 초안을 합침, 팀 확인 전)
 - 합친 파일 셋 (원본은 고치지 않음)
-  - **(혜)** `hyeseon/bm/canvas-draft.md` (커밋 0d79f48)
+  - **(혜)** `hyeseon/old/bm/canvas-draft.md` (커밋 0d79f48)
   - **(이)** `iji/bm/canvas-draft.md` (커밋 016c435)
   - **(유)** `yujin/bm/canvas-draft.md` (커밋 17b940a)
 - 기획 목적: 요트를 처음 사는 사람(지식이 없는 사람)에게 믿을 수 있는 정보를 준다. (혜 `:4`)

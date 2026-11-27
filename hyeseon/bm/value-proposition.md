@@ -7,7 +7,7 @@
 - 읽은 파일
   - 손님 불편 Top 3: `journey/pain-top3.md` (맨 위, 팀 Top 3)
   - JTBD: `yujin/ax/jtbd.md` (맨 위 `ax/`는 없음. 팀 Top 3 셋과 짝이 맞는 JTBD 파일이 이것뿐이라 골랐다. `hyeseon/journey/pain-jtbd.md`는 팀 Top 3가 정해지기 전 이지 후보 6개 기준이라 쓰지 않았다)
-  - 우리 쪽: `hyeseon/bm/canvas-draft.md`(혜선 9줄) · `hyeseon/bm/canvas.html`(통합판 기반 12칸)
+  - 우리 쪽: `hyeseon/old/bm/canvas-draft.md`(혜선 9줄) · `hyeseon/bm/canvas.html`(통합판 기반 12칸)
 - **주의:** J1 · J2의 인용은 배를 사는 사람이 아니라 요트투어 손님의 말이다. 처음 배를 사는 윤 씨도 같은지는 가설이다 (`yujin/ax/jtbd.md:13`). 매수인 49건 쪽 근거는 혜선 요약이라 원문 인용이 아니다 (`journey/pain-top3.md:17`).
 
 ---
@@ -49,7 +49,7 @@
 | 무엇 | 어디서 왔나 | 근거 |
 |---|---|---|
 | 웹사이트(베이스캠프) 세 화면: 매물 견주기 → 판매자에게 묻기 → 산 뒤에 할 일, 정보 게시판, 개인 매물 게시판 | canvas.html | `hyeseon/bm/canvas.html:127` |
-| 인스타 → 무료 체크리스트 → 웹사이트, 뉴스레터, 팔로워 알림 | 둘 다 | `hyeseon/bm/canvas-draft.md:14-15`, `canvas.html:117`, `:126` |
+| 인스타 → 무료 체크리스트 → 웹사이트, 뉴스레터, 팔로워 알림 | 둘 다 | `hyeseon/old/bm/canvas-draft.md:14-15`, `canvas.html:117`, `:126` |
 | AI 생성: 산 뒤 기한·돈 안내, 매물 정리 카드, 판매자에게 물을 질문 넷, 변경등록 서류 체크리스트 | canvas.html (유진 판에서 옴) | `hyeseon/bm/canvas.html:167` |
 | AI 예측: 사기 의심 정도(C5) / 시세 대비 %, 고장 나기 쉬운 곳·대략 수리비(C6) | 둘 다 | `canvas-draft.md:13`, `canvas.html:168` |
 | AI 자동화: 서류의 주인·압류 대조(E9), 매물 글에 사용시간·정비 이력이 적혔는지 세기 | 둘 다 | `canvas-draft.md:13`, `canvas.html:169` |
