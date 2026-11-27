@@ -42,11 +42,21 @@
         font-size: 13px; text-align: center; }
   .ad b { display: inline-block; border: 1px solid var(--text-2); border-radius: 4px;
           padding: 0 6px; margin-right: 6px; font-size: 12px; }
+  .steps { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 16px; padding: 0; list-style: none; font-size: 13px; }
+  .steps li { margin: 0; }
+  .steps a, .steps span { display: inline-block; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line); text-decoration: none; }
+  .steps a { color: var(--accent); background: var(--bg); }
+  .steps span[aria-current] { background: var(--accent); color: var(--bg); border-color: var(--accent); font-weight: 700; }
+  .next { display: flex; justify-content: space-between; gap: 10px; margin-top: 22px; }
+  .next a { flex: 1; text-align: center; padding: 11px 14px; border-radius: 8px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; font-weight: 700; }
+  .next a.primary { background: var(--accent); color: var(--bg); }
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="draft">게시 전 초안이에요. 게시를 승인할 사람을 팀이 정하기 전에는 올리지 않아요. (yujin 연습판 · 2026-11-27)</div>
+
+  <ol class="steps" aria-label="단계"><li><a href="listing-card.html">① 매물 견주기</a></li><li><a href="seller-questions.html">② 판매자에게 묻기</a></li><li><span aria-current="page">③ 산 뒤에 할 일</span></li></ol>
 
   <h1>배를 사신 뒤, 기한 안에 하실 일</h1>
   <p class="meta">확인한 날: 2026년 11월 27일 · 줄마다 어디에서 읽었는지 붙여 두었어요.</p>
@@ -131,6 +141,7 @@
   </section>
 
   <section class="ad"><b>광고</b>업체 광고 자리 (비어 있음) · 정보 글과 나누어 두는 칸이에요. 판매자 · 딜러 광고는 받지 않아요.</section>
+  <nav class="next"><a href="seller-questions.html">← ② 판매자에게 묻기</a><a class="primary" href="listing-card.html">처음으로 → ① 매물 견주기</a></nav>
 </div>
 
 <script>

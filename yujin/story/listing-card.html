@@ -43,11 +43,21 @@
   @media (max-width: 560px) {
     tbody th { width: 28%; } td { width: 36%; } th, td { padding: 8px; }
   }
+  .steps { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 16px; padding: 0; list-style: none; font-size: 13px; }
+  .steps li { margin: 0; }
+  .steps a, .steps span { display: inline-block; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line); text-decoration: none; }
+  .steps a { color: var(--accent); background: var(--bg); }
+  .steps span[aria-current] { background: var(--accent); color: var(--bg); border-color: var(--accent); font-weight: 700; }
+  .next { display: flex; justify-content: space-between; gap: 10px; margin-top: 22px; }
+  .next a { flex: 1; text-align: center; padding: 11px 14px; border-radius: 8px; border: 1px solid var(--accent); color: var(--accent); text-decoration: none; font-weight: 700; }
+  .next a.primary { background: var(--accent); color: var(--bg); }
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="draft">게시 전 초안이에요. 실제 매물 값이라, 게시를 승인할 사람을 팀이 정하기 전에는 올리지 않아요. (yujin 연습판 · 2026-11-27)</div>
+
+  <ol class="steps" aria-label="단계"><li><span aria-current="page">① 매물 견주기</span></li><li><a href="seller-questions.html">② 판매자에게 묻기</a></li><li><a href="guide-after-purchase.html">③ 산 뒤에 할 일</a></li></ol>
 
   <h1>매물 두 개, 나란히 보기</h1>
   <p class="meta">세일링 요트 두 척 · 판매자가 글을 올린 곳: 중고 거래 앱 · 옮긴 날: 2026년 11월 25일</p>
@@ -85,7 +95,7 @@
   </section>
 
   <section>
-    <h2>두 글 모두에 없는 것 — 판매자에게 물어보세요</h2>
+    <h2>두 글 모두에 없는 것 — <a href="seller-questions.html">판매자에게 물어보세요 →</a></h2>
     <ul>
       <li>엔진 사용시간</li>
       <li>등록이 되어 있는지 (등록증)</li>
@@ -94,6 +104,7 @@
       <li>계류비가 얼마인지</li>
     </ul>
   </section>
+  <nav class="next"><a class="primary" href="seller-questions.html">다음 → ② 판매자에게 묻기</a></nav>
 </div>
 </body>
 </html>
