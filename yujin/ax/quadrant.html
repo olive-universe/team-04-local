@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>마린딜러 AX 기회 2×2 · yujin 판 (12일차 오후)</title>
+<style>
+  :root {
+    --surface: #ffffff; --text: #191919; --text-2: #666666;
+    --grid: #e6e6e6; --axis: #bdbdbd; --quad: #fff3f3;
+    --top: #ec4647; --rest: #5c5c5c;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --surface: #191919; --text: #efefef; --text-2: #9c9c9c;
+      --grid: #2e2e2e; --axis: #555555; --quad: #2a1d1d;
+      --top: #eb6263; --rest: #9c9c9c;
+    }
+  }
+  body { margin: 0; padding: 24px; background: var(--surface); color: var(--text);
+         font-family: "Pretendard", "Malgun Gothic", system-ui, sans-serif; }
+  .wrap { max-width: 760px; margin: 0 auto; }
+  h1 { font-size: 20px; margin: 0 0 4px; }
+  .sub { color: var(--text-2); font-size: 13px; margin: 0 0 16px; line-height: 1.5; }
+  .legend { display: flex; gap: 20px; font-size: 13px; margin-bottom: 8px; align-items: center; }
+  .legend svg { vertical-align: middle; margin-right: 6px; }
+  svg text { fill: var(--text); font-size: 12px; }
+  .muted { fill: var(--text-2); }
+  .pt { cursor: pointer; }
+  .tip { position: fixed; pointer-events: none; background: var(--surface); color: var(--text);
+         border: 1px solid var(--axis); border-radius: 6px; padding: 8px 10px; font-size: 12px;
+         line-height: 1.5; box-shadow: 0 2px 8px rgba(0,0,0,.15); max-width: 260px; display: none; }
+  table { border-collapse: collapse; width: 100%; font-size: 13px; margin-top: 20px; }
+  th, td { border-bottom: 1px solid var(--grid); padding: 6px 8px; text-align: left; vertical-align: top; }
+  th { color: var(--text-2); font-weight: 600; }
+  td.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .note { color: var(--text-2); font-size: 12px; margin-top: 12px; line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>AX 기회 2×2 · 가로 실현성 × 세로 임팩트</h1>
+  <p class="sub">yujin 이름 폴더 연습판 · 2026-11-27 · 점수는 <b>Claude 제안, yujin 확정 전</b> (`ax/ideas.md`) · Top 3는 yujin이 고름(3 · 1 · 4번) · 2026-11-27 다시 매김: 3번 실현성 4 → 5, 5번 실현성 3 → 4</p>
+
+  <div class="legend" aria-hidden="true">
+    <span><svg width="16" height="16"><circle cx="8" cy="8" r="6" fill="var(--top)" stroke="var(--surface)" stroke-width="2"/></svg>Top 3 (yujin이 고름)</span>
+    <span><svg width="16" height="16"><rect x="3" y="3" width="10" height="10" rx="2" fill="var(--rest)"/></svg>나머지 AX 기회</span>
+  </div>
+
+  <svg id="chart" viewBox="0 0 640 520" width="100%" role="img"
+       aria-label="AX 기회 5개의 실현성과 임팩트 점수. 아래 표에 같은 값이 있습니다.">
+  </svg>
+
+  <table>
+    <thead><tr><th>번호</th><th>아이디어</th><th>임팩트</th><th>실현성</th><th>Top 3</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+
+  <p class="note">
+    · 가운데 선은 3점입니다. <b>'먼저 할 것' 칸(오른쪽 위) 안에 온전히 든 점은 3번 하나</b>이고, 1번과 4번은 임팩트 3이라 가로 가운데 선 위에 걸립니다. 5번(실현성 4, 임팩트 3)도 가로 가운데 선 위에 있어, 이름표를 점 아래에 달았습니다.<br>
+    · 1번과 4번은 같은 자리 (실현성 5, 임팩트 3)라 칸이 바뀌지 않게 위아래로 조금 벌려 그렸습니다.<br>
+    · Claude는 이 그림을 브라우저로 직접 열어 보지 못했습니다. 점 번호와 `ax/ideas.md`의 점수를 하나씩 맞춰 봐 주세요.
+  </p>
+</div>
+<div class="tip" id="tip"></div>
+
+<script>
+const ideas = [
+  { n: 1, name: "매물 정리 카드 초안", impact: 3, feas: 5, top: true,  dy: -9 },
+  { n: 2, name: "매물 글 칸 세기",     impact: 2, feas: 5, top: false, dy: 0 },
+  { n: 3, name: "기한·돈 안내 초안",   impact: 4, feas: 5, top: true,  dy: 0 },
+  { n: 4, name: "물어볼 질문 넷 초안", impact: 3, feas: 5, top: true,  dy: 9 },
+  { n: 5, name: "변경등록 체크리스트", impact: 3, feas: 4, top: false, dy: 0, below: true },
+];
+const NS = "http://www.w3.org/2000/svg";
+const svg = document.getElementById("chart");
+const L = 70, R = 600, T = 30, B = 460;               // plot box
+const x = v => L + (v - 1) / 4 * (R - L);
+const y = v => B - (v - 1) / 4 * (B - T);
+const el = (tag, attrs, parent = svg) => {
+  const e = document.createElementNS(NS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  parent.appendChild(e); return e;
+};
+// '먼저 할 것' quadrant
+el("rect", { x: x(3), y: y(5), width: x(5) - x(3), height: y(3) - y(5), fill: "var(--quad)" });
+el("text", { x: x(5) - 8, y: y(5) + 18, "text-anchor": "end", "font-weight": "700" }).textContent = "먼저 할 것";
+// grid + ticks
+for (let v = 1; v <= 5; v++) {
+  el("line", { x1: x(v), x2: x(v), y1: T, y2: B, stroke: "var(--grid)", "stroke-width": 1 });
+  el("line", { x1: L, x2: R, y1: y(v), y2: y(v), stroke: "var(--grid)", "stroke-width": 1 });
+  el("text", { x: x(v), y: B + 18, "text-anchor": "middle", class: "muted" }).textContent = v;
+  el("text", { x: L - 10, y: y(v) + 4, "text-anchor": "end", class: "muted" }).textContent = v;
+}
+// center lines at 3
+el("line", { x1: x(3), x2: x(3), y1: T, y2: B, stroke: "var(--axis)", "stroke-width": 1.5, "stroke-dasharray": "4 4" });
+el("line", { x1: L, x2: R, y1: y(3), y2: y(3), stroke: "var(--axis)", "stroke-width": 1.5, "stroke-dasharray": "4 4" });
+// axis titles
+el("text", { x: (L + R) / 2, y: B + 44, "text-anchor": "middle" }).textContent = "실현성 → (5 = 하루 안에 시범)";
+const yt = el("text", { x: 18, y: (T + B) / 2, "text-anchor": "middle", transform: `rotate(-90 18 ${(T + B) / 2})` });
+yt.textContent = "임팩트 → (5 = J 문장의 불편이 거의 없어짐)";
+// points
+const tip = document.getElementById("tip");
+ideas.forEach(d => {
+  const cx = x(d.feas), cy = y(d.impact) + d.dy;
+  const g = el("g", { class: "pt", tabindex: 0, "aria-label": `${d.n}번 ${d.name}, 임팩트 ${d.impact}, 실현성 ${d.feas}` });
+  el("circle", { cx, cy, r: 16, fill: "transparent" }, g);  // hit target
+  if (d.top) el("circle", { cx, cy, r: 7, fill: "var(--top)", stroke: "var(--surface)", "stroke-width": 2 }, g);
+  else el("rect", { x: cx - 5, y: cy - 5, width: 10, height: 10, rx: 2, fill: "var(--rest)", stroke: "var(--surface)", "stroke-width": 2 }, g);
+  const lx = d.below ? cx : (d.feas === 5 ? cx - 14 : cx + 14);
+  const ly = d.below ? cy + 30 : cy + 4;
+  const anchor = d.below ? "middle" : (d.feas === 5 ? "end" : "start");
+  el("text", { x: lx, y: ly, "text-anchor": anchor, "font-weight": d.top ? "700" : "400" }, g)
+    .textContent = `${d.n} ${d.name}`;
+  const show = ev => {
+    tip.innerHTML = `<b>${d.n}번 ${d.name}</b><br>임팩트 ${d.impact} · 실현성 ${d.feas}<br>${d.top ? "Top 3 (yujin이 고름)" : "나머지 AX 기회"}`;
+    tip.style.display = "block";
+    const r = ev.target.getBoundingClientRect ? ev.target.getBoundingClientRect() : { left: ev.clientX, top: ev.clientY };
+    tip.style.left = ((ev.clientX || r.left) + 14) + "px";
+    tip.style.top = ((ev.clientY || r.top) + 14) + "px";
+  };
+  g.addEventListener("mousemove", show); g.addEventListener("focus", show);
+  g.addEventListener("mouseleave", () => tip.style.display = "none");
+  g.addEventListener("blur", () => tip.style.display = "none");
+});
+// table view
+document.getElementById("rows").innerHTML = ideas.map(d =>
+  `<tr><td class="num">${d.n}</td><td>${d.name}</td><td class="num">${d.impact}</td><td class="num">${d.feas}</td><td>${d.top ? "●" : ""}</td></tr>`).join("");
+</script>
+</body>
+</html>
