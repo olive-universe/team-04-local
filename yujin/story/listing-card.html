@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>매물 두 개 나란히 보기 · 마린딜러 (게시 전 초안)</title>
+<style>
+  :root {
+    --bg: #ffffff; --card: #f7f8fa; --text: #191919; --text-2: #5f6368;
+    --line: #e3e5e8; --accent: #1b64be; --warn-bg: #fff6e0; --warn: #8a5a00; --miss: #8a8f94;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #161718; --card: #212325; --text: #efefef; --text-2: #a5a9ad;
+            --line: #33363a; --accent: #6aabf1; --warn-bg: #3a2f14; --warn: #f2c35b; --miss: #8f9499; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font-family: "Pretendard", "Malgun Gothic", system-ui, sans-serif; line-height: 1.6; }
+  .wrap { max-width: 760px; margin: 0 auto; padding: 20px 16px 48px; }
+  .draft { background: var(--warn-bg); color: var(--warn); border-radius: 8px;
+           padding: 10px 14px; font-size: 13px; margin-bottom: 18px; }
+  h1 { font-size: 24px; line-height: 1.35; margin: 4px 0 6px; }
+  .meta { color: var(--text-2); font-size: 13px; margin: 0 0 18px; }
+  .note { background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+          padding: 10px 14px; font-size: 14px; margin-bottom: 14px; }
+  table { width: 100%; border-collapse: separate; border-spacing: 0; font-size: 14px;
+          background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tr:last-child th, tr:last-child td { border-bottom: none; }
+  thead th { font-size: 15px; background: transparent; }
+  tbody th { color: var(--text-2); font-weight: 600; width: 22%; font-size: 13px; }
+  td { width: 39%; }
+  .big { font-size: 17px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  .miss { color: var(--miss); }
+  .miss::before { content: "— "; }
+  .flag { display: inline-block; font-size: 12px; border: 1px solid var(--warn); color: var(--warn);
+          border-radius: 4px; padding: 0 6px; margin-left: 4px; }
+  section { background: var(--card); border: 1px solid var(--line); border-radius: 12px;
+            padding: 14px 18px; margin: 14px 0; }
+  h2 { font-size: 17px; margin: 0 0 8px; }
+  ul { margin: 0; padding-left: 20px; } li { margin: 5px 0; }
+  .src { color: var(--text-2); font-size: 12px; }
+  @media (max-width: 560px) {
+    tbody th { width: 28%; } td { width: 36%; } th, td { padding: 8px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="draft">게시 전 초안이에요. 실제 매물 값이라, 게시를 승인할 사람을 팀이 정하기 전에는 올리지 않아요. (yujin 연습판 · 2026-11-27)</div>
+
+  <h1>매물 두 개, 나란히 보기</h1>
+  <p class="meta">세일링 요트 두 척 · 판매자가 글을 올린 곳: 중고 거래 앱 · 옮긴 날: 2026년 11월 25일</p>
+
+  <div class="note">아래 값은 모두 <b>판매자가 적은 값</b>이에요. 저희가 확인한 값은 아니에요. 글에 없는 칸은 회색으로 비워 두었어요.</div>
+
+  <table>
+    <thead><tr><th></th><th>매물 A</th><th>매물 B</th></tr></thead>
+    <tbody>
+      <tr><th>판매자가 적은 값</th>
+          <td><span class="big">130만 원 / 1,300만 원</span><span class="flag">두 값이 달라요</span><br><span class="src">가격 칸은 130만 원, 본문은 1,300만 원이에요. 판매자는 전국에 보이게 하려고 130으로 적었다고 했어요.</span></td>
+          <td><span class="big">4,999만 원</span><br><span class="src">본문에 5,500만 원에서 내렸다고 적혀 있어요.</span></td></tr>
+      <tr><th>배 종류 · 크기</th><td>세일링 요트 · 26피트<br><span class="src">모델 이름에서 읽음</span></td><td>세일링 요트 · 37피트<br><span class="src">모델 이름에서 읽음</span></td></tr>
+      <tr><th>연식</th><td class="miss">글에 없어요</td><td>1993년식</td></tr>
+      <tr><th>엔진</th><td>얀마 1GM</td><td class="miss">글에 없어요</td></tr>
+      <tr><th>엔진 사용시간</th><td class="miss">글에 없어요</td><td class="miss">글에 없어요</td></tr>
+      <tr><th>정비 이력<br>(판매자 말)</th><td>한 달 전 선저를 올려 도색</td><td>엔진 샤프트 베어링 교체, 전반적인 수리를 마쳤다고 함</td></tr>
+      <tr><th>함께 넘기는 것</th><td>스피네이커 세일 · 오토파일럿 · 도저 · 비미니탑</td><td class="miss">글에 없어요</td></tr>
+      <tr><th>배를 댈 곳</th>
+          <td>통영의 한 마리나에 정박 중<br>선석은 <b>"협의 가능"</b></td>
+          <td>제목은 <b>"선석 포함"</b>, 본문에는 배가 칠천도에 있다고 적혀 있어요<span class="flag">위치가 달라요</span></td></tr>
+      <tr><th>등록증</th><td class="miss">글에 없어요</td><td class="miss">글에 없어요</td></tr>
+      <tr><th>안전검사</th><td class="miss">글에 없어요</td><td class="miss">글에 없어요</td></tr>
+      <tr><th>보험</th><td class="miss">글에 없어요</td><td class="miss">글에 없어요</td></tr>
+    </tbody>
+  </table>
+
+  <section>
+    <h2>값 말고 더 들 수 있는 돈</h2>
+    <ul>
+      <li>두 매물 모두: 변경등록 수수료 1,500원, 취득세(금액은 아직 확인하지 못했어요), 보험(등록 전에 가입) <span class="src">· 안내 글 '배를 사신 뒤, 기한 안에 하실 일'</span></li>
+      <li>매물 A: 선석이 "협의"라서 <b>계류비가 따로</b> 들 수 있어요. 금액은 글에 없어요.</li>
+      <li>매물 B: 선석이 있어도 배가 다른 곳에 있어서 <b>배를 옮기는 비용</b>이 들 수 있어요. 선석을 넘길 수 있는 권리인지는 확인하지 못했어요.</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>두 글 모두에 없는 것 — 판매자에게 물어보세요</h2>
+    <ul>
+      <li>엔진 사용시간</li>
+      <li>등록이 되어 있는지 (등록증)</li>
+      <li>안전검사를 받았는지</li>
+      <li>보험에 들어 있는지</li>
+      <li>계류비가 얼마인지</li>
+    </ul>
+  </section>
+</div>
+</body>
+</html>
